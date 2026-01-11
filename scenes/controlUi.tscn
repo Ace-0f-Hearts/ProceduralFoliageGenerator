@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://0o46f600831c"]
+
+[ext_resource type="Texture2D" uid="uid://dpbfq8gjvtt33" path="res://assets/github-mark-white.svg" id="1_6al76"]
+[ext_resource type="Script" uid="uid://b38yd6vktitc1" path="res://scripts/viewmodel/OptionsButton.cs" id="1_ei471"]
+[ext_resource type="Texture2D" uid="uid://dhxekeirvcoev" path="res://assets/github-mark.svg" id="2_1qlb1"]
+[ext_resource type="Script" uid="uid://tb360plbr03q" path="res://scripts/viewmodel/TexturedLinkButton.cs" id="2_c4xvu"]
+[ext_resource type="Script" uid="uid://bcloso7x4yw4t" path="res://scripts/viewmodel/GenerationButton.cs" id="2_ljvhs"]
+[ext_resource type="PackedScene" uid="uid://dt1ntm4vc1vf2" path="res://scenes/fileDialogUi.tscn" id="6_qllka"]
+
+[node name="ControlUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer3"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 9
+
+[node name="OptionsButton" type="MenuButton" parent="Panel/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+text = "Options"
+item_count = 2
+popup/item_0/text = "Settings"
+popup/item_0/id = 0
+popup/item_1/text = "Exit"
+popup/item_1/id = 1
+script = ExtResource("1_ei471")
+
+[node name="GenerationButton" type="Button" parent="Panel/MarginContainer3/HBoxContainer" node_paths=PackedStringArray("Dialog")]
+layout_mode = 2
+text = "Generate"
+script = ExtResource("2_ljvhs")
+Dialog = NodePath("../../../../Control")
+
+[node name="TextureButton" type="TextureButton" parent="Panel/MarginContainer3/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+texture_normal = ExtResource("1_6al76")
+texture_pressed = ExtResource("2_1qlb1")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("2_c4xvu")
+Url = "https://github.com/Ace-0f-Hearts/ProceduralFoliageGenerator"
+
+[node name="Control" parent="." instance=ExtResource("6_qllka")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[connection signal="pressed" from="Panel/MarginContainer3/HBoxContainer/GenerationButton" to="Panel/MarginContainer3/HBoxContainer/GenerationButton" method="OnPressed"]
+[connection signal="pressed" from="Panel/MarginContainer3/HBoxContainer/TextureButton" to="Panel/MarginContainer3/HBoxContainer/TextureButton" method="OnPressed"]
