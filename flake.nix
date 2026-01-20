@@ -33,7 +33,7 @@
               ])
               pkgs.mono5
               pkgs.powershell
-              
+              pkgs.dotnetPackages.NewtonsoftJson
             ];
 
           # Set any environment variables for your dev shell
