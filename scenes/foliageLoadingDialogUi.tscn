@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7ee1iim7lyoe"]
+
+[ext_resource type="Script" uid="uid://vnh4c2ota46y" path="res://scripts/viewmodel/FoliageLoadingDialog.cs" id="1_88187"]
+[ext_resource type="PackedScene" uid="uid://otay6he5s6l3" path="res://scenes/instanceAmountItemUi.tscn" id="2_jkdru"]
+
+[node name="Control" type="Control" node_paths=PackedStringArray("InstanceAmountDisplay")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_88187")
+InstanceAmountDisplay = NodePath("Panel/VBoxContainer/HSplitContainer/VBoxContainer2/MarginContainer/FoldableContainer/VBoxContainer_InstanceAmountDisplay")
+InstanceAmountItem = ExtResource("2_jkdru")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 473.0
+offset_bottom = 284.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Foliage file:"
+
+[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+split_offset = 245
+dragging_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="FoldableContainer" type="FoldableContainer" parent="Panel/VBoxContainer/HSplitContainer/VBoxContainer2/MarginContainer"]
+layout_mode = 2
+title = "Number of instances / species"
+
+[node name="VBoxContainer_InstanceAmountDisplay" type="VBoxContainer" parent="Panel/VBoxContainer/HSplitContainer/VBoxContainer2/MarginContainer/FoldableContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" parent="Panel/VBoxContainer/HSplitContainer/VBoxContainer2/MarginContainer/FoldableContainer/VBoxContainer_InstanceAmountDisplay" instance=ExtResource("2_jkdru")]
+layout_mode = 2

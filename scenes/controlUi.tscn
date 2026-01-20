@@ -9,11 +9,10 @@
 
 [node name="ControlUi" type="Control"]
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_bottom = 648.0
 grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -49,6 +48,10 @@ text = "Generate"
 script = ExtResource("2_ljvhs")
 Dialog = NodePath("../../../../Control")
 
+[node name="Button" type="Button" parent="Panel/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+text = "Load"
+
 [node name="TextureButton" type="TextureButton" parent="Panel/MarginContainer3/HBoxContainer"]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
@@ -62,13 +65,18 @@ script = ExtResource("2_c4xvu")
 Url = "https://github.com/Ace-0f-Hearts/ProceduralFoliageGenerator"
 
 [node name="Control" parent="." instance=ExtResource("6_qllka")]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = -576.0
+offset_bottom = -324.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="pressed" from="Panel/MarginContainer3/HBoxContainer/GenerationButton" to="Panel/MarginContainer3/HBoxContainer/GenerationButton" method="OnPressed"]
 [connection signal="pressed" from="Panel/MarginContainer3/HBoxContainer/TextureButton" to="Panel/MarginContainer3/HBoxContainer/TextureButton" method="OnPressed"]

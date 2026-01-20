@@ -5,15 +5,21 @@
 [ext_resource type="Script" uid="uid://ph1bl4e56ner" path="res://scripts/viewmodel/PathInput.cs" id="3_3jv16"]
 [ext_resource type="Texture2D" uid="uid://hcijdu2pxh5i" path="res://icon.svg" id="4_ke7ar"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("FileDialog")]
+[node name="Control" type="Control" node_paths=PackedStringArray("FileDialog", "MapFilePathInput", "PlantFilePathInput", "SizeOfMap", "MinElevation", "MaxElevation", "NumberOfPlants")]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_ke7ar")
 FileDialog = NodePath("FileDialog")
+MapFilePathInput = NodePath("Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/LineEdit")
+PlantFilePathInput = NodePath("Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/LineEdit")
+SizeOfMap = NodePath("Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap/Label_SizeOfMap_Value")
+MinElevation = NodePath("Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MinElevation/HBoxContainer_MinElevation/Label_MinElevation_Value")
+MaxElevation = NodePath("Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MaxElevation/HBoxContainer_MaxElevation/Label_MaxElevation_Value")
+NumberOfPlants = NodePath("Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies/Label_NumberOfSpecies_Value")
 
 [node name="FileDialog" type="FileDialog" parent="."]
 oversampling_override = 1.0
@@ -22,63 +28,61 @@ initial_position = 1
 file_mode = 0
 access = 2
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -257.0
-offset_top = -115.0
-offset_right = 257.0
-offset_bottom = 115.0
+[node name="Panel" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 319.0
+offset_top = 205.0
+offset_right = 833.0
+offset_bottom = 443.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(257, 115)
 
-[node name="PanelContainer" type="PanelContainer" parent="Panel"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 20.0
-offset_right = 343.0
-offset_bottom = 166.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/PanelContainer"]
+[node name="HBoxContainer" type="HSplitContainer" parent="Panel"]
 layout_mode = 2
+split_offset = 68
+dragging_enabled = false
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/PanelContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/PanelContainer/VBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Map file"
 label_settings = ExtResource("2_glp4j")
 
-[node name="LineEdit" type="LineEdit" parent="Panel/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("Controller", "FileDialogRequestButton")]
+[node name="LineEdit" type="LineEdit" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("Controller", "FileDialogRequestButton")]
 layout_mode = 2
 placeholder_text = "Input path to map file"
 script = ExtResource("3_3jv16")
 Extensions = "*.ocd, *.omap, *.xmap"
 Description = "Map file"
-Controller = NodePath("../../../../../..")
+Controller = NodePath("../../../../../../..")
 FileDialogRequestButton = NodePath("FileDialogRequestButton")
 
-[node name="FileDialogRequestButton" type="Button" parent="Panel/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/LineEdit"]
+[node name="FileDialogRequestButton" type="Button" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/LineEdit"]
 layout_mode = 0
 offset_left = 273.0
 offset_top = 5.0
 offset_right = 305.0
 offset_bottom = 27.0
 
-[node name="TextureRect" type="TextureRect" parent="Panel/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/LineEdit/FileDialogRequestButton"]
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/LineEdit/FileDialogRequestButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -95,38 +99,39 @@ texture = ExtResource("4_ke7ar")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="MarginContainer2" type="MarginContainer" parent="Panel/PanelContainer/VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/PanelContainer/VBoxContainer/MarginContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="Label" type="Label" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 text = "Foliage descriptor file"
 label_settings = ExtResource("2_glp4j")
 
-[node name="LineEdit" type="LineEdit" parent="Panel/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("Controller", "FileDialogRequestButton")]
+[node name="LineEdit" type="LineEdit" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("Controller", "FileDialogRequestButton")]
 layout_mode = 2
+size_flags_vertical = 4
 placeholder_text = "Input path to foliage file"
 script = ExtResource("3_3jv16")
 Extensions = "*.json"
 Description = "Foliage describing JSON"
-Controller = NodePath("../../../../../..")
+Controller = NodePath("../../../../../../..")
 FileDialogRequestButton = NodePath("FileDialogRequestButton")
 
-[node name="FileDialogRequestButton" type="Button" parent="Panel/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/LineEdit"]
+[node name="FileDialogRequestButton" type="Button" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/LineEdit"]
 layout_mode = 0
 offset_left = 273.0
 offset_top = 3.0
 offset_right = 305.0
 offset_bottom = 25.0
 
-[node name="TextureRect" type="TextureRect" parent="Panel/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/LineEdit/FileDialogRequestButton"]
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/LineEdit/FileDialogRequestButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -143,130 +148,133 @@ texture = ExtResource("4_ke7ar")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PanelContainer2" type="PanelContainer" parent="Panel"]
-layout_mode = 0
-offset_left = 357.0
-offset_top = 20.0
-offset_right = 492.0
-offset_bottom = 166.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/PanelContainer2"]
+[node name="PanelContainer2" type="PanelContainer" parent="Panel/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/PanelContainer2/VBoxContainer"]
+[node name="VBoxContainer_Infobox" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="MarginContainer_SizeOfMap" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/PanelContainer2/VBoxContainer/MarginContainer"]
+[node name="HBoxContainer_SizeOfMap" type="HBoxContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_SizeOfMap"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/PanelContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="Label_SizeOfMap_Description" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap"]
 layout_mode = 2
 text = "Size of map:"
 label_settings = ExtResource("2_glp4j")
 
-[node name="Label2" type="Label" parent="Panel/PanelContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="Label_SizeOfMap_Value" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap"]
 layout_mode = 2
 text = "0"
 label_settings = ExtResource("2_glp4j")
 
-[node name="MarginContainer3" type="MarginContainer" parent="Panel/PanelContainer2/VBoxContainer"]
+[node name="MarginContainer_MinElevation" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/PanelContainer2/VBoxContainer/MarginContainer3"]
+[node name="HBoxContainer_MinElevation" type="HBoxContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MinElevation"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/PanelContainer2/VBoxContainer/MarginContainer3/HBoxContainer"]
+[node name="Label_MinElevation_Description" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MinElevation/HBoxContainer_MinElevation"]
 layout_mode = 2
 text = "Min. elevation:"
 label_settings = ExtResource("2_glp4j")
 
-[node name="Label2" type="Label" parent="Panel/PanelContainer2/VBoxContainer/MarginContainer3/HBoxContainer"]
+[node name="Label_MinElevation_Value" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MinElevation/HBoxContainer_MinElevation"]
 layout_mode = 2
 text = "0"
 label_settings = ExtResource("2_glp4j")
 
-[node name="MarginContainer4" type="MarginContainer" parent="Panel/PanelContainer2/VBoxContainer"]
+[node name="MarginContainer_MaxElevation" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/PanelContainer2/VBoxContainer/MarginContainer4"]
+[node name="HBoxContainer_MaxElevation" type="HBoxContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MaxElevation"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/PanelContainer2/VBoxContainer/MarginContainer4/HBoxContainer"]
+[node name="Label_MaxElevation_Description" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MaxElevation/HBoxContainer_MaxElevation"]
 layout_mode = 2
 text = "Max. elevation:"
 label_settings = ExtResource("2_glp4j")
 
-[node name="Label2" type="Label" parent="Panel/PanelContainer2/VBoxContainer/MarginContainer4/HBoxContainer"]
+[node name="Label_MaxElevation_Value" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MaxElevation/HBoxContainer_MaxElevation"]
 layout_mode = 2
 text = "0"
 label_settings = ExtResource("2_glp4j")
 
-[node name="HSeparator" type="HSeparator" parent="Panel/PanelContainer2/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox"]
 layout_mode = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="Panel/PanelContainer2/VBoxContainer"]
+[node name="MarginContaine_NumberOfSpecies" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/PanelContainer2/VBoxContainer/MarginContainer2"]
+[node name="HBoxContainer_NumberOfSpecies" type="HBoxContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContaine_NumberOfSpecies"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/PanelContainer2/VBoxContainer/MarginContainer2/HBoxContainer"]
+[node name="Label_NumberOfSpecies_Description" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies"]
 layout_mode = 2
 text = "Number of species:"
 label_settings = ExtResource("2_glp4j")
 
-[node name="Label2" type="Label" parent="Panel/PanelContainer2/VBoxContainer/MarginContainer2/HBoxContainer"]
+[node name="Label_NumberOfSpecies_Value" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies"]
 layout_mode = 2
 text = "0"
 label_settings = ExtResource("2_glp4j")
 
-[node name="PanelContainer3" type="PanelContainer" parent="Panel"]
-layout_mode = 0
-offset_left = 25.0
-offset_top = 178.0
-offset_right = 492.0
-offset_bottom = 218.0
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/PanelContainer3"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/PanelContainer3/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 5
 
-[node name="GenerationButton" type="Button" parent="Panel/PanelContainer3/HBoxContainer/MarginContainer"]
+[node name="GenerationButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
 text = "Generate"
 
-[node name="MarginContainer2" type="MarginContainer" parent="Panel/PanelContainer3/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 5
 
-[node name="CancelButton" type="Button" parent="Panel/PanelContainer3/HBoxContainer/MarginContainer2"]
+[node name="CancelButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer/MarginContainer2"]
 layout_mode = 2
 text = "Cancel"
 
-[connection signal="pressed" from="Panel/PanelContainer3/HBoxContainer/MarginContainer/GenerationButton" to="." method="OnGenerateStarted"]
+[node name="PanelContainer4" type="PanelContainer" parent="Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Panel/VBoxContainer/PanelContainer4"]
+layout_mode = 2
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/MarginContainer/GenerationButton" to="." method="OnGenerateStarted"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/MarginContainer2/CancelButton" to="." method="OnFileDialogCloseRequested"]
