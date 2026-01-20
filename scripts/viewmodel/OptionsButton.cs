@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace ViewModel
+namespace ProceduralFoliageGenerator.ViewModel
 {
     /// <summary>
     /// Custom class for handling user inputs regarding options.

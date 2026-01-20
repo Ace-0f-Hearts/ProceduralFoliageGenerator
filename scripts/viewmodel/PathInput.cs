@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace ViewModel;
+namespace ProceduralFoliageGenerator.ViewModel;
 public partial class PathInput : LineEdit
 {
     [Export]

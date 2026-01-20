@@ -1,8 +1,8 @@
 using Godot;
 using System;
-using ViewModel;
+using ProceduralFoliageGenerator.ViewModel;
 
-namespace ViewModel
+namespace ProceduralFoliageGenerator.ViewModel
 {
     /// <summary>
     /// Custom class for handling the user request for foliage generation. 

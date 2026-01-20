@@ -5,7 +5,7 @@ using Godot.Collections;
 using Godot.NativeInterop;
 using FileAccess = Godot.FileAccess;
 
-namespace ViewModel;
+namespace ProceduralFoliageGenerator.ViewModel;
 
 
 /// <summary>
@@ -143,7 +143,11 @@ public partial class GenerationExecutor : Node
         _generatorThread.WaitToFinish();
         GD.Print($"Generation Finished\nOutput Log:{OutputLog}\nError Code:{ErrorCode}");
         
+        _generatorMutex.Lock();
         LogOutput();
+        ClearArguments();
+        ClearLogs();
+        _generatorMutex.Unlock();
     }   
     
     /// <summary>
@@ -183,6 +187,15 @@ public partial class GenerationExecutor : Node
                 GD.Print($"Error: {FileAccess.GetOpenError()}");
             }
         }
+    }
+
+    private void ClearArguments()
+    {
+        _generatorArguments = null;
+    }
+
+    private void ClearLogs()
+    {
         OutputLog.Clear();
     }
     

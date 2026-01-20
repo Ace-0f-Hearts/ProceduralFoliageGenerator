@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace ViewModel
+namespace ProceduralFoliageGenerator.ViewModel
 {
     /// <summary>
     /// Custom textured button class for handling URL opening.
