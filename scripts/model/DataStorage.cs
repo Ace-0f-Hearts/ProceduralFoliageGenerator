@@ -11,7 +11,7 @@ namespace ProceduralFoliageGenerator.Model;
 public record DataStorage
 {
     public event EventHandler PlantAttributesSet;
-    public event EventHandler PlantInstancesLoaded;
+    public event EventHandler PlantInstancesSet;
 
     private List<PlantAttributes> _plantAttrs;
     private Dictionary<string,List<PlantInstanceDescriptor>> _plantInstances;
@@ -37,7 +37,7 @@ public record DataStorage
         set
         {
             _plantInstances = value;
-            PlantInstancesLoaded?.Invoke(this, EventArgs.Empty);
+            PlantInstancesSet?.Invoke(this, EventArgs.Empty);
         }
     }
 
