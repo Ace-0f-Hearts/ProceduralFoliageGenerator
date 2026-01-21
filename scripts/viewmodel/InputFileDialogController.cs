@@ -6,11 +6,9 @@ using ProceduralFoliageGenerator.Model;
 
 namespace ProceduralFoliageGenerator.ViewModel;
 
-public partial class FileDialogController : Control
+public partial class InputFileDialogController : FileDialogController
 {
-    [Export]
-    public FileDialog FileDialog { get; set; }
-    
+
     [Export]
     public PathInput MapFilePathInput { get; set; }
     
@@ -26,52 +24,55 @@ public partial class FileDialogController : Control
     [Export]
     public Label NumberOfPlants { get; set; }
     
+    [Export]
+    public Container ButtonsContainer { get; set; }
+    [Export]
+    public Container ProgressBarContainer { get; set; }
 
     public override void _Ready()
     {
         MainModel.Instance.TemporaryData.PlantAttributesSet += OnPlantAttributesSet;
-        
-        FileDialog.CloseRequested += OnFileDialogCloseRequested;
+
+        MapFilePathInput.FileDialogRequested += OnFileDialogOpenRequested;
+        PlantFilePathInput.FileDialogRequested += OnFileDialogOpenRequested;
         MapFilePathInput.TextSubmitted += OnMapFileInput;
         PlantFilePathInput.TextSubmitted += OnPlantFileInput;
-    }
-    
-    /// <summary>
-    /// Signal handler for handling requests of opening the file explorer node.
-    /// </summary>
-    /// <param name="extensions"></param>
-    /// <param name="description"></param>
-    /// <param name="input"></param>
-    public void OnFileDialogOpenRequested(string extensions,string description,PathInput input)
-    {
-        FileDialog.AddFilter(extensions,description);
-        FileDialog.FileSelected += (path) => OnFileSelected(path,input);
-        FileDialog.Show();
+        base._Ready();
     }
 
-    
-    /// <summary>
-    /// Signal handler for handling the requests of closing the file explorer node.
-    /// </summary>
-    public void OnFileDialogCloseRequested()
+    public override void OnFileDialogOpenRequested(string extensions, string description, PathInput input)
     {
-        FileDialog.ClearFilters();
-        FileDialog.CurrentFile = "";
-        FileDialog.Hide();
+        MapFilePathInput.DisableButtons();
+        PlantFilePathInput.DisableButtons();
+        base.OnFileDialogOpenRequested(extensions, description, input);
     }
 
-    public void OnFileSelected(string path,PathInput input)
+    public override void OnFileDialogCloseRequested()
     {
-        FileDialog.ClearFilters();
-        input.Text = path;
-        input.EmitSignal(LineEdit.SignalName.TextSubmitted, path);
-        FileDialog.Hide();
+        MapFilePathInput.EnableButtons();
+        MapFilePathInput.DisableButtons();
+        
+        base.OnFileDialogCloseRequested();
     }
 
     public void OnGenerationStarted()
     {
         MainModel.Instance.StoreTemporyData();
         GenerationExecutor.Instance.ExecuteGeneration();
+        ButtonsContainer.Hide();
+        ProgressBarContainer.Show();
+    }
+
+    public void OnGenerationProgressed(float progress)
+    {
+        //TODO: Update progressbar   
+    }
+
+    public void OnGenerationCompleted()
+    {
+        ButtonsContainer.Show();
+        ProgressBarContainer.Hide();
+        this.Hide();
     }
 
     public void OnGenerationCanceled()
@@ -95,6 +96,7 @@ public partial class FileDialogController : Control
         this!.NumberOfPlants.Text = MainModel.Instance.TemporaryData.GetAmountOfSpecies.ToString();
     }
 }
+
 
 
 

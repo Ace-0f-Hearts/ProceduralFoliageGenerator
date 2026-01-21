@@ -1,11 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dt1ntm4vc1vf2"]
+[gd_scene load_steps=4 format=3 uid="uid://dt1ntm4vc1vf2"]
 
-[ext_resource type="Script" uid="uid://ck5hpxi2rpbv8" path="res://scripts/viewmodel/FileDialogController.cs" id="1_ke7ar"]
+[ext_resource type="Script" path="res://scripts/viewmodel/InputFileDialogController.cs" id="1_ke7ar"]
 [ext_resource type="LabelSettings" uid="uid://6qlavkqgh48p" path="res://settings/labels/dialogInputLabel.tres" id="2_glp4j"]
-[ext_resource type="Script" uid="uid://ph1bl4e56ner" path="res://scripts/viewmodel/PathInput.cs" id="3_3jv16"]
-[ext_resource type="Texture2D" uid="uid://hcijdu2pxh5i" path="res://icon.svg" id="4_ke7ar"]
+[ext_resource type="PackedScene" uid="uid://c3wbnqj3khh2k" path="res://scenes/pathInput.tscn" id="3_yhqpo"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("FileDialog", "MapFilePathInput", "PlantFilePathInput", "SizeOfMap", "MinElevation", "MaxElevation", "NumberOfPlants")]
+[node name="Control" type="Control" node_paths=PackedStringArray("MapFilePathInput", "PlantFilePathInput", "SizeOfMap", "MinElevation", "MaxElevation", "NumberOfPlants", "ButtonsContainer", "ProgressBarContainer")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
@@ -13,20 +12,14 @@ offset_bottom = 648.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_ke7ar")
-FileDialog = NodePath("FileDialog")
 MapFilePathInput = NodePath("Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/LineEdit")
 PlantFilePathInput = NodePath("Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/LineEdit")
 SizeOfMap = NodePath("Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap/Label_SizeOfMap_Value")
 MinElevation = NodePath("Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MinElevation/HBoxContainer_MinElevation/Label_MinElevation_Value")
 MaxElevation = NodePath("Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MaxElevation/HBoxContainer_MaxElevation/Label_MaxElevation_Value")
 NumberOfPlants = NodePath("Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies/Label_NumberOfSpecies_Value")
-
-[node name="FileDialog" type="FileDialog" parent="."]
-oversampling_override = 1.0
-title = "Open a File"
-initial_position = 1
-file_mode = 0
-access = 2
+ButtonsContainer = NodePath("Panel/VBoxContainer/HBoxContainer_Buttons")
+ProgressBarContainer = NodePath("Panel/VBoxContainer/PanelContainer4")
 
 [node name="Panel" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -66,38 +59,10 @@ layout_mode = 2
 text = "Map file"
 label_settings = ExtResource("2_glp4j")
 
-[node name="LineEdit" type="LineEdit" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("Controller", "FileDialogRequestButton")]
+[node name="LineEdit" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_yhqpo")]
 layout_mode = 2
-placeholder_text = "Input path to map file"
-script = ExtResource("3_3jv16")
 Extensions = "*.ocd, *.omap, *.xmap"
 Description = "Map file"
-Controller = NodePath("../../../../../../..")
-FileDialogRequestButton = NodePath("FileDialogRequestButton")
-
-[node name="FileDialogRequestButton" type="Button" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/LineEdit"]
-layout_mode = 0
-offset_left = 273.0
-offset_top = 5.0
-offset_right = 305.0
-offset_bottom = 27.0
-
-[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/LineEdit/FileDialogRequestButton"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -9.0
-offset_top = -9.0
-offset_right = 9.0
-offset_bottom = 9.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_ke7ar")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="MarginContainer2" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -114,39 +79,11 @@ layout_mode = 2
 text = "Foliage descriptor file"
 label_settings = ExtResource("2_glp4j")
 
-[node name="LineEdit" type="LineEdit" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("Controller", "FileDialogRequestButton")]
+[node name="LineEdit" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer" instance=ExtResource("3_yhqpo")]
 layout_mode = 2
-size_flags_vertical = 4
-placeholder_text = "Input path to foliage file"
-script = ExtResource("3_3jv16")
+placeholder_text = "Input path to attributes descriptor"
 Extensions = "*.json"
 Description = "Foliage describing JSON"
-Controller = NodePath("../../../../../../..")
-FileDialogRequestButton = NodePath("FileDialogRequestButton")
-
-[node name="FileDialogRequestButton" type="Button" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/LineEdit"]
-layout_mode = 0
-offset_left = 273.0
-offset_top = 3.0
-offset_right = 305.0
-offset_bottom = 25.0
-
-[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/LineEdit/FileDialogRequestButton"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -9.0
-offset_top = -9.0
-offset_right = 9.0
-offset_bottom = 9.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_ke7ar")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="PanelContainer2" type="PanelContainer" parent="Panel/HBoxContainer"]
 layout_mode = 2
@@ -243,29 +180,29 @@ label_settings = ExtResource("2_glp4j")
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainer_Buttons" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer_Buttons"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 5
 
-[node name="GenerationButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer/MarginContainer"]
+[node name="GenerationButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer_Buttons/MarginContainer"]
 layout_mode = 2
 text = "Generate"
 
-[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer_Buttons"]
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 5
 
-[node name="CancelButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer/MarginContainer2"]
+[node name="CancelButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer_Buttons/MarginContainer2"]
 layout_mode = 2
 text = "Cancel"
 
@@ -276,5 +213,5 @@ layout_mode = 2
 [node name="ProgressBar" type="ProgressBar" parent="Panel/VBoxContainer/PanelContainer4"]
 layout_mode = 2
 
-[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/MarginContainer/GenerationButton" to="." method="OnGenerateStarted"]
-[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/MarginContainer2/CancelButton" to="." method="OnFileDialogCloseRequested"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer_Buttons/MarginContainer/GenerationButton" to="." method="OnGenerationStarted"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer_Buttons/MarginContainer2/CancelButton" to="." method="OnFileDialogCloseRequested"]

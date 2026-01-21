@@ -5,13 +5,15 @@ using System.Linq;
 using ProceduralFoliageGenerator.Model;
 
 namespace ProceduralFoliageGenerator.ViewModel;
-public partial class FoliageLoadingDialog : Control
+public partial class FoliageLoadingDialogController : FileDialogController
 {
     private const int InitialItemAmount = 5; 
         
     [Export] public Container InstanceAmountDisplay;
     [Export] public PackedScene InstanceAmountItem;
 
+    [Export] public PathInput FoliageFilePathInput { get; set; }
+    
     public List<InstanceAmountItem> Items;
     
     public override void _Ready()
@@ -28,10 +30,32 @@ public partial class FoliageLoadingDialog : Control
             InstanceAmountDisplay.AddChild(item);
             item.Hide();
         }
+
+        FoliageFilePathInput.FileDialogRequested += OnFileDialogOpenRequested;
+        FoliageFilePathInput.TextSubmitted += OnFoliageFileInput;
         
         base._Ready();
     }
 
+    public override void OnFileDialogOpenRequested(string extensions, string description, PathInput input)
+    {
+        FoliageFilePathInput.DisableButtons();
+        base.OnFileDialogOpenRequested(extensions, description, input);
+    }
+
+    public override void OnFileDialogCloseRequested()
+    {
+        FoliageFilePathInput.EnableButtons();
+        base.OnFileDialogCloseRequested();
+    }
+
+    private void OnFoliageFileInput(string path)
+    {
+        MainModel.Instance.SetNewFoliageDescriptor(path);
+    }
+    
+
+    
     private void OnPlantInstancesPreloaded(object sender, EventArgs e)
     {
         var data = MainModel.Instance.TemporaryData.GetPlantInstanceAmountPerSpecies;
@@ -64,5 +88,18 @@ public partial class FoliageLoadingDialog : Control
         {
             (child as InstanceAmountItem)?.Hide();
         }
+    }
+
+    public void OnConfirmPressed()
+    {
+        FoliageFilePathInput.Clear();
+        MainModel.Instance.StoreTemporyData();
+        this.Hide();
+    }
+
+    public void OnCancelPressed()
+    {
+        FoliageFilePathInput.Clear();
+        this.Hide();
     }
 }

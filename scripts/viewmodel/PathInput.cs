@@ -12,14 +12,24 @@ public partial class PathInput : LineEdit
     public string Path { get; set; } = "";
     
     [Export]
-    public FileDialogController Controller { get; private set; }
-
-    [Export]
     public Button FileDialogRequestButton { get; private set; }
+
+    public event Action<string,string,PathInput> FileDialogRequested ;
     
     public override void _Ready()
     {
-        FileDialogRequestButton!.Pressed += () => { Controller!.OnFileDialogOpenRequested(Extensions, Description, this); };
+        FileDialogRequestButton!.Pressed += () => { FileDialogRequested?.Invoke(Extensions, Description, this); };
     }
+
+    public void EnableButtons()
+    {
+        this.FileDialogRequestButton.Disabled = false;
+    }
+
+    public void DisableButtons()
+    {
+        this.FileDialogRequestButton.Disabled = true;
+    }
+    
 }
 

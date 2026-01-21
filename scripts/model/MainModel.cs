@@ -40,6 +40,9 @@ public class MainModel
     
     private MainModel()
     {
+        TemporaryData = new DataStorage();
+        InUseData = new DataStorage();
+        
         _foliageDescriptorParser = new FoliageDescriptorParser();
         _plantAttrParser = new PlantAttributeParser();
     }

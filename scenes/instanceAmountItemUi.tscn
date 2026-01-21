@@ -1,6 +1,11 @@
-[gd_scene format=3 uid="uid://otay6he5s6l3"]
+[gd_scene load_steps=2 format=3 uid="uid://otay6he5s6l3"]
 
-[node name="HBoxContainer_InstanceCounter" type="HBoxContainer"]
+[ext_resource type="Script" uid="uid://d1nwyao7r7wac" path="res://scripts/viewmodel/InstanceAmountItem.cs" id="1_0eysh"]
+
+[node name="HBoxContainer_InstanceCounter" type="HBoxContainer" node_paths=PackedStringArray("DescLabel", "ValueLabel")]
+script = ExtResource("1_0eysh")
+DescLabel = NodePath("Label_InstanceCounter_Desc")
+ValueLabel = NodePath("Label_InstanceCounter_Value")
 
 [node name="Label_InstanceCounter_Desc" type="Label" parent="."]
 layout_mode = 2

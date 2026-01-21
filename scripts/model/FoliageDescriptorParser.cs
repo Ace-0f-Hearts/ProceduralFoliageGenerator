@@ -20,19 +20,21 @@ public class FoliageDescriptorParser
         foreach (var key in dict.Keys )
         {
             var keyStr = key.AsString();
-            var instances = new List<PlantInstanceDescriptor>();
+            var instanceDescriptors = new List<PlantInstanceDescriptor>();
             
-            var p_inst = dict[keyStr];
-            var array = p_inst.AsGodotArray<Array<Single>>();
-            foreach (var item in array)
+            var instances = dict[keyStr];
+
+            foreach (var instanceVar in instances.AsGodotArray())
             {
-                if (item.Count != 4)
+                var instance = instanceVar.AsGodotArray();
+                
+                if (instance.Count != 4)
                     throw new Exception("Incorrect number of items in array");
                 
-                var position = new Vector3(item[0], item[1], item[2]);
-                instances.Add(new PlantInstanceDescriptor(position, item[3]));
+                var position = new Vector3(instance[0].AsSingle(), instance[1].AsSingle(), instance[2].AsSingle());
+                instanceDescriptors.Add(new PlantInstanceDescriptor(position, instance[3].AsSingle()));
             }
-            result.Add(keyStr, instances);
+            result.Add(keyStr, instanceDescriptors);
         }
         return result;
     }
