@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Godot;
+using Godot.Collections;
 
 namespace ProceduralFoliageGenerator.Model;
 
@@ -8,7 +9,20 @@ public class PlantAttributeParser
 {
     public PlantAttributeParser() {}
 
-    
+    public Range ParseRange(Array range)
+    {
+        var min = range[0].AsSingle();
+        var max = range[0].AsSingle();
+        return new Range(min, max);
+    }
+
+    public Gaussian ParseGaussian(Array gaussian)
+    {
+        var peak = gaussian[0].AsSingle();
+        var avg = gaussian[1].AsSingle();
+        var deviation = gaussian[2].AsSingle();
+        return new Gaussian(peak, avg, deviation);
+    }
     
     public List<PlantAttributes> Parse(string jsonContent)
     {
@@ -21,12 +35,13 @@ public class PlantAttributeParser
         {
             var plantAttr = item.AsGodotDictionary();
             
+            var id = plantAttr["id"].AsInt32();
             var name = plantAttr["name"].AsStringName();
-            var growthRadius = plantAttr["growthRadius"].AsSingle();
-            var minElevation  = plantAttr["minElevation"].AsSingle();
-            var maxElevation = plantAttr["maxElevation"].AsSingle();
+            var growthRadius = ParseRange(plantAttr["growth_radius"].AsGodotArray());
+            var elevation  = ParseGaussian(plantAttr["elevation"].AsGodotArray());
+            var slope = ParseGaussian(plantAttr["slope"].AsGodotArray());
             
-            var res = new PlantAttributes(name, growthRadius, minElevation, maxElevation);
+            var res = new PlantAttributes(id,name, growthRadius, elevation, slope);
             plantAttributesList.Add(res);
         }
 

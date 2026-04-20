@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3 uid="uid://dnewadkk6d25n"]
+
+[ext_resource type="Script" uid="uid://rm3uwswsysig" path="res://scripts/viewmodel/scene3d/FoliageModel.cs" id="1_hhxvm"]
+[ext_resource type="PackedScene" uid="uid://cyxva5idkl1cx" path="res://scenes/camera.tscn" id="1_ki6c0"]
+[ext_resource type="PackedScene" uid="uid://bnbm2ye2hymeh" path="res://scenes/ui/mainUi.tscn" id="2_8ifl6"]
+[ext_resource type="PackedScene" uid="uid://dq5g1v648mlhu" path="res://scenes/foliageRenderer.tscn" id="2_twn0q"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_ki6c0"]
+orientation = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8ifl6"]
+top_radius = 0.236
+bottom_radius = 0.084
+height = 0.411
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_twn0q"]
+radius = 0.155
+height = 0.59
+
+[sub_resource type="SphereMesh" id="SphereMesh_hhxvm"]
+radius = 0.213
+height = 0.528
+
+[sub_resource type="PrismMesh" id="PrismMesh_w16ng"]
+left_to_right = 0.6
+size = Vector3(0.506, 0.604, 0.59)
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("Renderer")]
+script = ExtResource("1_hhxvm")
+Renderer = NodePath("FoliageRenderer")
+
+[node name="Camera" parent="." instance=ExtResource("1_ki6c0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.009352207, 1.6234086, 0.15228128)
+
+[node name="FoliageRenderer" parent="." instance=ExtResource("2_twn0q")]
+
+[node name="Node" type="Node" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node"]
+visible = false
+mesh = SubResource("QuadMesh_ki6c0")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.027055979, 0, 2.509883)
+mesh = SubResource("CylinderMesh_8ifl6")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.4154258)
+mesh = SubResource("CapsuleMesh_twn0q")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3156104, 0, 0)
+mesh = SubResource("SphereMesh_hhxvm")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Node"]
+transform = Transform3D(0.6371684, 0, 0.7707246, 0, 1, 0, -0.7707246, 0, 0.6371684, 2.624322, 0, 0)
+mesh = SubResource("PrismMesh_w16ng")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Node"]
+transform = Transform3D(1, 0, 0, 0, 0.9638493, 0.26644784, 0, -0.26644784, 0.9638493, 0, 2.4088063, 0)
+shadow_enabled = true
+shadow_blur = 9.535
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Node"]
+transform = Transform3D(1, 0, 0, 0, 0.86689675, 0.49848774, 0, -0.49848774, 0.86689675, 0, 1.2655768, 0)
+visible = false
+light_energy = 0.204
+omni_range = 1.84
+omni_attenuation = 0.76
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MainUi" parent="CanvasLayer" instance=ExtResource("2_8ifl6")]

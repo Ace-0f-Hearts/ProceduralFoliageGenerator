@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnbm2ye2hymeh"]
+
+[ext_resource type="PackedScene" uid="uid://d3uyisu5mkj3n" path="res://scenes/ui/foliageUi.tscn" id="1_e6wn5"]
+[ext_resource type="PackedScene" uid="uid://0o46f600831c" path="res://scenes/ui/controlUi.tscn" id="2_3ikq1"]
+
+[node name="MainUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FoliageUi" parent="." instance=ExtResource("1_e6wn5")]
+layout_mode = 1
+anchors_preset = 9
+anchor_right = 0.0
+offset_right = 1152.0
+grow_horizontal = 1
+
+[node name="ControlUi" parent="." instance=ExtResource("2_3ikq1")]
+layout_mode = 1

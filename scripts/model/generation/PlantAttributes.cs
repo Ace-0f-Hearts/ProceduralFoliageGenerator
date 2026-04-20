@@ -14,16 +14,19 @@ public partial class PlantAttributes : Resource
     /// </summary>
     /// <param name="name"></param>
     /// <param name="growthRadius"></param>
-    /// <param name="minimumElevationLevel"></param>
-    /// <param name="maximumElevationLevel"></param>
-    public PlantAttributes(string name, float growthRadius, float minimumElevationLevel, float maximumElevationLevel)
+    /// <param name="elevation"></param>
+    /// <param name="slope"></param>
+    public PlantAttributes(int id, string name, Range growthRadius, Gaussian elevation, Gaussian slope)
     {
+        Id = id;
         Name = name;
         GrowthRadius = growthRadius;
-        MinimumElevationLevel = minimumElevationLevel;
-        MaximumElevationLevel = maximumElevationLevel;
+        Elevation = elevation;
+        Slope = slope;
     }
     
+    
+    public int Id { get; init; }
     /// <summary>
     /// Name of the plant species.
     /// </summary>
@@ -34,23 +37,23 @@ public partial class PlantAttributes : Resource
     /// Plants cannot have intersecting growth radii with each other.
     /// Measured in meters.
     /// </summary>
-    public float GrowthRadius { get; init; }
+    public Range GrowthRadius { get; init; }
     
     /// <summary>
     /// A simplified attribute derived from the real-life requirements of plantlife.
     /// Determines the minimum level of elevation necessary for the plant to grow and survive.
     /// Measured in meters.
     /// <br/>
-    /// Must be smaller than <see cref="MaximumElevationLevel"/>
+    /// Must be smaller than <see cref="Slope"/>
     /// </summary>
-    public float MinimumElevationLevel { get; init; }
+    public Gaussian Elevation { get; init; }
     
     /// <summary>
     /// A simplified attribute derived from the real-life requirements of plantlife.
     /// Determines the maximum level of elevation necessary for the plant to grow and survive.
     /// Measured in meters.
     /// <br/>
-    /// Must be greater than <see cref="MinimumElevationLevel"/>
+    /// Must be greater than <see cref="Elevation"/>
     /// </summary>
-    public float MaximumElevationLevel { get; init; }
+    public Gaussian Slope { get; init; }
 }

@@ -9,13 +9,8 @@ namespace ProceduralFoliageGenerator.ViewModel
     /// </summary>
     public partial class DialogPopupButton : Button
     {
-        
-        [Export] 
-        public FileDialogController Dialog  { get; set; }
-
         public override void _Ready()
         {
-            Pressed += Dialog.Show;
             base._Ready();
         }
     }

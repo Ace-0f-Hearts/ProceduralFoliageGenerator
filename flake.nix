@@ -29,12 +29,12 @@
               (with pkgs.dotnetCorePackages; combinePackages [
             
                 sdk_9_0
-                sdk_8_0
               ])
               pkgs.mono5
               pkgs.powershell
               pkgs.dotnetPackages.NewtonsoftJson
-            ];
+
+              ];
 
           # Set any environment variables for your dev shell
           env = { };

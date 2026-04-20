@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://rketofe7fqsc"]
+
+[ext_resource type="Script" uid="uid://bno0basjhb627" path="res://scripts/model/visualization/TerrainRenderer.cs" id="1_l5q0g"]
+[ext_resource type="Shader" uid="uid://dj582gip71ts7" path="res://assets/shaders/bump.gdshader" id="2_v6787"]
+[ext_resource type="FastNoiseLite" uid="uid://8udvt3knpgfj" path="res://assets/defaultHeightMapNoise.tres" id="3_5s2uy"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5s2uy"]
+width = 2048
+height = 2048
+generate_mipmaps = false
+noise = ExtResource("3_5s2uy")
+seamless = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_boo46"]
+width = 2048
+height = 2048
+noise = ExtResource("3_5s2uy")
+seamless = true
+as_normal_map = true
+bump_strength = 7.5
+
+[sub_resource type="Gradient" id="Gradient_5s2uy"]
+interpolation_mode = 2
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.49301675, 1)
+colors = PackedColorArray(0.48039687, 0.12357504, 0.18837771, 1, 0.5460713, 0.5652672, 0.56543523, 1, 0.3019608, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nld5a"]
+gradient = SubResource("Gradient_5s2uy")
+width = 2048
+height = 2048
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v6787"]
+render_priority = 0
+shader = ExtResource("2_v6787")
+shader_parameter/tex = SubResource("GradientTexture2D_nld5a")
+shader_parameter/height_scale = 0.5
+shader_parameter/width_x = 1000.0
+shader_parameter/width_z = 1000.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_gxa1j"]
+lightmap_size_hint = Vector2i(7, 7)
+subdivide_width = 32
+subdivide_depth = 32
+orientation = 1
+
+[node name="TerrainRenderer" type="Node3D" node_paths=PackedStringArray("Terrain")]
+script = ExtResource("1_l5q0g")
+HeightScale = 2.0
+Terrain = NodePath("MeshInstance3D")
+DefaultNoise = ExtResource("3_5s2uy")
+DefaultNoiseTexture = SubResource("NoiseTexture2D_5s2uy")
+DefaultNoiseNormal = SubResource("NoiseTexture2D_boo46")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.006720841, 0.002480805, -0.0006509125)
+material_override = SubResource("ShaderMaterial_v6787")
+mesh = SubResource("QuadMesh_gxa1j")

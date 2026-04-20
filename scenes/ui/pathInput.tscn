@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3wbnqj3khh2k"]
+
+[ext_resource type="Script" uid="uid://ph1bl4e56ner" path="res://scripts/viewmodel/ui/PathInput.cs" id="1_em0dg"]
+[ext_resource type="Texture2D" uid="uid://hcijdu2pxh5i" path="res://icon.svg" id="2_m1bas"]
+
+[node name="LineEdit" type="LineEdit" node_paths=PackedStringArray("FileDialogRequestButton")]
+offset_right = 311.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "Input path to map file"
+script = ExtResource("1_em0dg")
+FileDialogRequestButton = NodePath("FileDialogRequestButton")
+
+[node name="FileDialogRequestButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -38.0
+offset_top = 5.0
+offset_right = -6.0
+offset_bottom = -4.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="FileDialogRequestButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.0
+offset_top = -9.0
+offset_right = 9.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_m1bas")
+expand_mode = 1
+stretch_mode = 5

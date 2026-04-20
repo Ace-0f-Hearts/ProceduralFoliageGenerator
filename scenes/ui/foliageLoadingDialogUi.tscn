@@ -1,0 +1,163 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7ee1iim7lyoe"]
+
+[ext_resource type="Script" uid="uid://vnh4c2ota46y" path="res://scripts/viewmodel/ui/FoliageLoadingDialogController.cs" id="1_88187"]
+[ext_resource type="PackedScene" uid="uid://otay6he5s6l3" path="res://scenes/ui/instanceAmountItemUi.tscn" id="2_jkdru"]
+[ext_resource type="PackedScene" uid="uid://c3wbnqj3khh2k" path="res://scenes/ui/pathInput.tscn" id="3_jkdru"]
+
+[node name="Control" type="Control" node_paths=PackedStringArray("InstanceAmountDisplay", "InstancesPathInput", "AttributesPathInput")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_88187")
+InstanceAmountDisplay = NodePath("Panel/VBoxContainer/HSplitContainer/VBoxContainer2/MarginContainer/FoldableContainer/VBoxContainer_InstanceAmountDisplay")
+InstanceAmountItem = ExtResource("2_jkdru")
+InstancesPathInput = NodePath("Panel/VBoxContainer/MandatorySettingsMarginContainer/VBoxContainer/InstancesLineEdit")
+AttributesPathInput = NodePath("Panel/VBoxContainer/MandatorySettingsMarginContainer/VBoxContainer/AttributesLineEdit")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -236.5
+offset_top = -142.0
+offset_right = 236.5
+offset_bottom = 142.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="MandatorySettingsMarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/MandatorySettingsMarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer/MandatorySettingsMarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/MandatorySettingsMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Path to instances:"
+
+[node name="InstancesLineEdit" parent="Panel/VBoxContainer/MandatorySettingsMarginContainer/VBoxContainer" instance=ExtResource("3_jkdru")]
+layout_mode = 2
+placeholder_text = "Input path to foliage file"
+Extensions = "*.json"
+Description = "Foliage JSON file"
+
+[node name="Label2" type="Label" parent="Panel/VBoxContainer/MandatorySettingsMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Path to attributes:"
+
+[node name="AttributesLineEdit" parent="Panel/VBoxContainer/MandatorySettingsMarginContainer/VBoxContainer" instance=ExtResource("3_jkdru")]
+layout_mode = 2
+placeholder_text = "Input path to foliage file"
+Extensions = "*.json"
+Description = "Foliage JSON file"
+
+[node name="OptionalSettingsMarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/OptionalSettingsMarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer/OptionalSettingsMarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/OptionalSettingsMarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Load new terrain?"
+
+[node name="CheckButton" type="CheckButton" parent="Panel/VBoxContainer/OptionalSettingsMarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="OptionalSettingsMarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/OptionalSettingsMarginContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer/OptionalSettingsMarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/OptionalSettingsMarginContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "OCAD map:"
+
+[node name="InstancesLineEdit" parent="Panel/VBoxContainer/OptionalSettingsMarginContainer2/VBoxContainer/HBoxContainer" instance=ExtResource("3_jkdru")]
+layout_mode = 2
+placeholder_text = "Input path to foliage file"
+Extensions = "*.json"
+Description = "Foliage JSON file"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer/OptionalSettingsMarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="Panel/VBoxContainer/OptionalSettingsMarginContainer2/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Height map:"
+
+[node name="AttributesLineEdit" parent="Panel/VBoxContainer/OptionalSettingsMarginContainer2/VBoxContainer/HBoxContainer2" instance=ExtResource("3_jkdru")]
+layout_mode = 2
+placeholder_text = "Input path to foliage file"
+Extensions = "*.json"
+Description = "Foliage JSON file"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+split_offset = 245
+dragging_enabled = false
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="FoldableContainer" type="FoldableContainer" parent="Panel/VBoxContainer/HSplitContainer/VBoxContainer2/MarginContainer"]
+layout_mode = 2
+title = "Number of instances per species"
+
+[node name="VBoxContainer_InstanceAmountDisplay" type="VBoxContainer" parent="Panel/VBoxContainer/HSplitContainer/VBoxContainer2/MarginContainer/FoldableContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="Button" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Confirm"
+
+[node name="Button2" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button" to="." method="OnConfirmPressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button2" to="." method="OnCancelPressed"]

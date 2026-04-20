@@ -7,19 +7,21 @@ using ProceduralFoliageGenerator.Model;
 namespace ProceduralFoliageGenerator.ViewModel;
 public partial class FoliageLoadingDialogController : FileDialogController
 {
+
     private const int InitialItemAmount = 5; 
         
     [Export] public Container InstanceAmountDisplay;
     [Export] public PackedScene InstanceAmountItem;
 
-    [Export] public PathInput FoliageFilePathInput { get; set; }
+    [Export] public PathInput InstancesPathInput { get; set; }
+    [Export] public PathInput AttributesPathInput { get; set; }
     
     public List<InstanceAmountItem> Items;
     
     public override void _Ready()
     {
-        MainModel.Instance.TemporaryData.PlantInstancesSet += OnPlantInstancesPreloaded;
-        MainModel.Instance.InUseData.PlantInstancesSet += OnPlantInstancesLoaded;
+        GlobalModel.Instance.TemporaryInstanceData.PlantInstancesSet += OnPlantInstancesPreloaded;
+        GlobalModel.Instance.InUseSpeciesBuilder.PlantInstancesSet += OnPlantInstancesLoaded;
 
         Items = new();
         
@@ -31,34 +33,62 @@ public partial class FoliageLoadingDialogController : FileDialogController
             item.Hide();
         }
 
-        FoliageFilePathInput.FileDialogRequested += OnFileDialogOpenRequested;
-        FoliageFilePathInput.TextSubmitted += OnFoliageFileInput;
+        InstancesPathInput.FileDialogRequested += OnFileDialogReadRequested;
+        InstancesPathInput.TextSubmitted += OnInstancesInput;
+        
+
+        AttributesPathInput.FileDialogRequested += OnFileDialogReadRequested;
+        AttributesPathInput.TextSubmitted += OnAttributesInput;
+
+        GlobalModel.Instance.InUseGenerationData.PlantAttributesSet += SetLoadedAttributePath;
+        // FileDialog.CloseRequested += OnFileDialogCloseRequested;
         
         base._Ready();
     }
 
+    public void SetLoadedAttributePath(object sender, EventArgs e)
+    {
+        AttributesPathInput.Path = GlobalModel.Instance.InUseGenerationData.PathToSpeciesAttributes;
+    }
+
+    
+    
     public override void OnFileDialogOpenRequested(string extensions, string description, PathInput input)
     {
-        FoliageFilePathInput.DisableButtons();
+        InstancesPathInput.DisableButtons();
+        AttributesPathInput.DisableButtons();
+        // FileDialog.CloseRequested += OnFileDialogCloseRequested;
         base.OnFileDialogOpenRequested(extensions, description, input);
+    }
+
+    public override void OnFileDialogReadRequested(string extensions, string description, PathInput input)
+    {
+        base.OnFileDialogReadRequested(extensions, description, input);
+        OnFileDialogOpenRequested(extensions, description, input);
     }
 
     public override void OnFileDialogCloseRequested()
     {
-        FoliageFilePathInput.EnableButtons();
+        InstancesPathInput.EnableButtons();
+        AttributesPathInput.EnableButtons();
         base.OnFileDialogCloseRequested();
     }
 
-    private void OnFoliageFileInput(string path)
+    private void OnInstancesInput(string path)
     {
-        MainModel.Instance.SetNewFoliageDescriptor(path);
+        GlobalModel.Instance.SetNewInstances(path);
+    }
+
+    private void OnAttributesInput(string path)
+    {
+        GlobalModel.Instance.SetPlantAttributesForInstances(path);
     }
     
 
     
     private void OnPlantInstancesPreloaded(object sender, EventArgs e)
     {
-        var data = MainModel.Instance.TemporaryData.GetPlantInstanceAmountPerSpecies;
+        var data = GlobalModel.Instance.TemporaryInstanceData.GetNumberOfInstancesPerSpecies;
 
         //Add more items if necessary
         while (data.Count > Items.Count)
@@ -92,14 +122,14 @@ public partial class FoliageLoadingDialogController : FileDialogController
 
     public void OnConfirmPressed()
     {
-        FoliageFilePathInput.Clear();
-        MainModel.Instance.StoreTemporyData();
+        InstancesPathInput.Clear();
+        GlobalModel.Instance.StoreTemporaryInstanceData();
         this.Hide();
     }
 
     public void OnCancelPressed()
     {
-        FoliageFilePathInput.Clear();
+        InstancesPathInput.Clear();
         this.Hide();
     }
 }

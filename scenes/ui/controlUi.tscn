@@ -1,19 +1,25 @@
-[gd_scene load_steps=8 format=3 uid="uid://0o46f600831c"]
+[gd_scene load_steps=9 format=3 uid="uid://0o46f600831c"]
 
 [ext_resource type="Texture2D" uid="uid://dpbfq8gjvtt33" path="res://assets/github-mark-white.svg" id="1_6al76"]
-[ext_resource type="Script" uid="uid://b38yd6vktitc1" path="res://scripts/viewmodel/OptionsButton.cs" id="1_ei471"]
+[ext_resource type="Script" uid="uid://b38yd6vktitc1" path="res://scripts/viewmodel/ui/OptionsButton.cs" id="1_ei471"]
+[ext_resource type="Script" uid="uid://wloime5bna1e" path="res://scripts/viewmodel/ui/ControlUi.cs" id="1_kalm3"]
 [ext_resource type="Texture2D" uid="uid://dhxekeirvcoev" path="res://assets/github-mark.svg" id="2_1qlb1"]
-[ext_resource type="Script" uid="uid://tb360plbr03q" path="res://scripts/viewmodel/TexturedLinkButton.cs" id="2_c4xvu"]
-[ext_resource type="Script" uid="uid://bcloso7x4yw4t" path="res://scripts/viewmodel/DialogPopupButton.cs" id="2_qllka"]
-[ext_resource type="PackedScene" uid="uid://dt1ntm4vc1vf2" path="res://scenes/fileDialogUi.tscn" id="6_qllka"]
-[ext_resource type="PackedScene" uid="uid://c7ee1iim7lyoe" path="res://scenes/foliageLoadingDialogUi.tscn" id="7_gbtsf"]
+[ext_resource type="Script" uid="uid://tb360plbr03q" path="res://scripts/viewmodel/ui/TexturedLinkButton.cs" id="2_c4xvu"]
+[ext_resource type="Script" uid="uid://bcloso7x4yw4t" path="res://scripts/viewmodel/ui/DialogPopupButton.cs" id="2_qllka"]
+[ext_resource type="PackedScene" uid="uid://dt1ntm4vc1vf2" path="res://scenes/ui/fileDialogUi.tscn" id="6_qllka"]
+[ext_resource type="PackedScene" uid="uid://c7ee1iim7lyoe" path="res://scenes/ui/foliageLoadingDialogUi.tscn" id="7_gbtsf"]
 
-[node name="ControlUi" type="Control"]
+[node name="ControlUi" type="Control" node_paths=PackedStringArray("DialogPopupButtons", "FileDialogControllers")]
 layout_mode = 3
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_bottom = 648.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kalm3")
+DialogPopupButtons = [NodePath("Panel/MarginContainer3/HBoxContainer/Button_Generate"), NodePath("Panel/MarginContainer3/HBoxContainer/Button_Load")]
+FileDialogControllers = [NodePath("Control_GenerationDialog"), NodePath("Control_LoadingDialog")]
+metadata/_edit_pinned_properties_ = [&"DialogPopupButtons", &"FileDialogControllers"]
 
 [node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -43,17 +49,15 @@ popup/item_1/text = "Exit"
 popup/item_1/id = 1
 script = ExtResource("1_ei471")
 
-[node name="Button_Generate" type="Button" parent="Panel/MarginContainer3/HBoxContainer" node_paths=PackedStringArray("Dialog")]
+[node name="Button_Generate" type="Button" parent="Panel/MarginContainer3/HBoxContainer"]
 layout_mode = 2
 text = "Generate"
 script = ExtResource("2_qllka")
-Dialog = NodePath("../../../../Control_GenerationDialog")
 
-[node name="Button_Load" type="Button" parent="Panel/MarginContainer3/HBoxContainer" node_paths=PackedStringArray("Dialog")]
+[node name="Button_Load" type="Button" parent="Panel/MarginContainer3/HBoxContainer"]
 layout_mode = 2
 text = "Load"
 script = ExtResource("2_qllka")
-Dialog = NodePath("../../../../Control_LoadingDialog")
 
 [node name="TextureButton" type="TextureButton" parent="Panel/MarginContainer3/HBoxContainer"]
 custom_minimum_size = Vector2(30, 30)
@@ -70,31 +74,11 @@ Url = "https://github.com/Ace-0f-Hearts/ProceduralFoliageGenerator"
 [node name="Control_GenerationDialog" parent="." node_paths=PackedStringArray("FileDialog") instance=ExtResource("6_qllka")]
 visible = false
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -576.0
-offset_top = -324.0
-offset_right = -576.0
-offset_bottom = -324.0
-grow_horizontal = 2
-grow_vertical = 2
 FileDialog = NodePath("../FileDialog")
 
 [node name="Control_LoadingDialog" parent="." node_paths=PackedStringArray("FileDialog") instance=ExtResource("7_gbtsf")]
 visible = false
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -576.0
-offset_top = -324.0
-offset_right = 576.0
-offset_bottom = 324.0
 FileDialog = NodePath("../FileDialog")
 
 [node name="FileDialog" type="FileDialog" parent="."]
