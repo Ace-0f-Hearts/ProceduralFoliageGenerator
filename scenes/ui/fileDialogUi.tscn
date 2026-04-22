@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://dt1ntm4vc1vf2"]
 
-[ext_resource type="Script" uid="uid://ck5hpxi2rpbv8" path="res://scripts/viewmodel/ui/InputFileDialogController.cs" id="1_ke7ar"]
-[ext_resource type="LabelSettings" uid="uid://6qlavkqgh48p" path="res://settings/labels/dialogInputLabel.tres" id="2_glp4j"]
-[ext_resource type="PackedScene" uid="uid://c3wbnqj3khh2k" path="res://scenes/ui/pathInput.tscn" id="3_yhqpo"]
+[ext_resource type="Script" uid="uid://ck5hpxi2rpbv8" path="res://scripts/viewmodel/ui/GenerationDialogController.cs" id="1_26sh4"]
+[ext_resource type="PackedScene" uid="uid://5d3y3j74n4ec" path="res://scenes/ui/generationInputPanel.tscn" id="2_6dqjb"]
+[ext_resource type="PackedScene" uid="uid://c0y63yv4a2wpm" path="res://scenes/ui/generationInfoPanel.tscn" id="3_dcj2d"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("MapFilePathInput", "AttributesPathInput", "SymbolSetPathInput", "InstanceOutputPathInput", "HeightMapPathInput", "SizeOfMap", "MinElevation", "MaxElevation", "NumberOfPlants", "ButtonsContainer", "ProgressBarContainer")]
+[node name="Control" type="Control" node_paths=PackedStringArray("InputPanel", "InfoPanel", "ButtonsContainer", "ProgressBarContainer", "LoadButton")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -15,18 +15,12 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-script = ExtResource("1_ke7ar")
-MapFilePathInput = NodePath("Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/OcadMarginContainer/VBoxContainer/OcadLineEdit")
-AttributesPathInput = NodePath("Panel/HBoxContainer/PanelContainer/VBoxContainer/AttributeMarginContainer/VBoxContainer/AttributeLineEdit")
-SymbolSetPathInput = NodePath("Panel/HBoxContainer/PanelContainer/VBoxContainer/SymbolSetMarginContainer/VBoxContainer/SymbolSetLineEdit")
-InstanceOutputPathInput = NodePath("Panel/HBoxContainer/PanelContainer/VBoxContainer/InstancesOutputMarginContainer/VBoxContainer/InstancesOutputLineEdit")
-HeightMapPathInput = NodePath("Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer/From File/TabContainer/From File")
-SizeOfMap = NodePath("Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap/Label_SizeOfMap_Value")
-MinElevation = NodePath("Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MinElevation/HBoxContainer_MinElevation/Label_MinElevation_Value")
-MaxElevation = NodePath("Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MaxElevation/HBoxContainer_MaxElevation/Label_MaxElevation_Value")
-NumberOfPlants = NodePath("Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies/Label_NumberOfSpecies_Value")
+script = ExtResource("1_26sh4")
+InputPanel = NodePath("Panel/HBoxContainer/PanelContainer/InputPanel")
+InfoPanel = NodePath("Panel/HBoxContainer/PanelContainer2/InfoPanel")
 ButtonsContainer = NodePath("Panel/VBoxContainer/HBoxContainer_Buttons")
 ProgressBarContainer = NodePath("Panel/VBoxContainer/PanelContainer4")
+LoadButton = NodePath("Panel/VBoxContainer/HBoxContainer_Buttons/MarginContainer3/LoadButton")
 
 [node name="Panel" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -51,291 +45,16 @@ dragging_enabled = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer"]
+[node name="InputPanel" parent="Panel/HBoxContainer/PanelContainer" node_paths=PackedStringArray("FileDialog") instance=ExtResource("2_6dqjb")]
 layout_mode = 2
-alignment = 1
-
-[node name="FoldableContainer" type="FoldableContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-title = "Map Settings"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer"]
-layout_mode = 2
-
-[node name="OcadMarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/OcadMarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/OcadMarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "OCAD map"
-label_settings = ExtResource("2_glp4j")
-
-[node name="OcadLineEdit" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/OcadMarginContainer/VBoxContainer" instance=ExtResource("3_yhqpo")]
-layout_mode = 2
-Extensions = "*.ocd, *.omap, *.xmap"
-Description = "OCAD map file"
-
-[node name="HeightMapMarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 10
-
-[node name="From File" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer/From File"]
-layout_mode = 2
-text = "Height map"
-label_settings = ExtResource("2_glp4j")
-
-[node name="TabContainer" type="TabContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer/From File"]
-layout_mode = 2
-tab_alignment = 1
-current_tab = 1
-
-[node name="Random" type="RichTextLabel" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer/From File/TabContainer"]
-visible = false
-layout_mode = 2
-text = "Use random noise to generate height map."
-fit_content = true
-metadata/_tab_index = 0
-
-[node name="Default" type="RichTextLabel" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer/From File/TabContainer"]
-layout_mode = 2
-text = "Compute the height map from the OCAD map file directly. 
-(Not yet implemented)"
-fit_content = true
-metadata/_tab_index = 1
-
-[node name="From File" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer/From File/TabContainer" instance=ExtResource("3_yhqpo")]
-visible = false
-layout_mode = 2
-placeholder_text = "Input path to height map"
-Extensions = "*.ocd, *.omap, *.xmap"
-Description = "Height map"
-metadata/_tab_index = 2
-
-[node name="HeightMapMarginContainer2" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer2/VBoxContainer"]
-layout_mode = 2
-text = "Diffusion Points"
-label_settings = ExtResource("2_glp4j")
-
-[node name="DiffusionTabContainer" type="TabContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer2/VBoxContainer"]
-layout_mode = 2
-tab_alignment = 1
-current_tab = 1
-
-[node name="Random" type="HBoxContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer2/VBoxContainer/DiffusionTabContainer"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer2/VBoxContainer/DiffusionTabContainer/Random"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "Number of diffusion points:"
-fit_content = true
-language = "en"
-
-[node name="Random" type="SpinBox" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer2/VBoxContainer/DiffusionTabContainer/Random"]
-layout_mode = 2
-
-[node name="Manual" type="HBoxContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer2/VBoxContainer/DiffusionTabContainer"]
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer2/VBoxContainer/DiffusionTabContainer/Manual"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "(Not yet implemented)"
-fit_content = true
-language = "en"
-
-[node name="From File" type="HBoxContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer2/VBoxContainer/DiffusionTabContainer"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 2
-
-[node name="HeightMapLineEdit" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/FoldableContainer/VBoxContainer/HeightMapMarginContainer2/VBoxContainer/DiffusionTabContainer/From File" instance=ExtResource("3_yhqpo")]
-layout_mode = 2
-placeholder_text = "Input path to diffusion points file"
-Extensions = "*.ocd, *.omap, *.xmap"
-Description = "Diffusion points file"
-
-[node name="AttributeMarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/AttributeMarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/AttributeMarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Species attributes descriptor"
-label_settings = ExtResource("2_glp4j")
-
-[node name="AttributeLineEdit" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/AttributeMarginContainer/VBoxContainer" instance=ExtResource("3_yhqpo")]
-layout_mode = 2
-placeholder_text = "Input path to attributes descriptor"
-Extensions = "*.json"
-Description = "Foliage describing JSON"
-
-[node name="SymbolSetMarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/SymbolSetMarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/SymbolSetMarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Symbol set"
-label_settings = ExtResource("2_glp4j")
-
-[node name="SymbolSetLineEdit" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/SymbolSetMarginContainer/VBoxContainer" instance=ExtResource("3_yhqpo")]
-layout_mode = 2
-placeholder_text = "Input path to symbol set"
-Extensions = "*.json"
-Description = "Symbol set JSON"
-
-[node name="InstancesOutputMarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/InstancesOutputMarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/InstancesOutputMarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Instances output"
-label_settings = ExtResource("2_glp4j")
-
-[node name="InstancesOutputLineEdit" parent="Panel/HBoxContainer/PanelContainer/VBoxContainer/InstancesOutputMarginContainer/VBoxContainer" instance=ExtResource("3_yhqpo")]
-layout_mode = 2
-placeholder_text = "Path to output instances"
-Extensions = "*.json"
-Description = "Plant instances"
+FileDialog = NodePath("../../../../FileDialog")
 
 [node name="PanelContainer2" type="PanelContainer" parent="Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer_Infobox" type="VBoxContainer" parent="Panel/HBoxContainer/PanelContainer2"]
+[node name="InfoPanel" parent="Panel/HBoxContainer/PanelContainer2" instance=ExtResource("3_dcj2d")]
 layout_mode = 2
-alignment = 1
-
-[node name="MarginContainer_SizeOfMap" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="HBoxContainer_SizeOfMap" type="HBoxContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_SizeOfMap"]
-layout_mode = 2
-
-[node name="Label_SizeOfMap_Description" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap"]
-layout_mode = 2
-text = "Size of map:"
-label_settings = ExtResource("2_glp4j")
-
-[node name="Label_SizeOfMap_Value" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap"]
-layout_mode = 2
-text = "0"
-label_settings = ExtResource("2_glp4j")
-
-[node name="MarginContainer_MinElevation" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="HBoxContainer_MinElevation" type="HBoxContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MinElevation"]
-layout_mode = 2
-
-[node name="Label_MinElevation_Description" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MinElevation/HBoxContainer_MinElevation"]
-layout_mode = 2
-text = "Min. elevation:"
-label_settings = ExtResource("2_glp4j")
-
-[node name="Label_MinElevation_Value" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MinElevation/HBoxContainer_MinElevation"]
-layout_mode = 2
-text = "0"
-label_settings = ExtResource("2_glp4j")
-
-[node name="MarginContainer_MaxElevation" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="HBoxContainer_MaxElevation" type="HBoxContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MaxElevation"]
-layout_mode = 2
-
-[node name="Label_MaxElevation_Description" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MaxElevation/HBoxContainer_MaxElevation"]
-layout_mode = 2
-text = "Max. elevation:"
-label_settings = ExtResource("2_glp4j")
-
-[node name="Label_MaxElevation_Value" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContainer_MaxElevation/HBoxContainer_MaxElevation"]
-layout_mode = 2
-text = "0"
-label_settings = ExtResource("2_glp4j")
-
-[node name="HSeparator" type="HSeparator" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox"]
-layout_mode = 2
-
-[node name="MarginContaine_NumberOfSpecies" type="MarginContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 10
-
-[node name="HBoxContainer_NumberOfSpecies" type="HBoxContainer" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContaine_NumberOfSpecies"]
-layout_mode = 2
-
-[node name="Label_NumberOfSpecies_Description" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies"]
-layout_mode = 2
-text = "Number of species:"
-label_settings = ExtResource("2_glp4j")
-
-[node name="Label_NumberOfSpecies_Value" type="Label" parent="Panel/HBoxContainer/PanelContainer2/VBoxContainer_Infobox/MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies"]
-layout_mode = 2
-text = "0"
-label_settings = ExtResource("2_glp4j")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
@@ -356,6 +75,17 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 text = "Generate"
 
+[node name="MarginContainer3" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer_Buttons"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="LoadButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer_Buttons/MarginContainer3"]
+layout_mode = 2
+disabled = true
+text = "Load"
+
 [node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer_Buttons"]
 layout_mode = 2
 theme_override_constants/margin_left = 50
@@ -374,5 +104,13 @@ layout_mode = 2
 [node name="ProgressBar" type="ProgressBar" parent="Panel/VBoxContainer/PanelContainer4"]
 layout_mode = 2
 
+[node name="FileDialog" type="FileDialog" parent="."]
+oversampling_override = 1.0
+title = "Open a File"
+initial_position = 1
+file_mode = 0
+access = 2
+
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer_Buttons/MarginContainer/GenerationButton" to="." method="OnGenerationStarted"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer_Buttons/MarginContainer3/LoadButton" to="." method="LoadGeneratedConfig"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer_Buttons/MarginContainer2/CancelButton" to="." method="OnGenerationCanceled"]

@@ -1,71 +1,62 @@
-#nullable enable
 using Godot;
 using System;
-
+using System.Collections.Generic;
 using ProceduralFoliageGenerator.Model;
 
 namespace ProceduralFoliageGenerator.ViewModel;
-
-public partial class InputFileDialogController : FileDialogController
+public partial class InputPanelController : FileDialogController
 {
-
     [Export]
     public required PathInput MapFilePathInput { get; set; }
     [Export]
+    public required HeightMapOptionsInput HeightMapOptions { get; set; }
+    [Export]
+    public required DiffusionPointsOptionsInput DiffusionPointsOptions { get; set; }
+    [Export]
     public required PathInput AttributesPathInput { get; set; } 
-    
     [Export]
     public required PathInput SymbolSetPathInput { get; set; }
     [Export]
     public required PathInput InstanceOutputPathInput { get; set; }
     
-    [Export]
-    public required PathInput HeightMapPathInput { get; set; }
     
-    [Export]
-    public required Label SizeOfMap { get; set; }
-    [Export]
-    public required Label MinElevation { get; set; }
-    [Export]
-    public required Label MaxElevation { get; set; }
-    [Export]
-    public required Label NumberOfPlants { get; set; }
-    
-    [Export]
-    public required Container ButtonsContainer { get; set; }
-    [Export]
-    public required Container ProgressBarContainer { get; set; }
-
     public override void _Ready()
     {
-        GlobalModel.Instance.TemporaryGenerationData.PlantAttributesSet += OnPlantAttributesSet;
-
         MapFilePathInput.FileDialogRequested += OnFileDialogReadRequested;
         AttributesPathInput.FileDialogRequested += OnFileDialogReadRequested;
-        HeightMapPathInput.FileDialogRequested += OnFileDialogReadRequested;
         SymbolSetPathInput.FileDialogRequested += OnFileDialogReadRequested;
-        
         InstanceOutputPathInput.FileDialogRequested += OnFileDialogWriteRequested;
+        
+        HeightMapOptions.HeightMapPathInput.FileDialogRequested += OnFileDialogReadRequested;
+        DiffusionPointsOptions.DiffusionFilePathInput.FileDialogRequested += OnFileDialogReadRequested;
         
         MapFilePathInput.TextSubmitted += OnMapSet;
         AttributesPathInput.TextSubmitted += OnAttributesFileSet;
-        HeightMapPathInput.TextSubmitted += OnInstancesOutputSet;
         SymbolSetPathInput.TextSubmitted += OnSymbolSetSet;
         InstanceOutputPathInput.TextSubmitted += OnInstancesOutputSet;
-
+        
+        HeightMapOptions.OptionsReady += (object o, EventArgs args) => OnHeightMapSet(HeightMapOptions.Options);
+        DiffusionPointsOptions.OptionsReady += (object o,EventArgs args) => OnDiffusionPointsSet(DiffusionPointsOptions.Options);
+        
+        HeightMapOptions.CheckAndSignalWhenReady();
+        DiffusionPointsOptions.CheckAndSignalWhenReady();
+        
         base._Ready();
     }
-
-
+    
     public override void OnFileDialogOpenRequested(string extensions, string description, PathInput input)
     {
         MapFilePathInput.DisableButtons();
         AttributesPathInput.DisableButtons();
         InstanceOutputPathInput.DisableButtons();
-        HeightMapPathInput.DisableButtons();
         SymbolSetPathInput.DisableButtons();
+        
+        HeightMapOptions.DisableInputs();
+        DiffusionPointsOptions.DisableInputs();
+        
         base.OnFileDialogOpenRequested(extensions, description, input);
     }
+    
     public override void OnFileDialogReadRequested(string extensions, string description, PathInput input)
     {
         base.OnFileDialogReadRequested(extensions, description, input);
@@ -82,70 +73,45 @@ public partial class InputFileDialogController : FileDialogController
     {
         MapFilePathInput.EnableButtons();
         AttributesPathInput.EnableButtons();
-        HeightMapPathInput.EnableButtons();
+        HeightMapOptions.EnableInputs();
         SymbolSetPathInput.EnableButtons();
         InstanceOutputPathInput.EnableButtons();
+        
+        HeightMapOptions.EnableInputs();
+        DiffusionPointsOptions.EnableInputs();
         
         base.OnFileDialogCloseRequested();
     }
 
-    public void OnGenerationStarted()
-    {
-        GlobalModel.Instance.StoreTemporaryGenerationData();
-        GenerationExecutor.Instance.ExecuteGeneration();
-        ButtonsContainer.Hide();
-        ProgressBarContainer.Show();
-    }
-
-    public void OnGenerationProgressed(float progress)
-    {
-        //TODO: Update progressbar   
-    }
-
-    public void OnGenerationCompleted()
-    {
-        ButtonsContainer.Show();
-        ProgressBarContainer.Hide();
-        this.Hide();
-    }
-
-    public void OnGenerationCanceled()
-    {
-        GlobalModel.Instance.ClearTemporaryData();
-        this.Hide();
-    }
-
     public void OnMapSet(string input)
     {
-        GlobalModel.Instance.SetNewMapFile(input);
+        GlobalModel.Instance.GenerationController.CommandData.PathToMapFile = input;
     }
 
     public void OnAttributesFileSet(string input)
     {
-        GlobalModel.Instance.SetPlantAttributesForGeneration(input);
+        GlobalModel.Instance.GenerationController.CommandData.PathToSpeciesAttributes = input;
+        
     }
 
     public void OnInstancesOutputSet(string input)
     {
-        GlobalModel.Instance.SetInstancesOutputPath(input);
+        GlobalModel.Instance.GenerationController.CommandData.PathToPlantInstances = input;
     }
 
     public void OnSymbolSetSet(string input)
     {
-        GlobalModel.Instance.SetSymbolSet(input);
+        GlobalModel.Instance.GenerationController.CommandData.PathToSymbolSet = input;
     }
 
-    public void OnHeightMapSet(string input)
+    public void OnHeightMapSet(HeightMapOptions options)
     {
-        GlobalModel.Instance.SetHeightMap(input);
+        GlobalModel.Instance.GenerationController.CommandData.HeightMapOptions = options;
     }
 
-    public void OnPlantAttributesSet(object? o, EventArgs args)
+    public void OnDiffusionPointsSet(DiffusionPointsOptions options)
     {
-        this!.NumberOfPlants.Text = GlobalModel.Instance.TemporaryGenerationData.GetAmountOfSpecies.ToString();
+        GlobalModel.Instance.GenerationController.CommandData.DiffusionPointsOptions = options;
     }
+
 }
-
-
-
-

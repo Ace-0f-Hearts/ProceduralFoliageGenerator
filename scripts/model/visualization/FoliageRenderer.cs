@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 
@@ -5,9 +6,16 @@ namespace ProceduralFoliageGenerator.Model;
 
 public partial class FoliageRenderer : Node3D
 {
-    public List<MultiMeshInstance3D> MultiMeshes { get; init; }
+    public MapData MapData { get; set; }
+    public List<MultiMeshInstance3D> MultiMeshes { get; init; } = new();
 
-    public void PopulateMultiMeshes(SpeciesLibrary lib)
+
+    public override void _Ready()
+    {
+        base._Ready();
+    }
+
+    public void PopulateMultiMeshes(Foliage lib)
     {
         foreach (var (obj,instances) in lib.GetInstancesPerObjects())
         {
@@ -26,7 +34,8 @@ public partial class FoliageRenderer : Node3D
         int idx = 0;
         foreach (var instance in instances)
         {
-            multiMesh.SetInstanceTransform(idx,new Transform3D(Basis.Identity,instance.WorldPosition));
+            GD.Print("instance position",instance.WorldPosition / MapData.Scaling);
+            multiMesh.SetInstanceTransform(idx,new Transform3D(Basis.Identity,instance.WorldPosition / MapData.Scaling));
             ++idx;
         }
 
@@ -35,5 +44,7 @@ public partial class FoliageRenderer : Node3D
         this.AddChild(multiMeshInstance);
         MultiMeshes.Add(multiMeshInstance);
     }
+
+ 
     
 }

@@ -1,9 +1,9 @@
 shader_type spatial;
 
-uniform sampler2D tex;
+uniform sampler2D tex : source_color;
 uniform sampler2D bump_map;
 uniform sampler2D normal_map : hint_normal;
-uniform float height_scale = 0.5;
+uniform float height_scale = 1.0;
 uniform float width_x = 10.f;
 uniform float width_z = 10.f;
 
@@ -13,8 +13,8 @@ varying vec2 tex_position;
 void vertex() {
 	// Called for every vertex the material is visible on.
 	tex_position = vec2(VERTEX.x / width_x,VERTEX.z / width_z) + 0.5;
-	float height = texture(bump_map,tex_position).x;
-	VERTEX.y += height * height_scale;
+	float height = texture(bump_map,tex_position).x * height_scale;
+	VERTEX.y += height;
 }
 
 void fragment() {

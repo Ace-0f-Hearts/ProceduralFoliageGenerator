@@ -1,0 +1,95 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0y63yv4a2wpm"]
+
+[ext_resource type="Script" uid="uid://856fqgscb38x" path="res://scripts/viewmodel/ui/InfoPanelController.cs" id="1_4170b"]
+[ext_resource type="LabelSettings" uid="uid://6qlavkqgh48p" path="res://settings/labels/dialogInputLabel.tres" id="1_wifq5"]
+
+[node name="InfoPanel" type="VBoxContainer" node_paths=PackedStringArray("SizeOfMap", "MinElevation", "MaxElevation", "NumberOfPlants")]
+alignment = 1
+script = ExtResource("1_4170b")
+SizeOfMap = NodePath("MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap/Label_SizeOfMap_Value")
+MinElevation = NodePath("MarginContainer_MinElevation/HBoxContainer_MinElevation/Label_MinElevation_Value")
+MaxElevation = NodePath("MarginContainer_MaxElevation/HBoxContainer_MaxElevation/Label_MaxElevation_Value")
+NumberOfPlants = NodePath("MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies/Label_NumberOfSpecies_Value")
+
+[node name="MarginContainer_SizeOfMap" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer_SizeOfMap" type="HBoxContainer" parent="MarginContainer_SizeOfMap"]
+layout_mode = 2
+
+[node name="Label_SizeOfMap_Description" type="Label" parent="MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap"]
+layout_mode = 2
+text = "Size of map:"
+label_settings = ExtResource("1_wifq5")
+
+[node name="Label_SizeOfMap_Value" type="Label" parent="MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap"]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("1_wifq5")
+
+[node name="MarginContainer_MinElevation" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer_MinElevation" type="HBoxContainer" parent="MarginContainer_MinElevation"]
+layout_mode = 2
+
+[node name="Label_MinElevation_Description" type="Label" parent="MarginContainer_MinElevation/HBoxContainer_MinElevation"]
+layout_mode = 2
+text = "Min. elevation:"
+label_settings = ExtResource("1_wifq5")
+
+[node name="Label_MinElevation_Value" type="Label" parent="MarginContainer_MinElevation/HBoxContainer_MinElevation"]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("1_wifq5")
+
+[node name="MarginContainer_MaxElevation" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer_MaxElevation" type="HBoxContainer" parent="MarginContainer_MaxElevation"]
+layout_mode = 2
+
+[node name="Label_MaxElevation_Description" type="Label" parent="MarginContainer_MaxElevation/HBoxContainer_MaxElevation"]
+layout_mode = 2
+text = "Max. elevation:"
+label_settings = ExtResource("1_wifq5")
+
+[node name="Label_MaxElevation_Value" type="Label" parent="MarginContainer_MaxElevation/HBoxContainer_MaxElevation"]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("1_wifq5")
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="MarginContaine_NumberOfSpecies" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer_NumberOfSpecies" type="HBoxContainer" parent="MarginContaine_NumberOfSpecies"]
+layout_mode = 2
+
+[node name="Label_NumberOfSpecies_Description" type="Label" parent="MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies"]
+layout_mode = 2
+text = "Number of species:"
+label_settings = ExtResource("1_wifq5")
+
+[node name="Label_NumberOfSpecies_Value" type="Label" parent="MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies"]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("1_wifq5")

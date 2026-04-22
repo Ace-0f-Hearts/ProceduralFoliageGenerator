@@ -1,0 +1,145 @@
+[gd_scene load_steps=6 format=3 uid="uid://5d3y3j74n4ec"]
+
+[ext_resource type="Script" uid="uid://bkw00dphlm433" path="res://scripts/viewmodel/ui/InputPanelController.cs" id="1_85xbb"]
+[ext_resource type="LabelSettings" uid="uid://6qlavkqgh48p" path="res://settings/labels/dialogInputLabel.tres" id="1_i32cn"]
+[ext_resource type="PackedScene" uid="uid://c3wbnqj3khh2k" path="res://scenes/ui/pathInput.tscn" id="2_w2viu"]
+[ext_resource type="PackedScene" uid="uid://vrndllm200o0" path="res://scenes/ui/heightTabOptions.tscn" id="4_85xbb"]
+[ext_resource type="PackedScene" uid="uid://b2j2qk6byckh3" path="res://scenes/ui/diffusionTabOptions.tscn" id="5_3bmjx"]
+
+[node name="InputPanel" type="VBoxContainer" node_paths=PackedStringArray("MapFilePathInput", "HeightMapOptions", "DiffusionPointsOptions", "AttributesPathInput", "SymbolSetPathInput", "InstanceOutputPathInput")]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+script = ExtResource("1_85xbb")
+MapFilePathInput = NodePath("FoldableContainer/VBoxContainer/OcadMarginContainer/VBoxContainer/OcadLineEdit")
+HeightMapOptions = NodePath("FoldableContainer/VBoxContainer/HeightMapMarginContainer/From File/HeightMapOptionsInput")
+DiffusionPointsOptions = NodePath("FoldableContainer/VBoxContainer/DiffusionMarginContainer/VBoxContainer/DiffusionTabContainer")
+AttributesPathInput = NodePath("AttributeMarginContainer/VBoxContainer/AttributeLineEdit")
+SymbolSetPathInput = NodePath("SymbolSetMarginContainer/VBoxContainer/SymbolSetLineEdit")
+InstanceOutputPathInput = NodePath("InstancesOutputMarginContainer/VBoxContainer/InstancesOutputLineEdit")
+
+[node name="FoldableContainer" type="FoldableContainer" parent="."]
+layout_mode = 2
+title = "Map Settings"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer"]
+layout_mode = 2
+
+[node name="OcadMarginContainer" type="MarginContainer" parent="FoldableContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/VBoxContainer/OcadMarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="FoldableContainer/VBoxContainer/OcadMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "OCAD map"
+label_settings = ExtResource("1_i32cn")
+
+[node name="OcadLineEdit" parent="FoldableContainer/VBoxContainer/OcadMarginContainer/VBoxContainer" instance=ExtResource("2_w2viu")]
+layout_mode = 2
+Extensions = "*.ocd, *.omap, *.xmap"
+Description = "OCAD map file"
+
+[node name="HeightMapMarginContainer" type="MarginContainer" parent="FoldableContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="From File" type="VBoxContainer" parent="FoldableContainer/VBoxContainer/HeightMapMarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="FoldableContainer/VBoxContainer/HeightMapMarginContainer/From File"]
+layout_mode = 2
+text = "Height map"
+label_settings = ExtResource("1_i32cn")
+
+[node name="HeightMapOptionsInput" parent="FoldableContainer/VBoxContainer/HeightMapMarginContainer/From File" instance=ExtResource("4_85xbb")]
+layout_mode = 2
+
+[node name="DiffusionMarginContainer" type="MarginContainer" parent="FoldableContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/VBoxContainer/DiffusionMarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="FoldableContainer/VBoxContainer/DiffusionMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Diffusion Points"
+label_settings = ExtResource("1_i32cn")
+
+[node name="DiffusionTabContainer" parent="FoldableContainer/VBoxContainer/DiffusionMarginContainer/VBoxContainer" instance=ExtResource("5_3bmjx")]
+layout_mode = 2
+
+[node name="AttributeMarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AttributeMarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AttributeMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Species attributes descriptor"
+label_settings = ExtResource("1_i32cn")
+
+[node name="AttributeLineEdit" parent="AttributeMarginContainer/VBoxContainer" instance=ExtResource("2_w2viu")]
+layout_mode = 2
+placeholder_text = "Input path to attributes descriptor"
+Extensions = "*.json"
+Description = "Foliage describing JSON"
+
+[node name="SymbolSetMarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SymbolSetMarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SymbolSetMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Symbol set"
+label_settings = ExtResource("1_i32cn")
+
+[node name="SymbolSetLineEdit" parent="SymbolSetMarginContainer/VBoxContainer" instance=ExtResource("2_w2viu")]
+layout_mode = 2
+placeholder_text = "Input path to symbol set"
+Extensions = "*.json"
+Description = "Symbol set JSON"
+
+[node name="InstancesOutputMarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InstancesOutputMarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="InstancesOutputMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Instances output"
+label_settings = ExtResource("1_i32cn")
+
+[node name="InstancesOutputLineEdit" parent="InstancesOutputMarginContainer/VBoxContainer" instance=ExtResource("2_w2viu")]
+layout_mode = 2
+placeholder_text = "Path to output instances"
+Extensions = "*.json"
+Description = "Plant instances"

@@ -3,12 +3,10 @@ using Godot;
 
 namespace ProceduralFoliageGenerator.Model;
 
-public class PlantInstanceParser
+public class PlantInstancesParser
 {
-    public  PlantInstanceParser()
-    {}
 
-    public List<PlantInstance> Parse(string jsonContent)
+    public static List<PlantInstance> Parse(string jsonContent)
     {
         List<PlantInstance> instances = new List<PlantInstance>();
 

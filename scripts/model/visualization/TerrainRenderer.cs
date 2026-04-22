@@ -17,16 +17,19 @@ public partial class TerrainRenderer : Node3D
         set
         {
             _mapData = value;
-            (Terrain.Mesh as QuadMesh)?.SetSize(new Vector2(MapData.Width, MapData.Height));
+            
+            Terrain.SetPosition(new Vector3(_mapData.Width / MapData.Scaling / 2.0f, 0, _mapData.Height / MapData.Scaling / 2.0f));
+            
+            (Terrain.Mesh as QuadMesh)?.SetSize(new Vector2(MapData.Width / MapData.Scaling, MapData.Height / MapData.Scaling));
             (Terrain.Mesh as QuadMesh)?.SetSubdivideDepth(64);
             (Terrain.Mesh as QuadMesh)?.SetSubdivideWidth(64);
-            (Terrain.MaterialOverride as ShaderMaterial)?.SetShaderParameter("width_x", MapData.Width * 2);
-            (Terrain.MaterialOverride as ShaderMaterial)?.SetShaderParameter("width_z", MapData.Height * 2);
+            (Terrain.MaterialOverride as ShaderMaterial)?.SetShaderParameter("height_scale", MapData.HeightScale);
+            (Terrain.MaterialOverride as ShaderMaterial)?.SetShaderParameter("width_x", MapData.Width * 2 / MapData.Scaling);
+            (Terrain.MaterialOverride as ShaderMaterial)?.SetShaderParameter("width_z", MapData.Height * 2 / MapData.Scaling);
         }
         
     }
 
-    [Export] public float HeightScale { get; set; } = 0.5f;
 
     [Export] public MeshInstance3D Terrain { get; private set; }
 
@@ -60,7 +63,7 @@ public partial class TerrainRenderer : Node3D
     public override void _Ready()
     {
         MapData = new ();
-        (Terrain.MaterialOverride as ShaderMaterial)?.SetShaderParameter("height_scale", HeightScale);
+        
         GenerateRandomBumpMap();
         
         base._Ready();
@@ -79,6 +82,9 @@ public partial class TerrainRenderer : Node3D
         
         BumpMap = DefaultNoiseTexture;
         NormalMap = DefaultNoiseNormal;
+
+        // BumpMap.GetImage().SaveJpg("BumpMap.jpeg");
+        // NormalMap.GetImage().SaveJpg("NormalMap.jpeg");
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -86,5 +92,12 @@ public partial class TerrainRenderer : Node3D
         if (Input.IsActionPressed("Randomize Bump Map"))
             GenerateRandomBumpMap();
         base._UnhandledInput(@event);
+    }
+
+    public void SetBumpMap(Image bumpMap)
+    {
+        BumpMap = ImageTexture.CreateFromImage(bumpMap);
+        
+        //TODO: Calculate normal
     }
 }

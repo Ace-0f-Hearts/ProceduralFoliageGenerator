@@ -1,114 +1,84 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
+using Godot;
+using ProceduralFoliageGenerator.ViewModel;
 
 namespace ProceduralFoliageGenerator.Model;
 
 /// <summary>
-/// Structure for storing all foliage rendering and generation related data.
+/// Responsible for constructing the string containing the flags for the command to be executed
 /// </summary>
-public record GenerationCommandBuilder
+public class GenerationCommandBuilder
 {
-    public event EventHandler PlantAttributesSet;
-    public event EventHandler<string> BuildRequestedWhileNotReady;
-    
-    private List<PlantAttributes> _plantAttributes;
 
-    public String PathToSymbolSet { get; set; }
-    public String PathToMapFile { get; set; }
-    public String PathToSpeciesAttributes { get; set; }
 
-    public String PathToHeightMap { get; set; }
-    public String PathToPlantInstances { get; set; }
     
-    public bool UseRandomDiffusionPoints { get; set; } = true;
-    public int NumberOfRandomDiffusionPoints { get; set; } = 3;
-    public bool UseHeightMap { get; set; } = false;
-    
-    public GenerationCommandBuilder()
+    public static List<String> BuildHeightMapFlag(GenerationCommandData data)
     {
-        _plantAttributes = new();
-    }
-    
-    public List<PlantAttributes> PlantAttributes
-    {
-        get => _plantAttributes;
-        set
+        List<String> resultFlags = new();
+        switch (data.HeightMapOptions.Flag)
         {
-            _plantAttributes = value;
-            PlantAttributesSet?.Invoke(this, EventArgs.Empty);
+            case HeightMapAcquisitionFlag.FromFile:
+                resultFlags.Add("--height_map");
+                resultFlags.Add(data.HeightMapOptions.Path);
+                break;
+            default:
+                throw  new ArgumentException($"Invalid heightmap option {data.HeightMapOptions.Flag}");
         }
+        return resultFlags;
     }
 
-    private bool IsReady()
+    public static List<String> BuildDiffusionPointsFlag(GenerationCommandData data)
     {
-        var predicates = 
-        new List<(Func<bool>,string)>{
-            (() => { return Path.Exists(PathToSymbolSet); },"Issue with file containing the symbol set: File does not exist\n"),
-            (() => { return Path.HasExtension(PathToSymbolSet) && Path.GetExtension(PathToSymbolSet) == ".json"; },"Issue with file containing the symbol set: Extension is missing or not supported. Supported extensions: '.json'\n"),
-            (() => { return Path.Exists(PathToMapFile);},"Issue with OCAD map file: File does not exist\n"),
-            (() => { return Path.HasExtension(PathToMapFile) && (Path.GetExtension(PathToMapFile) == ".ocad" || Path.GetExtension(PathToMapFile) == ".ocd");},"Issue with OCAD map file: Extension is missing or not supported. Supported extensions: '.ocad', '.ocd'\n"),
-            (() => { return Path.Exists(PathToSpeciesAttributes);},"Issue with file containing species attributes: File does not exist\n"),
-            (() => { return Path.HasExtension(PathToSpeciesAttributes) && Path.GetExtension(PathToSpeciesAttributes) == ".json"; },"Issue with file containing species attributes: Extension is missing or not supported. Supported extensions: '.json'\n"),
-            (() => { return (PathToHeightMap.Length == 0 || (Path.Exists(PathToHeightMap)));},"Issue with height map: File does not exist\n"),
-            (() => { return Path.Exists(PathToPlantInstances);},"Issue with output path to instances: Path does not exist\n")
-            
-        };
-        bool isReady = true;
-
-        List<String> errors = new();
-        
-        foreach (var (predicate,errorMessage) in predicates)
+        List<String> resultFlags = new();
+        switch (data.DiffusionPointsOptions.Flag)
         {
-            if (!predicate())
-            {
-                isReady = false;
-                errors.Add(errorMessage);
-            }
+            case DiffusionPointsAccusitionFlag.Random:
+                resultFlags.Add("--random_diff");
+                resultFlags.Add(data.DiffusionPointsOptions.NumberOfPoints.ToString());
+                break;
+            case DiffusionPointsAccusitionFlag.Manual:
+                break;
+            case DiffusionPointsAccusitionFlag.FromFile:
+                resultFlags.Add("--diff");
+                resultFlags.Add(data.DiffusionPointsOptions.Path);
+                break;
         }
-        
-        return isReady;
+
+        return resultFlags;
     }
-    
-    public (bool, string) Build()
+    public static (string,string[]) Build(GenerationCommandData data)
     {
+        var configFileName = "user://GenerationCache/" + Time.GetDatetimeStringFromSystem() + "-config.json";
+        var mapDataFile = "user://GenerationCache/" + Time.GetDatetimeStringFromSystem() + "-map_data.json";
+        
+        configFileName = ProjectSettings.GlobalizePath(configFileName);
+        mapDataFile = ProjectSettings.GlobalizePath(mapDataFile);
         var buildInstructions = new List<(string, Func<string>)>
         {
-            ("--ocad",() => PathToMapFile),
-            ("--species", () => PathToSpeciesAttributes),
-            ("--heightmap", () => PathToHeightMap),
-            ("--symbol", () => PathToSymbolSet),
-            ("--out", () => PathToPlantInstances),
-            ("--random_diff", () => NumberOfRandomDiffusionPoints.ToString())
+            ("--ocad",() => data.PathToMapFile),
+            ("--species", () => data.PathToSpeciesAttributes),
+            ("--symbol", () => data.PathToSymbolSet),
+            ("--out", () => data.PathToPlantInstances),
+            ("--config", () => { return configFileName; }),
+            ("--write_map_data", () => {return mapDataFile; }),
         };
         
-        bool isReady = IsReady();
-        String command = String.Empty;
+        bool isReady = data.IsReady();
+        List<String> command = new ();
         if (isReady) 
         {
             foreach (var (option,instruction) in buildInstructions)
             {
-                command += option + " " + instruction();
+                command.Add(option);
+                command.Add(instruction());
             }
+            command.AddRange(BuildDiffusionPointsFlag(data));
+            command.AddRange(BuildHeightMapFlag(data));
         }
-        return (isReady, command);
-
-    }
-
-    public int GetAmountOfSpecies => PlantAttributes.Count;
-
-    public void Clear()
-    {
-        _plantAttributes.Clear();
-        PathToMapFile = String.Empty;
-        PathToSpeciesAttributes = String.Empty;
-        PathToPlantInstances = String.Empty;
-        PathToHeightMap = String.Empty;
-        PathToSymbolSet = String.Empty;
         
-        UseHeightMap = false;
-        UseRandomDiffusionPoints = true;
+
+        
+        return (configFileName, command.ToArray());
     }
 }

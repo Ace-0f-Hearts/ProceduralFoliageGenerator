@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://vrndllm200o0"]
+
+[ext_resource type="Script" uid="uid://jon4b2i0bg6m" path="res://scripts/viewmodel/ui/HeightMapOptionsInput.cs" id="1_6oxlt"]
+[ext_resource type="PackedScene" uid="uid://c3wbnqj3khh2k" path="res://scenes/ui/pathInput.tscn" id="2_t7don"]
+
+[node name="TabContainer" type="TabContainer" node_paths=PackedStringArray("HeightMapPathInput")]
+tab_alignment = 1
+current_tab = 2
+clip_tabs = false
+script = ExtResource("1_6oxlt")
+HeightMapPathInput = NodePath("From File")
+
+[node name="Random" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 2
+text = "Use random noise to generate height map."
+fit_content = true
+metadata/_tab_index = 0
+
+[node name="Default" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 2
+text = "Compute the height map from the OCAD map file directly. 
+(Not yet implemented)"
+fit_content = true
+metadata/_tab_index = 1
+
+[node name="From File" parent="." instance=ExtResource("2_t7don")]
+layout_mode = 2
+placeholder_text = "Input path to height map"
+Extensions = "*.jpeg, *.jpg, *.png"
+Description = "Height map"
+metadata/_tab_index = 2
+
+[connection signal="tab_changed" from="." to="." method="OnTabChanged"]

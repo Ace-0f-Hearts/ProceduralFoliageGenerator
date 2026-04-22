@@ -71,21 +71,12 @@ stretch_mode = 5
 script = ExtResource("2_c4xvu")
 Url = "https://github.com/Ace-0f-Hearts/ProceduralFoliageGenerator"
 
-[node name="Control_GenerationDialog" parent="." node_paths=PackedStringArray("FileDialog") instance=ExtResource("6_qllka")]
+[node name="Control_GenerationDialog" parent="." instance=ExtResource("6_qllka")]
 visible = false
 layout_mode = 1
-FileDialog = NodePath("../FileDialog")
 
-[node name="Control_LoadingDialog" parent="." node_paths=PackedStringArray("FileDialog") instance=ExtResource("7_gbtsf")]
+[node name="Control_LoadingDialog" parent="." instance=ExtResource("7_gbtsf")]
 visible = false
 layout_mode = 1
-FileDialog = NodePath("../FileDialog")
-
-[node name="FileDialog" type="FileDialog" parent="."]
-oversampling_override = 1.0
-title = "Open a File"
-initial_position = 1
-file_mode = 0
-access = 2
 
 [connection signal="pressed" from="Panel/MarginContainer3/HBoxContainer/TextureButton" to="Panel/MarginContainer3/HBoxContainer/TextureButton" method="OnPressed"]

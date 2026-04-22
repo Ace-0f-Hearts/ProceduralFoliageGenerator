@@ -12,7 +12,7 @@ public partial class ControlUi : Control
     [Export]
     public Array<DialogPopupButton>  DialogPopupButtons { get; set; }
     [Export]
-    public Array<FileDialogController> FileDialogControllers { get; set; }
+    public Array<Control> FileDialogControllers { get; set; }
     public override void _Ready()
     {
 

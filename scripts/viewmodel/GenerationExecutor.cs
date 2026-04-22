@@ -1,8 +1,9 @@
+using System;
 using System.IO;
 using System.Runtime.InteropServices.JavaScript;
 using Godot;
-using Godot.Collections;
 using Godot.NativeInterop;
+using Array = Godot.Collections.Array;
 using FileAccess = Godot.FileAccess;
 
 namespace ProceduralFoliageGenerator.ViewModel;
@@ -14,6 +15,8 @@ namespace ProceduralFoliageGenerator.ViewModel;
 /// </summary>
 public partial class GenerationExecutor : Node
 {
+    
+    
 
     private static GenerationExecutor _instance;
     private GodotThread _generatorThread;
@@ -22,13 +25,18 @@ public partial class GenerationExecutor : Node
     /// <summary>
     /// TODO: Finalize generatorPath once its done
     /// </summary>
-    private string _generatorPath = "./FoliageGen/result/bin/generator";
+    private string _generatorPath = "/mnt/hobby-partition/Dev/ThesisWork/FoliageGen/build/debug/apps/App";
     private string[] _generatorArguments;
 
     private string _logPrefix = "genlog_";
     private string _loggingPath = "user://logs/generator/";
     private Array _outputLog;
 
+    
+    public event EventHandler GenerationSuccess;
+    public event EventHandler GenerationFailure;
+    
+    
     /// <summary>
     /// Path to the executable foliage generator program.
     /// TODO: Finalize its path
@@ -142,6 +150,15 @@ public partial class GenerationExecutor : Node
     {
         _generatorThread.WaitToFinish();
         GD.Print($"Generation Finished\nOutput Log:{OutputLog}\nError Code:{ErrorCode}");
+
+        if (ErrorCode != 0)
+        {
+            GenerationFailure?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            GenerationSuccess?.Invoke(this, EventArgs.Empty);
+        }
         
         _generatorMutex.Lock();
         LogOutput();

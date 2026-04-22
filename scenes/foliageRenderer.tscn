@@ -10,6 +10,7 @@ FoliageRenderer = NodePath("FoliageRenderer")
 TerrainRenderer = NodePath("TerrainRenderer")
 
 [node name="TerrainRenderer" parent="." instance=ExtResource("2_e5cgb")]
+HeightScale = 1.0
 
 [node name="FoliageRenderer" type="Node3D" parent="."]
 script = ExtResource("1_vjc8g")

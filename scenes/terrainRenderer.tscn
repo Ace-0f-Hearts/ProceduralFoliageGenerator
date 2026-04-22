@@ -17,7 +17,7 @@ height = 2048
 noise = ExtResource("3_5s2uy")
 seamless = true
 as_normal_map = true
-bump_strength = 7.5
+bump_strength = 20.8
 
 [sub_resource type="Gradient" id="Gradient_5s2uy"]
 interpolation_mode = 2

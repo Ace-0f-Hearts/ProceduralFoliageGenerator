@@ -15,7 +15,9 @@ public partial class PlantObject : Resource
     
     public static PlantObject Default()
     {
-        Mesh mesh = new CapsuleMesh();
+        var mesh = new BoxMesh();
+        mesh.SetSize(new Vector3(0.05f,0.05f,0.05f));
+        
         
         return new PlantObject("DEFAULT",mesh);
     }

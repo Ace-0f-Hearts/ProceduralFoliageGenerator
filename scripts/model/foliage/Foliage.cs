@@ -4,11 +4,11 @@ using Godot;
 
 namespace ProceduralFoliageGenerator.Model;
 
-public class SpeciesLibrary
+public class Foliage
 {
     private List<SpeciesData> SpeciesData { get; set; }
 
-    public SpeciesLibrary(List<SpeciesData> speciesData)
+    public Foliage(List<SpeciesData> speciesData)
     {
         SpeciesData = speciesData;
     }

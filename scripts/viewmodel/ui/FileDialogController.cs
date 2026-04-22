@@ -18,6 +18,7 @@ public partial class FileDialogController : Control
             FileDialog = new FileDialog();
             FileDialog.Access = FileDialog.AccessEnum.Filesystem;
             FileDialog.FileMode = FileDialog.FileModeEnum.OpenFile;
+            this.AddChild(FileDialog);
         }
         // FileDialog.FileSelected += OnFileSelected;
         // FileDialog.CloseRequested += OnFileDialogCloseRequested;
