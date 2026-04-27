@@ -13,13 +13,13 @@ varying vec2 tex_position;
 void vertex() {
 	// Called for every vertex the material is visible on.
 	tex_position = vec2(VERTEX.x / width_x,VERTEX.z / width_z) + 0.5;
-	float height = texture(bump_map,tex_position).x * height_scale;
+	float height = texture(bump_map,UV).x * height_scale;
 	VERTEX.y += height;
 }
 
 void fragment() {
 	// Called for every pixel the material is visible on.
-	ALBEDO = texture(tex,tex_position).xyz;
+	ALBEDO = texture(tex,UV).xyz;
 	NORMAL_MAP *= texture(normal_map, tex_position).xyz;
 }
 
