@@ -8,11 +8,11 @@ namespace ProceduralFoliageGenerator.Model;
 public class PlantAttributeParser
 {
 
-    public static Range ParseRange(Array range)
+    public static RangeValue ParseRange(Array range)
     {
         var min = range[0].AsSingle();
-        var max = range[0].AsSingle();
-        return new Range(min, max);
+        var max = range[1].AsSingle();
+        return new RangeValue(min, max);
     }
 
     public static Gaussian ParseGaussian(Array gaussian)
@@ -43,9 +43,7 @@ public class PlantAttributeParser
             var res = new PlantAttributes(id,name, growthRadius, elevation, slope);
             plantAttributesList.Add(res);
         }
-
         
-
         return plantAttributesList;
     }
 }

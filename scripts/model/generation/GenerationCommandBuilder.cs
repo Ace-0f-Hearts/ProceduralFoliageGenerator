@@ -22,6 +22,10 @@ public class GenerationCommandBuilder
                 resultFlags.Add("--height_map");
                 resultFlags.Add(data.HeightMapOptions.Path);
                 break;
+            case HeightMapAcquisitionFlag.Random:
+                resultFlags.Add("--height_map");
+                resultFlags.Add(ProjectSettings.GlobalizePath(data.HeightMapOptions.Path));
+                break;
             default:
                 throw  new ArgumentException($"Invalid heightmap option {data.HeightMapOptions.Flag}");
         }
@@ -49,8 +53,11 @@ public class GenerationCommandBuilder
     }
     public static (string,string[]) Build(GenerationCommandData data)
     {
-        var configFileName = "user://GenerationCache/" + Time.GetDatetimeStringFromSystem() + "-config.json";
-        var mapDataFile = "user://GenerationCache/" + Time.GetDatetimeStringFromSystem() + "-map_data.json";
+        var time = Time.GetDatetimeDictFromSystem();
+        var location = GenerationDataCache.CacheLocation + "/" + time["year"] + "-" + time["month"] + "-" + time["day"] +  "-"  + time["hour"] + "-" + time["minute"] + "-";
+        
+        var configFileName = location + "config.json";
+        var mapDataFile = location + "map_data.json";
         
         configFileName = ProjectSettings.GlobalizePath(configFileName);
         mapDataFile = ProjectSettings.GlobalizePath(mapDataFile);

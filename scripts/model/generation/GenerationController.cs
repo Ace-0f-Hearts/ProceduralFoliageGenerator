@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using Godot;
+using ProceduralFoliageGenerator.scripts.model;
 using ProceduralFoliageGenerator.ViewModel;
 
 namespace ProceduralFoliageGenerator.Model;
@@ -13,25 +14,57 @@ namespace ProceduralFoliageGenerator.Model;
 /// </summary>
 public record GenerationController
 {
-    public event EventHandler PlantAttributesSet;
     public event EventHandler<string> BuildRequestedWhileNotReady;
+    
 
-    public GenerationCommandData CommandData { get; } = new();
-    public GenerationInfoData InfoData { get; } = new();
+    public GenerationCommandData CommandData { get; }
+    public GenerationInfoData InfoData { get; }
 
     public String LastGeneratedConfig;
-    
+
+    public event EventHandler<string> ErrorOccured;
     
     public GenerationController()
     {
-        
+        CommandData = new GenerationCommandData();
+        InfoData = new GenerationInfoData();
+
+        CommandData.PathToSpeciesAttributesChanged += ((sender, args) =>
+        {
+            try
+            {
+                var content = File.ReadAllText(CommandData.PathToSpeciesAttributes);
+                InfoData.PlantAttributes = PlantAttributeParser.Parse(content);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                ErrorOccured?.Invoke(sender, e.Message);
+                
+            }
+        });
+
+        CommandData.PathToSymbolSetChanged += ((sender, args) =>
+        {
+            try
+            {
+                var content =  File.ReadAllText(CommandData.PathToSymbolSet);
+                InfoData.SymbolAttributes = SymbolAttributesParser.Parse(content);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                ErrorOccured?.Invoke(sender, e.Message);
+            }
+        });
     }
 
-    public string[] Execute()
+    public (bool,string[]) Execute()
     {
-        string[] result = {};        
+        string[] result = {};
+        bool execute = CommandData.IsReady();
         
-        if (CommandData.IsReady())
+        if (execute)
         {
             GenerationDataCache.SaveFiles(CommandData);
             var (config,command )= GenerationCommandBuilder.Build(CommandData);
@@ -40,9 +73,9 @@ public record GenerationController
         }
         else
         {
-            
+            ErrorOccured?.Invoke(this,"Execution requested while missing arguments");
         }
-        return result;
+        return (execute,result);
     }
     
     public void Clear()

@@ -109,12 +109,10 @@ public class FoliageData
         
         foreach (var instance in PlantInstances)
         {
-            var size = HeightMap.GetSize();
-            GD.Print(size);
-            int x =  (int)MathF.Round(instance.WorldPosition.X);
-            int z = (int)MathF.Round(instance.WorldPosition.Z);
+            float x = instance.WorldPosition.X / _mapData.Width;
+            float z = instance.WorldPosition.Z / _mapData.Height;
 
-            var elevation = (0.025f + HeightMap.GetPixel(x, z).R) * MapData.Scaling / MapData.HeightScale;
+            var elevation = 0.025f + (HeightMap.GetPixel((int)(x * HeightMap.GetWidth()),(int) (z * HeightMap.GetHeight())).R) * MapData.Scaling * MapData.HeightScale;
             
             instance.SetElevation(elevation);
             

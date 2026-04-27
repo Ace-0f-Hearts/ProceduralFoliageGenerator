@@ -50,9 +50,13 @@ public partial class HeightMapOptionsInput : TabContainer
 
     public void OnTabChanged(int i)
     {
-        //TODO: Rn we just force it to be read from a Random File
-        this.CurrentTab = 2;
-        i = 2;
+
+        if (i == 1)
+        {
+            i = 0;
+            this.SetCurrentTab(i);
+        }
+        
         if (i == 0)
             Options.Flag = HeightMapAcquisitionFlag.Random;
         else if (i == 1)

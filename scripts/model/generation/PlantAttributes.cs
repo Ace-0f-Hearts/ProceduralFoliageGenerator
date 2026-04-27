@@ -9,14 +9,18 @@ namespace ProceduralFoliageGenerator.Model;
 public partial class PlantAttributes : Resource
 {
     
+    public PlantAttributes()
+    {
+    }
+    
     /// <summary>
     /// Parameterized constructor
-    /// </summary>
+    /// </summary>í
     /// <param name="name"></param>
     /// <param name="growthRadius"></param>
     /// <param name="elevation"></param>
     /// <param name="slope"></param>
-    public PlantAttributes(int id, string name, Range growthRadius, Gaussian elevation, Gaussian slope)
+    public PlantAttributes(int id, string name, RangeValue growthRadius, Gaussian elevation, Gaussian slope)
     {
         Id = id;
         Name = name;
@@ -24,8 +28,10 @@ public partial class PlantAttributes : Resource
         Elevation = elevation;
         Slope = slope;
     }
-    
-    
+
+
+
+
     public int Id { get; init; }
     /// <summary>
     /// Name of the plant species.
@@ -37,7 +43,7 @@ public partial class PlantAttributes : Resource
     /// Plants cannot have intersecting growth radii with each other.
     /// Measured in meters.
     /// </summary>
-    public Range GrowthRadius { get; init; }
+    public RangeValue GrowthRadius { get; init; }
     
     /// <summary>
     /// A simplified attribute derived from the real-life requirements of plantlife.

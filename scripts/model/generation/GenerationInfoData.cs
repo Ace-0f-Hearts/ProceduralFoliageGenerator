@@ -8,15 +8,42 @@ namespace ProceduralFoliageGenerator.Model;
 /// </summary>
 public record GenerationInfoData
 {
-    public List<PlantAttributes> PlantAttributes { get; set; } = new();
-    public int NumberOfRandomDiffusionPoints { get; set; } = 3;
-    public int GetAmountOfSpecies => PlantAttributes.Count;
+    private List<PlantAttributes> _plantAttributes = new();
+    private List<SymbolAttributes>  _symbolAttributes = new();
+    
+    
+    public List<PlantAttributes> PlantAttributes
+    {
+        get => _plantAttributes;
+        set
+        {
+            _plantAttributes = value;
+            InfoChanged?.Invoke(this, EventArgs.Empty);
+        }
+        
+    }
 
+    public List<SymbolAttributes> SymbolAttributes
+    {
+        get => _symbolAttributes;
+        set
+        {
+            _symbolAttributes = value;
+            InfoChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    public int NumberOfRandomDiffusionPoints { get; set; } = 3;
+    public int NumberOfPlantAttributes => PlantAttributes.Count;
+    public int NumberOfSymbols => SymbolAttributes.Count;
+    
     public event EventHandler InfoChanged;
     
     public void Clear()
     {
         PlantAttributes.Clear();
+        SymbolAttributes.Clear();
+        InfoChanged?.Invoke(this, EventArgs.Empty);
+        
         NumberOfRandomDiffusionPoints = 3;
     }
 }

@@ -1,21 +1,51 @@
-[gd_scene load_steps=3 format=3 uid="uid://vrndllm200o0"]
+[gd_scene load_steps=5 format=3 uid="uid://vrndllm200o0"]
 
 [ext_resource type="Script" uid="uid://jon4b2i0bg6m" path="res://scripts/viewmodel/ui/HeightMapOptionsInput.cs" id="1_6oxlt"]
+[ext_resource type="FastNoiseLite" uid="uid://8udvt3knpgfj" path="res://assets/defaultHeightMapNoise.tres" id="2_bmtnh"]
 [ext_resource type="PackedScene" uid="uid://c3wbnqj3khh2k" path="res://scenes/ui/pathInput.tscn" id="2_t7don"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_iyu7y"]
+width = 2048
+height = 2048
+noise = ExtResource("2_bmtnh")
 
 [node name="TabContainer" type="TabContainer" node_paths=PackedStringArray("HeightMapPathInput")]
 tab_alignment = 1
-current_tab = 2
+current_tab = 0
 clip_tabs = false
 script = ExtResource("1_6oxlt")
 HeightMapPathInput = NodePath("From File")
 
-[node name="Random" type="RichTextLabel" parent="."]
-visible = false
+[node name="Random" type="MarginContainer" parent="."]
 layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+metadata/_tab_index = 0
+
+[node name="HBox" type="HSplitContainer" parent="Random"]
+layout_mode = 2
+split_offset = 45
+dragging_enabled = false
+dragger_visibility = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Random/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Random" type="RichTextLabel" parent="Random/HBox/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Use random noise to generate height map."
 fit_content = true
-metadata/_tab_index = 0
+
+[node name="TextureRect" type="TextureRect" parent="Random/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("NoiseTexture2D_iyu7y")
+expand_mode = 5
+stretch_mode = 5
 
 [node name="Default" type="RichTextLabel" parent="."]
 visible = false
@@ -26,6 +56,7 @@ fit_content = true
 metadata/_tab_index = 1
 
 [node name="From File" parent="." instance=ExtResource("2_t7don")]
+visible = false
 layout_mode = 2
 placeholder_text = "Input path to height map"
 Extensions = "*.jpeg, *.jpg, *.png"

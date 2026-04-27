@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgdribyd3q1om"]
+
+[ext_resource type="Script" uid="uid://eambh6bcxxh4" path="res://scripts/viewmodel/RangeItem.cs" id="1_djsbp"]
+[ext_resource type="Theme" uid="uid://dc1tu1wak7t6t" path="res://scenes/ui/defaultTheme.tres" id="1_p06eh"]
+
+[node name="Control" type="PanelContainer" node_paths=PackedStringArray("Min", "Max")]
+offset_right = 150.0
+offset_bottom = 65.0
+script = ExtResource("1_djsbp")
+Min = NodePath("MarginContainer/HBoxContainer/MinHBoxContainer/MinSpinBox")
+Max = NodePath("MarginContainer/HBoxContainer/MaxHBoxContainer/MaxSpinBox")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MinHBoxContainer" type="HSplitContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+dragging_enabled = false
+
+[node name="MinLabel" type="Label" parent="MarginContainer/HBoxContainer/MinHBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_p06eh")
+text = "Min.:"
+
+[node name="MinSpinBox" type="SpinBox" parent="MarginContainer/HBoxContainer/MinHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("1_p06eh")
+max_value = 50.0
+editable = false
+
+[node name="MaxHBoxContainer" type="HSplitContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+dragging_enabled = false
+
+[node name="MaxLabel" type="Label" parent="MarginContainer/HBoxContainer/MaxHBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_p06eh")
+text = "Max.:"
+
+[node name="MaxSpinBox" type="SpinBox" parent="MarginContainer/HBoxContainer/MaxHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("1_p06eh")
+max_value = 50.0
+editable = false

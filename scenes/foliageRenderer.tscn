@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dq5g1v648mlhu"]
+[gd_scene load_steps=5 format=3 uid="uid://dq5g1v648mlhu"]
 
 [ext_resource type="Script" uid="uid://o0p0m0wuwcjr" path="res://scripts/model/visualization/Renderer.cs" id="1_335rj"]
 [ext_resource type="Script" uid="uid://e3gqwoj5p0es" path="res://scripts/model/visualization/FoliageRenderer.cs" id="1_vjc8g"]
 [ext_resource type="PackedScene" uid="uid://rketofe7fqsc" path="res://scenes/terrainRenderer.tscn" id="2_e5cgb"]
+[ext_resource type="PackedScene" uid="uid://fc0iy3nqrh0a" path="res://scenes/meshLib.tscn" id="4_0tub2"]
 
 [node name="Renderer" type="Node3D" node_paths=PackedStringArray("FoliageRenderer", "TerrainRenderer")]
 script = ExtResource("1_335rj")
@@ -10,7 +11,8 @@ FoliageRenderer = NodePath("FoliageRenderer")
 TerrainRenderer = NodePath("TerrainRenderer")
 
 [node name="TerrainRenderer" parent="." instance=ExtResource("2_e5cgb")]
-HeightScale = 1.0
 
 [node name="FoliageRenderer" type="Node3D" parent="."]
 script = ExtResource("1_vjc8g")
+
+[node name="MeshLib" parent="." instance=ExtResource("4_0tub2")]

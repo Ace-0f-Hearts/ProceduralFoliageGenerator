@@ -11,14 +11,54 @@ namespace ProceduralFoliageGenerator.Model;
 /// </summary>
 public class GenerationCommandData
 {
-    public String PathToSymbolSet { get; set; }
-    public String PathToMapFile { get; set; }
-    public String PathToSpeciesAttributes { get; set; }
+    private String _pathToSymbolSet = String.Empty;
+    private String _pathToMapFile = String.Empty;
+    private String _pathToSpeciesAttributes = String.Empty;
+    private String _pathToPlantInstances  = String.Empty;
 
-    public String PathToPlantInstances { get; set; }
+    public String PathToSymbolSet
+    {
+        get => _pathToSymbolSet;
+        set
+        {
+            _pathToSymbolSet = value;
+            PathToSymbolSetChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public String PathToMapFile
+    {
+        get =>  _pathToMapFile;
+        set
+        {
+            _pathToMapFile = value;
+        }
+    }
+
+    public String PathToSpeciesAttributes
+    {
+        get => _pathToSpeciesAttributes;
+        set
+        {
+            _pathToSpeciesAttributes = value;
+            PathToSpeciesAttributesChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public String PathToPlantInstances
+    {
+        get => _pathToPlantInstances;
+        set
+        {
+            _pathToPlantInstances = value;
+        }
+    }
     
     public DiffusionPointsOptions DiffusionPointsOptions { get; set; }
     public HeightMapOptions HeightMapOptions { get; set; }
+    
+    public event EventHandler PathToSymbolSetChanged;
+    public event EventHandler PathToSpeciesAttributesChanged;
     
     public bool IsReady()
     {
@@ -27,7 +67,7 @@ public class GenerationCommandData
                 (() => { return FileAccess.FileExists(PathToSymbolSet); },"Issue with file containing the symbol set: File does not exist\n"),
                 (() => { return Path.HasExtension(PathToSymbolSet) && Path.GetExtension(PathToSymbolSet) == ".json"; },"Issue with file containing the symbol set: Extension is missing or not supported. Supported extensions: '.json'\n"),
                 (() => { return FileAccess.FileExists(PathToMapFile);},"Issue with OCAD map file: File does not exist\n"),
-                (() => { return Path.HasExtension(PathToMapFile) && (Path.GetExtension(PathToMapFile) == ".ocad" || Path.GetExtension(PathToMapFile) == ".ocd");},"Issue with OCAD map file: Extension is missing or not supported. Supported extensions: '.ocad', '.ocd'\n"),
+                (() => { return Path.HasExtension(PathToMapFile) && (Path.GetExtension(PathToMapFile) == ".omap" || Path.GetExtension(PathToMapFile) == ".ocd");},"Issue with OCAD map file: Extension is missing or not supported. Supported extensions: '.ocad', '.ocd'\n"),
                 (() => { return FileAccess.FileExists(PathToSpeciesAttributes);},"Issue with file containing species attributes: File does not exist\n"),
                 (() => { return Path.HasExtension(PathToSpeciesAttributes) && Path.GetExtension(PathToSpeciesAttributes) == ".json"; },"Issue with file containing species attributes: Extension is missing or not supported. Supported extensions: '.json'\n"),
                 (() => { return HeightMapOptions.Ready();},"Issue with height map: Invalid configuration\n"),

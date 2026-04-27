@@ -25,7 +25,7 @@ public partial class GenerationExecutor : Node
     /// <summary>
     /// TODO: Finalize generatorPath once its done
     /// </summary>
-    private string _generatorPath = "/mnt/hobby-partition/Dev/ThesisWork/FoliageGen/build/debug/apps/App";
+    private string _generatorPath = "/mnt/hobby-partition/Dev/ThesisWork/FoliageGen/cmake-build-default-system/apps/App";
     private string[] _generatorArguments;
 
     private string _logPrefix = "genlog_";

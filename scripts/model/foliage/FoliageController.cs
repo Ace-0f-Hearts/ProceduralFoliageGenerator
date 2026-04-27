@@ -13,6 +13,8 @@ public class FoliageController
     public FoliageConfig Config { get; set; }
     public FoliageData Data { get; set; }
     
+    public List<PlantObject> PlantObjects { get; set; }
+    
     public event EventHandler BuilderReady;
     
     public FoliageController()
@@ -84,9 +86,12 @@ public class FoliageController
         var instancesPerSpecies = Data.GetPlantInstancesPerSpecies();
 
         List<SpeciesData> speciesData = new();
+
+        int idx = 0;
         foreach (var (attr,instances) in instancesPerSpecies)
         {
-            speciesData.Add(BuildSpeciesData(attr, PlantObject.Default(), instances));
+            speciesData.Add(BuildSpeciesData(attr, PlantObjects[idx % PlantObjects.Count], instances));
+            idx += 1;
         }
 
         return new Foliage(speciesData);

@@ -82,7 +82,7 @@ namespace ProceduralFoliageGenerator.ViewModel
         public override void _Input(InputEvent @event)
         {
             DeltaUv = Vector2.Zero;
-            if (@event is InputEventMouseMotion mouseEvent)
+            if (@event is InputEventMouseMotion mouseEvent && Input.IsActionPressed("Move Camera"))
             {
                 DeltaUv += mouseEvent.Relative;
             }

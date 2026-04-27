@@ -21,6 +21,6 @@ public class Foliage
     
     public Dictionary<PlantAttributes, List<PlantInstance>> GetInstancesPerAttributes() => SpeciesData.ToDictionary(kvp => kvp.PlantAttributes, kvp => kvp.Instances);
     
-    public void SetObjectMeshData(int nth,Mesh mesh) => SpeciesData[nth].PlantObject.Mesh = mesh;
+    public void SetObjectMeshData(int nth,Mesh mesh) => SpeciesData[nth].PlantObject.TrunkMesh = mesh;
     public void SetObjectData(int nth, PlantObject obj) => SpeciesData[nth].PlantObject = obj;
 }

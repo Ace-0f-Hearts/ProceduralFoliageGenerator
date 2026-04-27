@@ -56,9 +56,13 @@ public class GlobalModel
 
     public void ExecuteGeneration()
     {
-        var flags = GenerationController.Execute();
-        GenerationExecutor.Instance.GeneratorArguments = flags;
-        GenerationExecutor.Instance.ExecuteGeneration();
+        var (execute,flags) = GenerationController.Execute();
+
+        if (execute)
+        {
+            GenerationExecutor.Instance.GeneratorArguments = flags;
+            GenerationExecutor.Instance.ExecuteGeneration();
+        }
     }
 
     public void LoadGeneratedFoliage()

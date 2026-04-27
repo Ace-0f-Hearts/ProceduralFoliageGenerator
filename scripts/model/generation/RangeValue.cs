@@ -1,8 +1,8 @@
 namespace ProceduralFoliageGenerator.Model;
 
-public class Range
+public class RangeValue
 {
-    public Range(float min, float max)
+    public RangeValue(float min, float max)
     {
         this.Min = min;
         this.Max = max;

@@ -13,7 +13,6 @@ public partial class FoliageModel : Node3D
         GlobalModel.Instance.FoliageController.BuilderReady += (obj, args) =>
         {
             Foliage = GlobalModel.Instance.FoliageController.Build();
-            Renderer.FoliageRenderer.PopulateMultiMeshes(Foliage);            
         };
         base._Ready();
     }

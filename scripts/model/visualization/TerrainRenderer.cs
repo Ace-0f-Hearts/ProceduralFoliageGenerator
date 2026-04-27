@@ -58,8 +58,7 @@ public partial class TerrainRenderer : Node3D
             (Terrain.MaterialOverride as ShaderMaterial)?.SetShaderParameter("normal_map", NormalMap);
         }
     }
-
-
+    
     public override void _Ready()
     {
         MapData = new ();
@@ -89,8 +88,7 @@ public partial class TerrainRenderer : Node3D
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (Input.IsActionPressed("Randomize Bump Map"))
-            GenerateRandomBumpMap();
+
         base._UnhandledInput(@event);
     }
 

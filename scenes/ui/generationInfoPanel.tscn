@@ -1,95 +1,92 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0y63yv4a2wpm"]
+[gd_scene load_steps=4 format=3 uid="uid://c0y63yv4a2wpm"]
 
 [ext_resource type="Script" uid="uid://856fqgscb38x" path="res://scripts/viewmodel/ui/InfoPanelController.cs" id="1_4170b"]
 [ext_resource type="LabelSettings" uid="uid://6qlavkqgh48p" path="res://settings/labels/dialogInputLabel.tres" id="1_wifq5"]
+[ext_resource type="PackedScene" uid="uid://q6ql7qtal1a5" path="res://scenes/ui/speciesItem.tscn" id="3_8u4h0"]
 
-[node name="InfoPanel" type="VBoxContainer" node_paths=PackedStringArray("SizeOfMap", "MinElevation", "MaxElevation", "NumberOfPlants")]
+[node name="InfoPanel" type="VBoxContainer" node_paths=PackedStringArray("NumberOfSymbols", "NumberOfSpecies", "SpeciesItem", "SpeciesGrid")]
 alignment = 1
 script = ExtResource("1_4170b")
-SizeOfMap = NodePath("MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap/Label_SizeOfMap_Value")
-MinElevation = NodePath("MarginContainer_MinElevation/HBoxContainer_MinElevation/Label_MinElevation_Value")
-MaxElevation = NodePath("MarginContainer_MaxElevation/HBoxContainer_MaxElevation/Label_MaxElevation_Value")
-NumberOfPlants = NodePath("MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies/Label_NumberOfSpecies_Value")
+NumberOfSymbols = NodePath("VBoxContainer/MarginContainer_MaxElevation/HBoxContainer_MaxElevation/NumberOfSymbolSpinBox")
+NumberOfSpecies = NodePath("VBoxContainer2/MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies/NumberOfSpeciesSpinBox")
+SpeciesItem = NodePath("VBoxContainer2/FoldableContainer/HBoxContainer/SpeciesItem")
+SpeciesGrid = NodePath("VBoxContainer2/FoldableContainer/HBoxContainer/ScrollContainer/GridContainer")
 
-[node name="MarginContainer_SizeOfMap" type="MarginContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer_MaxElevation" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer_SizeOfMap" type="HBoxContainer" parent="MarginContainer_SizeOfMap"]
+[node name="HBoxContainer_MaxElevation" type="HBoxContainer" parent="VBoxContainer/MarginContainer_MaxElevation"]
 layout_mode = 2
 
-[node name="Label_SizeOfMap_Description" type="Label" parent="MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap"]
+[node name="Label_MaxElevation_Description" type="Label" parent="VBoxContainer/MarginContainer_MaxElevation/HBoxContainer_MaxElevation"]
 layout_mode = 2
-text = "Size of map:"
+text = "Number of symbols:"
 label_settings = ExtResource("1_wifq5")
 
-[node name="Label_SizeOfMap_Value" type="Label" parent="MarginContainer_SizeOfMap/HBoxContainer_SizeOfMap"]
+[node name="NumberOfSymbolSpinBox" type="SpinBox" parent="VBoxContainer/MarginContainer_MaxElevation/HBoxContainer_MaxElevation"]
 layout_mode = 2
-text = "0"
-label_settings = ExtResource("1_wifq5")
+max_value = 200.0
+rounded = true
+editable = false
 
-[node name="MarginContainer_MinElevation" type="MarginContainer" parent="."]
+[node name="FoldableContainer" type="FoldableContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="HBoxContainer_MinElevation" type="HBoxContainer" parent="MarginContainer_MinElevation"]
-layout_mode = 2
-
-[node name="Label_MinElevation_Description" type="Label" parent="MarginContainer_MinElevation/HBoxContainer_MinElevation"]
-layout_mode = 2
-text = "Min. elevation:"
-label_settings = ExtResource("1_wifq5")
-
-[node name="Label_MinElevation_Value" type="Label" parent="MarginContainer_MinElevation/HBoxContainer_MinElevation"]
-layout_mode = 2
-text = "0"
-label_settings = ExtResource("1_wifq5")
-
-[node name="MarginContainer_MaxElevation" type="MarginContainer" parent="."]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="HBoxContainer_MaxElevation" type="HBoxContainer" parent="MarginContainer_MaxElevation"]
-layout_mode = 2
-
-[node name="Label_MaxElevation_Description" type="Label" parent="MarginContainer_MaxElevation/HBoxContainer_MaxElevation"]
-layout_mode = 2
-text = "Max. elevation:"
-label_settings = ExtResource("1_wifq5")
-
-[node name="Label_MaxElevation_Value" type="Label" parent="MarginContainer_MaxElevation/HBoxContainer_MaxElevation"]
-layout_mode = 2
-text = "0"
-label_settings = ExtResource("1_wifq5")
+folded = true
+title = "Symbols"
 
 [node name="HSeparator" type="HSeparator" parent="."]
 layout_mode = 2
 
-[node name="MarginContaine_NumberOfSpecies" type="MarginContainer" parent="."]
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContaine_NumberOfSpecies" type="MarginContainer" parent="VBoxContainer2"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer_NumberOfSpecies" type="HBoxContainer" parent="MarginContaine_NumberOfSpecies"]
+[node name="HBoxContainer_NumberOfSpecies" type="HBoxContainer" parent="VBoxContainer2/MarginContaine_NumberOfSpecies"]
 layout_mode = 2
 
-[node name="Label_NumberOfSpecies_Description" type="Label" parent="MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies"]
+[node name="Label_NumberOfSpecies_Description" type="Label" parent="VBoxContainer2/MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies"]
 layout_mode = 2
 text = "Number of species:"
 label_settings = ExtResource("1_wifq5")
 
-[node name="Label_NumberOfSpecies_Value" type="Label" parent="MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies"]
+[node name="NumberOfSpeciesSpinBox" type="SpinBox" parent="VBoxContainer2/MarginContaine_NumberOfSpecies/HBoxContainer_NumberOfSpecies"]
 layout_mode = 2
-text = "0"
-label_settings = ExtResource("1_wifq5")
+max_value = 200.0
+rounded = true
+editable = false
+
+[node name="FoldableContainer" type="FoldableContainer" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+title = "Species"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2/FoldableContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer2/FoldableContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer2/FoldableContainer/HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SpeciesItem" parent="VBoxContainer2/FoldableContainer/HBoxContainer" instance=ExtResource("3_8u4h0")]
+layout_mode = 2
