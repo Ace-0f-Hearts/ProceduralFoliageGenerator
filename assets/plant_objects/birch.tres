@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PlantObject" load_steps=5 format=3 uid="uid://uij8owrohknd"]
+
+[ext_resource type="Script" uid="uid://bpfw6eylbsqgs" path="res://scripts/model/visualization/PlantObject.cs" id="1_gd2xt"]
+[ext_resource type="ArrayMesh" uid="uid://bu3jnc6e31ivm" path="res://assets/trees/meshes/birch/AuxScene_mesh2.res" id="1_wiu5a"]
+[ext_resource type="ArrayMesh" uid="uid://cjm78ap2y5dvc" path="res://assets/trees/meshes/birch/AuxScene_mesh.res" id="2_bqu8i"]
+[ext_resource type="Texture2D" uid="uid://cunb5bl7vovq2" path="res://assets/trees/meshes/birch/tree(7).png" id="2_is3fg"]
+
+[resource]
+script = ExtResource("1_gd2xt")
+Name = "Birch"
+TrunkMesh = ExtResource("2_bqu8i")
+FoliageMesh = ExtResource("1_wiu5a")
+PlantTexture = ExtResource("2_is3fg")
+metadata/_custom_type_script = "uid://bpfw6eylbsqgs"

@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://cyxva5idkl1cx" path="res://scenes/camera.tscn" id="1_ki6c0"]
 [ext_resource type="PackedScene" uid="uid://bnbm2ye2hymeh" path="res://scenes/ui/mainUi.tscn" id="2_8ifl6"]
 [ext_resource type="PackedScene" uid="uid://dq5g1v648mlhu" path="res://scenes/foliageRenderer.tscn" id="2_twn0q"]
-[ext_resource type="Environment" uid="uid://dx6u0n82lfubf" path="res://assets/environment.tres" id="4_al2iq"]
-[ext_resource type="CameraAttributesPractical" uid="uid://swhg0nv4fmle" path="res://assets/cameraAttributes.tres" id="5_dmtm4"]
-[ext_resource type="Compositor" uid="uid://b16axxsc0al8g" path="res://assets/compositor.tres" id="6_1xypn"]
+[ext_resource type="Environment" uid="uid://dx6u0n82lfubf" path="res://assets/rendering/environment.tres" id="4_al2iq"]
+[ext_resource type="CameraAttributesPractical" uid="uid://swhg0nv4fmle" path="res://assets/rendering/cameraAttributes.tres" id="5_dmtm4"]
+[ext_resource type="Compositor" uid="uid://b16axxsc0al8g" path="res://assets/rendering/compositor.tres" id="6_1xypn"]
 
 [node name="Node3D" type="Node3D" node_paths=PackedStringArray("Renderer")]
 script = ExtResource("1_hhxvm")

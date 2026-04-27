@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbbd8po0fxno2"]
+
+[ext_resource type="LabelSettings" uid="uid://dophdy2pa0vx3" path="res://assets/theming/smallLabel.tres" id="1_7kvr4"]
+[ext_resource type="Script" uid="uid://s5dy5vjeqqgk" path="res://scripts/viewmodel/GaussianItem.cs" id="1_p3wpi"]
+
+[node name="GaussianItem" type="PanelContainer" node_paths=PackedStringArray("Peak", "Avg", "StdDev")]
+offset_right = 181.0
+offset_bottom = 103.0
+script = ExtResource("1_p3wpi")
+Peak = NodePath("MarginContainer/VBoxContainer/PeakHBoxContainer/PeakSpinBox")
+Avg = NodePath("MarginContainer/VBoxContainer/AvgHBoxContainer/AvgSpinBox")
+StdDev = NodePath("MarginContainer/VBoxContainer/StdDevHBoxContainer/StdDevSpinBox")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="PeakHBoxContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+dragging_enabled = false
+
+[node name="PeakLabel" type="Label" parent="MarginContainer/VBoxContainer/PeakHBoxContainer"]
+layout_mode = 2
+text = "Peak:"
+label_settings = ExtResource("1_7kvr4")
+
+[node name="PeakSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/PeakHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+max_value = 50.0
+editable = false
+
+[node name="AvgHBoxContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+dragging_enabled = false
+
+[node name="AvgLabel" type="Label" parent="MarginContainer/VBoxContainer/AvgHBoxContainer"]
+layout_mode = 2
+text = "Avg.:"
+label_settings = ExtResource("1_7kvr4")
+
+[node name="AvgSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/AvgHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+max_value = 50.0
+editable = false
+
+[node name="StdDevHBoxContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+dragging_enabled = false
+
+[node name="StdDevLabel" type="Label" parent="MarginContainer/VBoxContainer/StdDevHBoxContainer"]
+layout_mode = 2
+text = "Std. Dev.:"
+label_settings = ExtResource("1_7kvr4")
+
+[node name="StdDevSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/StdDevHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+max_value = 50.0
+editable = false

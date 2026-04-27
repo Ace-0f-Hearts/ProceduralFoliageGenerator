@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PlantObject" load_steps=5 format=3 uid="uid://jwimup4rkfni"]
+
+[ext_resource type="ArrayMesh" uid="uid://bsx8f87byppc4" path="res://assets/trees/meshes/pine/AuxScene_mesh2.res" id="1_kwm0r"]
+[ext_resource type="Script" uid="uid://bpfw6eylbsqgs" path="res://scripts/model/visualization/PlantObject.cs" id="1_yig32"]
+[ext_resource type="ArrayMesh" uid="uid://xwep5lanlmmi" path="res://assets/trees/meshes/pine/AuxScene_mesh.res" id="2_i27pv"]
+[ext_resource type="Texture2D" uid="uid://c3b6tnhq7dtgg" path="res://assets/trees/meshes/pine/tree(3).png" id="2_l74rk"]
+
+[resource]
+script = ExtResource("1_yig32")
+Name = "Pine"
+TrunkMesh = ExtResource("2_i27pv")
+FoliageMesh = ExtResource("1_kwm0r")
+PlantTexture = ExtResource("2_l74rk")
+metadata/_custom_type_script = "uid://bpfw6eylbsqgs"

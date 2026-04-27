@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://vrndllm200o0"]
 
 [ext_resource type="Script" uid="uid://jon4b2i0bg6m" path="res://scripts/viewmodel/ui/HeightMapOptionsInput.cs" id="1_6oxlt"]
-[ext_resource type="FastNoiseLite" uid="uid://8udvt3knpgfj" path="res://assets/defaultHeightMapNoise.tres" id="2_bmtnh"]
+[ext_resource type="FastNoiseLite" uid="uid://8udvt3knpgfj" path="res://assets/rendering/defaultHeightMapNoise.tres" id="2_bmtnh"]
 [ext_resource type="PackedScene" uid="uid://c3wbnqj3khh2k" path="res://scenes/ui/pathInput.tscn" id="2_t7don"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_iyu7y"]

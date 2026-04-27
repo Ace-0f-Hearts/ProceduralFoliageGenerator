@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PlantObject" load_steps=5 format=3 uid="uid://bolnb8uapxeg7"]
+
+[ext_resource type="ArrayMesh" uid="uid://vvq47omljf47" path="res://assets/trees/meshes/oak/AuxScene_mesh2.res" id="1_27p02"]
+[ext_resource type="Script" uid="uid://bpfw6eylbsqgs" path="res://scripts/model/visualization/PlantObject.cs" id="1_hph8d"]
+[ext_resource type="ArrayMesh" uid="uid://kr8isuoq5ech" path="res://assets/trees/meshes/oak/AuxScene_mesh.res" id="2_0lj3y"]
+[ext_resource type="Texture2D" uid="uid://dixsko7fqs8qq" path="res://assets/trees/meshes/oak/tree(9).png" id="2_d2mdy"]
+
+[resource]
+script = ExtResource("1_hph8d")
+Name = "Oak"
+TrunkMesh = ExtResource("2_0lj3y")
+FoliageMesh = ExtResource("1_27p02")
+PlantTexture = ExtResource("2_d2mdy")
+metadata/_custom_type_script = "uid://bpfw6eylbsqgs"

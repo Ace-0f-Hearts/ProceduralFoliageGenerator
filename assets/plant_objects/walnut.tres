@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PlantObject" load_steps=5 format=3 uid="uid://t8m21ipuyhve"]
+
+[ext_resource type="Script" uid="uid://bpfw6eylbsqgs" path="res://scripts/model/visualization/PlantObject.cs" id="1_f880j"]
+[ext_resource type="ArrayMesh" uid="uid://bn0dbgp7fo1uu" path="res://assets/trees/meshes/walnut/AuxScene_mesh2.res" id="1_uvmon"]
+[ext_resource type="Texture2D" uid="uid://e7xvps2ewblq" path="res://assets/trees/meshes/walnut/tree(3).png" id="2_2uh58"]
+[ext_resource type="ArrayMesh" uid="uid://cl7rhaveqc28c" path="res://assets/trees/meshes/walnut/AuxScene_mesh.res" id="2_bt3t8"]
+
+[resource]
+script = ExtResource("1_f880j")
+Name = "Walnut"
+TrunkMesh = ExtResource("2_bt3t8")
+FoliageMesh = ExtResource("1_uvmon")
+PlantTexture = ExtResource("2_2uh58")
+metadata/_custom_type_script = "uid://bpfw6eylbsqgs"

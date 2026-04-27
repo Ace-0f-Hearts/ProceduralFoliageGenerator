@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cgdribyd3q1om"]
 
 [ext_resource type="Script" uid="uid://eambh6bcxxh4" path="res://scripts/viewmodel/RangeItem.cs" id="1_djsbp"]
-[ext_resource type="Theme" uid="uid://dc1tu1wak7t6t" path="res://scenes/ui/defaultTheme.tres" id="1_p06eh"]
+[ext_resource type="Theme" uid="uid://dc1tu1wak7t6t" path="res://assets/theming/defaultTheme.tres" id="1_p06eh"]
 
 [node name="Control" type="PanelContainer" node_paths=PackedStringArray("Min", "Max")]
 offset_right = 150.0

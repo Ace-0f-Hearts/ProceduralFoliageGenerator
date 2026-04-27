@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bno0basjhb627" path="res://scripts/model/visualization/TerrainRenderer.cs" id="1_l5q0g"]
 [ext_resource type="Shader" uid="uid://dj582gip71ts7" path="res://assets/shaders/bump.gdshader" id="2_v6787"]
-[ext_resource type="FastNoiseLite" uid="uid://8udvt3knpgfj" path="res://assets/defaultHeightMapNoise.tres" id="3_5s2uy"]
-[ext_resource type="Texture2D" uid="uid://doqkik5sa8h1q" path="res://examples/snapshot.jpeg" id="4_nld5a"]
+[ext_resource type="FastNoiseLite" uid="uid://8udvt3knpgfj" path="res://assets/rendering/defaultHeightMapNoise.tres" id="3_5s2uy"]
+[ext_resource type="Texture2D" uid="uid://doqkik5sa8h1q" path="res://assets/textures/snapshot.jpeg" id="4_nld5a"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5s2uy"]
 width = 2048

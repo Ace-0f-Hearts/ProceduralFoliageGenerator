@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PlantObject" load_steps=5 format=3 uid="uid://ngdq0o65btr6"]
+
+[ext_resource type="Script" uid="uid://bpfw6eylbsqgs" path="res://scripts/model/visualization/PlantObject.cs" id="1_mr5w7"]
+[ext_resource type="ArrayMesh" uid="uid://ccednhb0smp4u" path="res://assets/trees/meshes/acacia/AuxScene_mesh2.res" id="1_qwjde"]
+[ext_resource type="ArrayMesh" uid="uid://boag7ke1w6sha" path="res://assets/trees/meshes/acacia/AuxScene_mesh.res" id="2_dg60f"]
+[ext_resource type="Texture2D" uid="uid://chk6y6mj83koe" path="res://assets/trees/meshes/acacia/tree(5).png" id="2_v5m5r"]
+
+[resource]
+script = ExtResource("1_mr5w7")
+Name = "Acacia"
+TrunkMesh = ExtResource("2_dg60f")
+FoliageMesh = ExtResource("1_qwjde")
+PlantTexture = ExtResource("2_v5m5r")
+metadata/_custom_type_script = "uid://bpfw6eylbsqgs"
