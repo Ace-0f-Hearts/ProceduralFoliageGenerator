@@ -1,0 +1,69 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5ea0nbc61gcy"]
+
+[ext_resource type="Script" uid="uid://bghems2f0ws61" path="res://scripts/viewmodel/ui/SettingsFileDialog.cs" id="1_t3mew"]
+[ext_resource type="PackedScene" uid="uid://c3wbnqj3khh2k" path="res://scenes/ui/pathInput.tscn" id="2_amih2"]
+
+[node name="Control" type="Control" node_paths=PackedStringArray("CustomGeneratorPathInput", "FileDialog")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_t3mew")
+CustomGeneratorPathInput = NodePath("Panel/VBoxContainer/ExecutableLineEdit")
+FileDialog = NodePath("FileDialog")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -236.5
+offset_top = -46.5
+offset_right = 236.5
+offset_bottom = 46.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Vegetation generator executable:"
+
+[node name="ExecutableLineEdit" parent="Panel/VBoxContainer" instance=ExtResource("2_amih2")]
+layout_mode = 2
+placeholder_text = "Executable path"
+Extensions = "*"
+Description = "Executable"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="Button" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Confirm"
+
+[node name="Button2" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+oversampling_override = 1.0
+title = "Open a File"
+initial_position = 1
+file_mode = 0
+access = 2
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button" to="." method="OnConfirmPressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button2" to="." method="OnCancelPressed"]

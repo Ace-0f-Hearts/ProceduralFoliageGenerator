@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://0o46f600831c"]
+[gd_scene load_steps=10 format=3 uid="uid://0o46f600831c"]
 
 [ext_resource type="Texture2D" uid="uid://dpbfq8gjvtt33" path="res://assets/github-mark-white.svg" id="1_6al76"]
 [ext_resource type="Script" uid="uid://b38yd6vktitc1" path="res://scripts/viewmodel/ui/OptionsButton.cs" id="1_ei471"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bcloso7x4yw4t" path="res://scripts/viewmodel/ui/DialogPopupButton.cs" id="2_qllka"]
 [ext_resource type="PackedScene" uid="uid://dt1ntm4vc1vf2" path="res://scenes/ui/fileDialogUi.tscn" id="6_qllka"]
 [ext_resource type="PackedScene" uid="uid://c7ee1iim7lyoe" path="res://scenes/ui/foliageLoadingDialogUi.tscn" id="7_gbtsf"]
+[ext_resource type="PackedScene" uid="uid://c5ea0nbc61gcy" path="res://scenes/ui/settingsDialog.tscn" id="9_6h8l2"]
 
 [node name="ControlUi" type="Control" node_paths=PackedStringArray("DialogPopupButtons", "FileDialogControllers")]
 layout_mode = 3
@@ -17,8 +18,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kalm3")
-DialogPopupButtons = [NodePath("Panel/MarginContainer3/HBoxContainer/Button_Generate"), NodePath("Panel/MarginContainer3/HBoxContainer/Button_Load")]
-FileDialogControllers = [NodePath("Control_GenerationDialog"), NodePath("Control_LoadingDialog")]
+DialogPopupButtons = [NodePath("Panel/MarginContainer3/HBoxContainer/GenerateButton"), NodePath("Panel/MarginContainer3/HBoxContainer/LoadButton"), NodePath("Panel/MarginContainer3/HBoxContainer/SettingsButton")]
+FileDialogControllers = [NodePath("Control_GenerationDialog"), NodePath("Control_LoadingDialog"), NodePath("Control_SettingsDialog")]
 metadata/_edit_pinned_properties_ = [&"DialogPopupButtons", &"FileDialogControllers"]
 
 [node name="Panel" type="PanelContainer" parent="."]
@@ -49,14 +50,19 @@ popup/item_1/text = "Exit"
 popup/item_1/id = 1
 script = ExtResource("1_ei471")
 
-[node name="Button_Generate" type="Button" parent="Panel/MarginContainer3/HBoxContainer"]
+[node name="GenerateButton" type="Button" parent="Panel/MarginContainer3/HBoxContainer"]
 layout_mode = 2
 text = "Generate"
 script = ExtResource("2_qllka")
 
-[node name="Button_Load" type="Button" parent="Panel/MarginContainer3/HBoxContainer"]
+[node name="LoadButton" type="Button" parent="Panel/MarginContainer3/HBoxContainer"]
 layout_mode = 2
 text = "Load"
+script = ExtResource("2_qllka")
+
+[node name="SettingsButton" type="Button" parent="Panel/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+text = "Settings"
 script = ExtResource("2_qllka")
 
 [node name="TextureButton" type="TextureButton" parent="Panel/MarginContainer3/HBoxContainer"]
@@ -76,6 +82,10 @@ visible = false
 layout_mode = 1
 
 [node name="Control_LoadingDialog" parent="." instance=ExtResource("7_gbtsf")]
+visible = false
+layout_mode = 1
+
+[node name="Control_SettingsDialog" parent="." instance=ExtResource("9_6h8l2")]
 visible = false
 layout_mode = 1
 

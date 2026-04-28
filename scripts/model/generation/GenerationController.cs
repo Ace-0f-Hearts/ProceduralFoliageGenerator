@@ -34,13 +34,15 @@ public record GenerationController
             try
             {
                 var content = File.ReadAllText(CommandData.PathToSpeciesAttributes);
-                InfoData.PlantAttributes = PlantAttributeParser.Parse(content);
+
+                var list = PlantAttributeParser.Parse(content);
+                if (list.Count > 0)
+                    InfoData.PlantAttributes = list;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 ErrorOccured?.Invoke(sender, e.Message);
-                
             }
         });
 
@@ -49,7 +51,10 @@ public record GenerationController
             try
             {
                 var content =  File.ReadAllText(CommandData.PathToSymbolSet);
-                InfoData.SymbolAttributes = SymbolAttributesParser.Parse(content);
+                
+                var list = SymbolAttributesParser.Parse(content);
+                if (list.Count > 0)
+                    InfoData.SymbolAttributes = list;
             }
             catch (Exception e)
             {
@@ -62,7 +67,7 @@ public record GenerationController
     public (bool,string[]) Execute()
     {
         string[] result = {};
-        bool execute = CommandData.IsReady();
+        bool execute = CommandData.IsReady() && InfoData.IsWellFormed();
         
         if (execute)
         {

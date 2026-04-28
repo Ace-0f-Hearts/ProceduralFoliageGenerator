@@ -25,7 +25,7 @@ public partial class GenerationExecutor : Node
     /// <summary>
     /// TODO: Finalize generatorPath once its done
     /// </summary>
-    private string _generatorPath = "/mnt/hobby-partition/Dev/ThesisWork/FoliageGen/cmake-build-default-system/apps/App";
+    private string _generatorPath = "./Generator/App";
     private string[] _generatorArguments;
 
     private string _logPrefix = "genlog_";
@@ -44,7 +44,7 @@ public partial class GenerationExecutor : Node
     public string GeneratorPath
     {
         get { return _generatorPath; }
-        private set
+        set
         {
             _generatorMutex.Lock();
             _generatorPath = value;
@@ -149,7 +149,6 @@ public partial class GenerationExecutor : Node
     private void _FinishThread()
     {
         _generatorThread.WaitToFinish();
-        GD.Print($"Generation Finished\nOutput Log:{OutputLog}\nError Code:{ErrorCode}");
 
         if (ErrorCode != 0)
         {

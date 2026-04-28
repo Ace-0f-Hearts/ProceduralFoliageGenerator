@@ -10,6 +10,7 @@ public partial class TerrainRenderer : Node3D
     private Texture2D _bumpMap;
     private Texture2D _normalMap;
     private MapData _mapData;
+
     
     public MapData MapData
     {
@@ -18,7 +19,7 @@ public partial class TerrainRenderer : Node3D
         {
             _mapData = value;
             
-            Terrain.SetPosition(new Vector3(_mapData.Width / MapData.Scaling / 2.0f, 0, _mapData.Height / MapData.Scaling / 2.0f));
+            Terrain.SetPosition(new Vector3(MapData.Width / MapData.Scaling / 2.0f, 0, MapData.Height / MapData.Scaling / 2.0f));
             
             (Terrain.Mesh as QuadMesh)?.SetSize(new Vector2(MapData.Width / MapData.Scaling, MapData.Height / MapData.Scaling));
             (Terrain.Mesh as QuadMesh)?.SetSubdivideDepth(64);
@@ -37,6 +38,7 @@ public partial class TerrainRenderer : Node3D
     [Export] public NoiseTexture2D DefaultNoiseTexture { get; private set; }
     [Export] public NoiseTexture2D DefaultNoiseNormal { get; private set; }
 
+    
     
     [Export]
     public Texture2D BumpMap
@@ -81,9 +83,6 @@ public partial class TerrainRenderer : Node3D
         
         BumpMap = DefaultNoiseTexture;
         NormalMap = DefaultNoiseNormal;
-
-        // BumpMap.GetImage().SaveJpg("BumpMap.jpeg");
-        // NormalMap.GetImage().SaveJpg("NormalMap.jpeg");
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -95,7 +94,12 @@ public partial class TerrainRenderer : Node3D
     public void SetBumpMap(Image bumpMap)
     {
         BumpMap = ImageTexture.CreateFromImage(bumpMap);
-        
-        //TODO: Calculate normal
+    }
+
+    public void SetMapTexture(Image mapTexture)
+    {
+          
+        var tex = ImageTexture.CreateFromImage(mapTexture);
+        (Terrain.MaterialOverride as ShaderMaterial)?.SetShaderParameter("tex", tex);
     }
 }

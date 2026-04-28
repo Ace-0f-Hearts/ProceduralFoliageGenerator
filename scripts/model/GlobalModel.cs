@@ -45,16 +45,13 @@ public class GlobalModel
         
     }
     
-    
-
-
     public void ClearTemporaryGenerationData()
     {
         GenerationController.Clear();
     }
 
 
-    public void ExecuteGeneration()
+    public bool ExecuteGeneration()
     {
         var (execute,flags) = GenerationController.Execute();
 
@@ -63,6 +60,7 @@ public class GlobalModel
             GenerationExecutor.Instance.GeneratorArguments = flags;
             GenerationExecutor.Instance.ExecuteGeneration();
         }
+        return execute;
     }
 
     public void LoadGeneratedFoliage()

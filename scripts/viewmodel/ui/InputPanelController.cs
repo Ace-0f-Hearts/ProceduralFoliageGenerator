@@ -40,6 +40,8 @@ public partial class InputPanelController : FileDialogController
         
         HeightMapOptions.CheckAndSignalWhenReady();
         DiffusionPointsOptions.CheckAndSignalWhenReady();
+
+        InstanceOutputPathInput.Path = "instances.json";
         
         base._Ready();
     }

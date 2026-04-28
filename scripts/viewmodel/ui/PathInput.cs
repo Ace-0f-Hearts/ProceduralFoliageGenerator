@@ -4,12 +4,23 @@ using System;
 namespace ProceduralFoliageGenerator.ViewModel;
 public partial class PathInput : LineEdit
 {
+    private String _path;
+    
     [Export]
     public string Extensions { get; set; }
     [Export]
     public string Description { get; set; }
-    
-    public string Path { get; set; } = "";
+
+    public String Path
+    {
+        get => _path;
+        set
+        {
+            _path = value;
+            this.Text = _path;
+            this.EmitSignal(LineEdit.SignalName.TextSubmitted, this);
+        }
+    }
     
     [Export]
     public Button FileDialogRequestButton { get; private set; }

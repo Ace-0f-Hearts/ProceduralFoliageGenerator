@@ -58,9 +58,11 @@ public class GenerationCommandBuilder
         
         var configFileName = location + "config.json";
         var mapDataFile = location + "map_data.json";
+        var mapTexture =  location + "map_texture.jpeg";
         
         configFileName = ProjectSettings.GlobalizePath(configFileName);
         mapDataFile = ProjectSettings.GlobalizePath(mapDataFile);
+        mapTexture = ProjectSettings.GlobalizePath(mapTexture);
         var buildInstructions = new List<(string, Func<string>)>
         {
             ("--ocad",() => data.PathToMapFile),
@@ -69,6 +71,7 @@ public class GenerationCommandBuilder
             ("--out", () => data.PathToPlantInstances),
             ("--config", () => { return configFileName; }),
             ("--write_map_data", () => {return mapDataFile; }),
+            ("--foliage_img", () => { return mapTexture; }),
         };
         
         bool isReady = data.IsReady();

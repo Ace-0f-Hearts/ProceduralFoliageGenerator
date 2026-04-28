@@ -7,4 +7,9 @@
   <ItemGroup>
     <Folder Include="scenes\ui\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitattributes" />
+    <Content Include=".gitignore" />
+    <Content Include=".gitmodules" />
+  </ItemGroup>
 </Project>

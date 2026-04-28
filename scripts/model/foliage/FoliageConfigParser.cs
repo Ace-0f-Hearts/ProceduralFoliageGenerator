@@ -11,11 +11,20 @@ public class FoliageConfigParser
         FoliageConfig config = new ();
         var json = Json.ParseString(content);
         var jsonObject = json.AsGodotDictionary();
-        
-        config.PathToSpeciesAttributes = jsonObject["species"].AsString();
-        config.PathToInstances = jsonObject["instances"].AsString();
-        config.PathToMapData = jsonObject["map_data"].AsString();
-        config.PathToHeightMap =  jsonObject["height_map"].AsString();
+        try
+        {
+            config.PathToSpeciesAttributes = jsonObject["species"].AsString();
+            config.PathToInstances = jsonObject["instances"].AsString();
+            config.PathToMapData = jsonObject["map_data"].AsString();
+            config.PathToHeightMap =  jsonObject["height_map"].AsString();
+            config.PathToMapTexture =  jsonObject["map_texture"].AsString();
+        }
+        catch (Exception e)
+        {
+            GD.Print(e);
+            throw;
+        }
+
         
         return config;
     } 

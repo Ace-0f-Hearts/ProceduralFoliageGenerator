@@ -17,8 +17,12 @@ public partial class Renderer : Node3D
     }
     public void OnFoliageReady(object o, EventArgs args)
     {
+        FoliageRenderer.Clear();
+        
         TerrainRenderer.MapData = GlobalModel.Instance.FoliageController.Data.MapData;
         TerrainRenderer.SetBumpMap(GlobalModel.Instance.FoliageController.Data.HeightMap);
+        TerrainRenderer.SetMapTexture(GlobalModel.Instance.FoliageController.Data.MapTexture);
+        
         
         FoliageRenderer.MapData =  GlobalModel.Instance.FoliageController.Data.MapData;
         FoliageRenderer.PopulateMultiMeshes(GlobalModel.Instance.FoliageController.Build());

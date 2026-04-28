@@ -9,6 +9,8 @@ public partial class ControlUi : Control
     public bool IsGenerationPopupOpen { get; set; }
     public bool IsLoadingPopupOpen { get; set; }
     
+    public bool IsSettingsPopupOpen { get; set; }
+    
     [Export]
     public Array<DialogPopupButton>  DialogPopupButtons { get; set; }
     [Export]

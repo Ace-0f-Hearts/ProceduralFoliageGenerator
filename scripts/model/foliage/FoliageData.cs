@@ -10,10 +10,11 @@ namespace ProceduralFoliageGenerator.Model;
 /// </summary>
 public class FoliageData
 {
-    private List<PlantAttributes> _plantAttributes;
-    private List<PlantInstance> _plantInstances;
+    private List<PlantAttributes> _plantAttributes = new();
+    private List<PlantInstance> _plantInstances = new();
     private MapData _mapData;
     private Image _heightMap;
+    private Image _mapTexture;
 
     public Image HeightMap
     {
@@ -22,7 +23,14 @@ public class FoliageData
             _heightMap = value;
             UpdateElevationOfInstances();
         }
-    } 
+    }
+
+    public Image MapTexture
+    {
+        get => _mapTexture;
+        set => _mapTexture = value;
+    }
+    
     public MapData MapData { 
         get => _mapData;
         set {
@@ -68,8 +76,10 @@ public class FoliageData
     }
     public void Clear()
     {
-        _plantInstances.Clear();
-        _plantAttributes.Clear();
+        _plantInstances?.Clear();
+        _plantAttributes?.Clear();
+        _mapData  = null;
+
     }
 
 
@@ -118,4 +128,6 @@ public class FoliageData
             
         }
     }
+
+
 }

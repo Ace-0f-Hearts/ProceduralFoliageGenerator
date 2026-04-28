@@ -37,6 +37,11 @@ public record GenerationInfoData
     public int NumberOfSymbols => SymbolAttributes.Count;
     
     public event EventHandler InfoChanged;
+
+    public bool IsWellFormed()
+    {
+        return PlantAttributes is not null && SymbolAttributes is not null && NumberOfPlantAttributes > 0  && NumberOfSymbols > 0 && NumberOfRandomDiffusionPoints >= 0;
+    }
     
     public void Clear()
     {

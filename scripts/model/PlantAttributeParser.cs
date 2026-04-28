@@ -33,7 +33,15 @@ public class PlantAttributeParser
         foreach (var item in array)
         {
             var plantAttr = item.AsGodotDictionary();
-            
+
+            if (!plantAttr.ContainsKey("id") || !plantAttr.ContainsKey("name") ||
+                !plantAttr.ContainsKey("growth_radius") || !plantAttr.ContainsKey("elevation") ||
+                !plantAttr.ContainsKey("slope"))
+            {
+                GD.Print("Ill-formed species attributes list!");
+                return new List<PlantAttributes>();
+            }
+                
             var id = plantAttr["id"].AsInt32();
             var name = plantAttr["name"].AsStringName();
             var growthRadius = ParseRange(plantAttr["growth_radius"].AsGodotArray());

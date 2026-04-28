@@ -18,6 +18,12 @@ public class SymbolAttributesParser
         {
             var symbolAttr = item.AsGodotDictionary();
             
+            if (!symbolAttr.ContainsKey("id") || !symbolAttr.ContainsKey("flags") ||
+                !symbolAttr.ContainsKey("radius"))
+            {
+                GD.Print("Ill-formed symbol attributes list!");
+                return new List<SymbolAttributes>();
+            }
             
             var id = symbolAttr["id"].AsInt32();
             var flags = symbolAttr["flags"].AsInt16();

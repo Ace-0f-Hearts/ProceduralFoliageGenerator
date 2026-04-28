@@ -12,6 +12,6 @@ public class MapData
     public float HorizontalOffset { get; set; } = 0;
     public float VerticalOffset { get; set; } = 0;
 
-    public float HeightScale { get; set; } = 2.0f;
+    public float HeightScale { get; set; } = 1.0f;
     public float Scaling { get; set; } = 100;
 }

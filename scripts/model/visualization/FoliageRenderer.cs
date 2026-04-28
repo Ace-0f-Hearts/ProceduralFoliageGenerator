@@ -7,7 +7,8 @@ namespace ProceduralFoliageGenerator.Model;
 public partial class FoliageRenderer : Node3D
 {
     public MapData MapData { get; set; }
-    public List<MultiMeshInstance3D> MultiMeshes { get; init; } = new();
+    public List<MeshInstance3D> Instances { get; init; } = new();
+    public List<Sprite3D> Sprites { get; init; } = new();
 
 
     public override void _Ready()
@@ -26,35 +27,7 @@ public partial class FoliageRenderer : Node3D
     
     private void RequestNewMultiMesh(PlantObject plant, List<PlantInstance> instances)
     {
-        // var trunkMultiMesh = new MultiMesh();
-        // trunkMultiMesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3D;
-        // trunkMultiMesh.InstanceCount = instances.Count;
-        // trunkMultiMesh.VisibleInstanceCount = -1; // Draw all instances
-        //
-        // var foliageMultiMesh = new MultiMesh();
-        // foliageMultiMesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3D;
-        // foliageMultiMesh.InstanceCount = instances.Count;
-        // foliageMultiMesh.VisibleInstanceCount = -1;
-        //
-        // trunkMultiMesh.SetMesh(plant.TrunkMesh);
-        // foliageMultiMesh.SetMesh(plant.FoliageMesh);
-        // int idx = 0;
-        // foreach (var instance in instances)
-        // {
-        //     trunkMultiMesh.SetInstanceTransform(idx,new Transform3D(Basis.Identity.Scaled(new Vector3(instance.Scale / MapData.Scaling / 10.0f,instance.Scale / MapData.Scaling / 10.0f,instance.Scale / MapData.Scaling / 10.0f)) ,instance.WorldPosition / MapData.Scaling));
-        //     foliageMultiMesh.SetInstanceTransform(idx,new Transform3D(Basis.Identity.Scaled(new Vector3(instance.Scale / MapData.Scaling / 10.0f,instance.Scale / MapData.Scaling / 10.0f,instance.Scale / MapData.Scaling / 10.0f)) ,instance.WorldPosition / MapData.Scaling));
-        //     ++idx;
-        // }
-        //
-        // var trunkMultiMeshInstance = new MultiMeshInstance3D();
-        // var foliageMultiMeshInstance = new MultiMeshInstance3D();
-        // trunkMultiMeshInstance.SetMultimesh(trunkMultiMesh);
-        // foliageMultiMeshInstance.SetMultimesh(trunkMultiMesh);
-        // this.AddChild(trunkMultiMeshInstance);
-        // this.AddChild(foliageMultiMeshInstance);
-        // MultiMeshes.Add(trunkMultiMeshInstance);
-        // MultiMeshes.Add(foliageMultiMeshInstance);
-
+        
         foreach (var instance in instances)
         {
             
@@ -105,6 +78,9 @@ public partial class FoliageRenderer : Node3D
             sprite.VisibilityRangeEnd = 35;
             sprite.VisibilityRangeEndMargin = 5;
             
+            Instances.Add(trunk);
+            Instances.Add(foliage);
+            Sprites.Add(sprite);
             
             this.AddChild(trunk);
             this.AddChild(foliage);
@@ -116,12 +92,18 @@ public partial class FoliageRenderer : Node3D
 
     public void Clear()
     {
-        foreach (var multiMesh in MultiMeshes)
+        foreach (var instance in Instances)
         {
-            this.RemoveChild(multiMesh);
-            multiMesh.Dispose();
+            instance.QueueFree();
         }
-        MultiMeshes.Clear();
+
+        foreach (var sprite in Sprites)
+        {
+            sprite.QueueFree();
+        }
+        
+        Instances.Clear();
+        Sprites.Clear();
     }
 
  

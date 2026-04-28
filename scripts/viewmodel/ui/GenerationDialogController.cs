@@ -32,14 +32,18 @@ public partial class GenerationDialogController : Control
     
     public void OnGenerationStarted()
     {
-        GlobalModel.Instance.ExecuteGeneration();
-        ButtonsContainer.Hide();
-        ProgressBarContainer.Show();
+        var executing = GlobalModel.Instance.ExecuteGeneration();
+
+        if (executing)
+        {
+            ButtonsContainer.Hide();
+            ProgressBarContainer.Show();
+        }
+
     }
 
     public void OnGenerationProgressed(float progress)
     {
-        //TODO: Update progressbar   
     }
 
     public void OnGenerationCompletedWithFailure()
