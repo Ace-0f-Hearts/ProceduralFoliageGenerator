@@ -16,6 +16,13 @@ public class PlantInstancesParser
         foreach (var item in array)
         {
             var rawInstance = item.AsGodotDictionary();
+
+            if (!rawInstance.ContainsKey("id") || !rawInstance.ContainsKey("scale") || !rawInstance.ContainsKey("x") ||
+                !rawInstance.ContainsKey("y"))
+            {
+                GD.Print("Ill-formed list of instances");
+                return new List<PlantInstance>();
+            }
             
             var id = rawInstance["id"].AsInt32();
             var scale = rawInstance["scale"].AsSingle();

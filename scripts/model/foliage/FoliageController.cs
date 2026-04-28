@@ -35,6 +35,8 @@ public class FoliageController
     
     public void Populate()
     {
+        bool problemWithConfig = false;
+        
         if (!Config.IsReady())
         {
             ErrorOccured?.Invoke(this, "One or more necessary generation artifacts are unavailable!");
@@ -45,37 +47,62 @@ public class FoliageController
         try
         {
             content = File.ReadAllText(Config.PathToSpeciesAttributes);
-            Data.PlantAttributes = PlantAttributeParser.Parse(content);
+            var list = PlantAttributeParser.Parse(content);
+            if (list.Count > 0)
+            {
+                Data.PlantAttributes = list;
+            }
+            else
+            {
+                problemWithConfig =  true;
+            }
         }
         catch (Exception e)
         {
             ErrorOccured?.Invoke(this, "Error occured while reading file containing species attributes: " + e.Message);
             GD.Print(e);
-            throw;
+            problemWithConfig =  true;
         }
         
         try
         {
             content =  File.ReadAllText(Config.PathToInstances);
-            Data.PlantInstances = PlantInstancesParser.Parse(content);
+            var list = PlantInstancesParser.Parse(content);
+
+            if (list.Count > 0)
+            {
+                Data.PlantInstances = list;
+            }
+            else
+            {
+                problemWithConfig =  true;
+            }
         }
         catch (Exception e)
         {
             ErrorOccured?.Invoke(this, "Error occured while reading file containing instances: " + e.Message);
             GD.Print(e);
-            throw;
+            problemWithConfig =  true;
         }
         
         try
         {
             content =  File.ReadAllText(Config.PathToMapData);
-            Data.MapData = MapDataParser.Parse(content);
+            var data = MapDataParser.Parse(content);
+            if (data is not null)
+            {
+                Data.MapData = data;
+            }
+            else
+            {
+                problemWithConfig =  true;
+            }
         }
         catch (Exception e)
         {
             ErrorOccured?.Invoke(this, "Error occured while reading file containing map information: " + e.Message);
             GD.Print(e);
-            throw;
+            problemWithConfig =  true;
         }
 
         try
@@ -86,21 +113,23 @@ public class FoliageController
         {
             ErrorOccured?.Invoke(this, "Error occured while reading file containing height map: " + e.Message);
             GD.Print(e);
-            throw;
+            problemWithConfig =  true;
         }
 
         try
         {
-            Data.MapTexture = Image.LoadFromFile(Config.PathToMapTexture);
+             var tex = ResourceLoader.Load(Config.PathToMapTexture);
+             Data.MapTexture = Image.LoadFromFile(Config.PathToMapTexture);
         }
         catch (Exception e)
         {
             ErrorOccured?.Invoke(this, "Error occured while reading file containing map texture: " + e.Message);
             GD.Print(e);
-            throw;
+            problemWithConfig =  true;
         }
-        
-        
+
+        if (problemWithConfig)
+            return;
         
         BuilderReady?.Invoke(this, EventArgs.Empty);
     }
