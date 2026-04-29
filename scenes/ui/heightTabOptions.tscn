@@ -10,6 +10,8 @@ height = 2048
 noise = ExtResource("2_bmtnh")
 
 [node name="TabContainer" type="TabContainer" node_paths=PackedStringArray("HeightMapPathInput")]
+offset_right = 239.0
+offset_bottom = 113.0
 tab_alignment = 1
 current_tab = 0
 clip_tabs = false
@@ -47,20 +49,12 @@ texture = SubResource("NoiseTexture2D_iyu7y")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="Default" type="RichTextLabel" parent="."]
-visible = false
-layout_mode = 2
-text = "Compute the height map from the OCAD map file directly. 
-(Not yet implemented)"
-fit_content = true
-metadata/_tab_index = 1
-
 [node name="From File" parent="." instance=ExtResource("2_t7don")]
 visible = false
 layout_mode = 2
 placeholder_text = "Input path to height map"
 Extensions = "*.jpeg, *.jpg, *.png"
 Description = "Height map"
-metadata/_tab_index = 2
+metadata/_tab_index = 1
 
 [connection signal="tab_changed" from="." to="." method="OnTabChanged"]

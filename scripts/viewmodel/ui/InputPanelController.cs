@@ -28,7 +28,7 @@ public partial class InputPanelController : FileDialogController
         InstanceOutputPathInput.FileDialogRequested += OnFileDialogWriteRequested;
         
         HeightMapOptions.HeightMapPathInput.FileDialogRequested += OnFileDialogReadRequested;
-        DiffusionPointsOptions.DiffusionFilePathInput.FileDialogRequested += OnFileDialogReadRequested;
+        // DiffusionPointsOptions.DiffusionFilePathInput.FileDialogRequested += OnFileDialogReadRequested;
         
         MapFilePathInput.TextSubmitted += OnMapSet;
         AttributesPathInput.TextSubmitted += OnAttributesFileSet;

@@ -27,7 +27,7 @@ public partial class HeightMapOptionsInput : TabContainer
         HeightMapPathInput.EnableButtons();
         this.SetTabDisabled(0,false);
         this.SetTabDisabled(1,false);
-        this.SetTabDisabled(2,false);
+        // this.SetTabDisabled(2,false);
         
     }
     
@@ -36,7 +36,7 @@ public partial class HeightMapOptionsInput : TabContainer
         HeightMapPathInput.DisableButtons();
         this.SetTabDisabled(0,true);
         this.SetTabDisabled(1,true);
-        this.SetTabDisabled(2,true);
+        // this.SetTabDisabled(2,true);
     }
     
     public void CheckAndSignalWhenReady()
@@ -51,17 +51,17 @@ public partial class HeightMapOptionsInput : TabContainer
     public void OnTabChanged(int i)
     {
 
-        if (i == 1)
-        {
-            i = 0;
-            this.SetCurrentTab(i);
-        }
+        // if (i == 1)
+        // {
+        //     i = 0;
+        //     this.SetCurrentTab(i);
+        // }
         
         if (i == 0)
             Options.Flag = HeightMapAcquisitionFlag.Random;
+        // else if (i == 1)
+        //     Options.Flag = HeightMapAcquisitionFlag.Default;
         else if (i == 1)
-            Options.Flag = HeightMapAcquisitionFlag.Default;
-        else if (i == 2)
             Options.Flag = HeightMapAcquisitionFlag.FromFile;
         
         CheckAndSignalWhenReady();

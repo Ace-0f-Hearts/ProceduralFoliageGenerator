@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://b2j2qk6byckh3" path="res://scenes/ui/diffusionTabOptions.tscn" id="5_3bmjx"]
 
 [node name="InputPanel" type="VBoxContainer" node_paths=PackedStringArray("MapFilePathInput", "HeightMapOptions", "DiffusionPointsOptions", "AttributesPathInput", "SymbolSetPathInput", "InstanceOutputPathInput")]
+offset_right = 245.0
+offset_bottom = 604.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1

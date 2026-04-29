@@ -19,9 +19,7 @@ namespace ProceduralFoliageGenerator.ViewModel
         {
             switch (id)
             {
-                case 0: //Settings
-                    break;
-                case 1: //Exit
+                case 0: //Exit
                     GetTree().Root.PropagateNotification((int)NotificationWMCloseRequest);
                     GetTree().Quit();
                     break;

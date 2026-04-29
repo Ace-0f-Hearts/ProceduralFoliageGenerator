@@ -1,14 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2j2qk6byckh3"]
+[gd_scene load_steps=2 format=3 uid="uid://b2j2qk6byckh3"]
 
 [ext_resource type="Script" uid="uid://dhwqurkioa4gg" path="res://scripts/viewmodel/ui/DiffusionPointsOptionsInput.cs" id="1_2meoc"]
-[ext_resource type="PackedScene" uid="uid://c3wbnqj3khh2k" path="res://scenes/ui/pathInput.tscn" id="1_dwdrp"]
 
 [node name="DiffusionTabContainer" type="TabContainer" node_paths=PackedStringArray("DiffusionFilePathInput", "NumberOfPointsInput")]
+offset_right = 237.0
+offset_bottom = 77.0
 tab_alignment = 1
 current_tab = 0
 clip_tabs = false
 script = ExtResource("1_2meoc")
-DiffusionFilePathInput = NodePath("From File/DiffusionFileLineEdit")
+DiffusionFilePathInput = NodePath("")
 NumberOfPointsInput = NodePath("Random/NumberOfPointsSpinBox")
 
 [node name="Random" type="HBoxContainer" parent="."]
@@ -28,29 +29,5 @@ layout_mode = 2
 min_value = 1.0
 value = 3.0
 rounded = true
-
-[node name="Manual" type="HBoxContainer" parent="."]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="Manual"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "(Not yet implemented)"
-fit_content = true
-language = "en"
-
-[node name="From File" type="HBoxContainer" parent="."]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 2
-
-[node name="DiffusionFileLineEdit" parent="From File" instance=ExtResource("1_dwdrp")]
-layout_mode = 2
-placeholder_text = "Input path to diffusion points file"
-Extensions = "*.json"
-Description = "Diffusion points file"
 
 [connection signal="tab_changed" from="." to="." method="OnTabChanged"]

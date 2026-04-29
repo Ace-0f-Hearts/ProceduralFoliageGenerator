@@ -75,8 +75,8 @@ public record HeightMapOptions
 
         await _defaultNoiseTexture.ToSignal(_defaultNoiseTexture, NoiseTexture2D.SignalName.Changed);
 
-        _defaultNoiseTexture.GetImage().SaveJpg(_defaultPath);
-        Path = _defaultPath;
+        _defaultNoiseTexture.GetImage().SaveJpg(ProjectSettings.GlobalizePath(_defaultPath));
+        Path = ProjectSettings.GlobalizePath(_defaultPath);
     }
     
     public bool Ready()
