@@ -18,7 +18,7 @@ public partial class PathInput : LineEdit
         {
             _path = value;
             Text = _path;
-            EmitSignal(LineEdit.SignalName.TextSubmitted, this);
+            EmitSignal(LineEdit.SignalName.TextSubmitted, _path);
         }
     }
 

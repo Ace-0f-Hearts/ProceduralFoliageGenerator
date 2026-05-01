@@ -23,33 +23,37 @@ public class GenerationDataCache
         var newSymbolSet = cacheInstanceLocation + Path.GetFileName(data.PathToSymbolSet);
         var newSpeciesAttributes = cacheInstanceLocation + Path.GetFileName(data.PathToSpeciesAttributes);
         var newInstances = cacheInstanceLocation + Path.GetFileName(data.PathToPlantInstances);
-
-
+        var newHeightMap = cacheInstanceLocation + Path.GetFileName(data.HeightMapOptions.Path);
+        
         var error = dir.Copy(data.PathToMapFile, newOcad);
+        if (error != Error.Ok)
+            GD.PrintErr(error);
+        
         error = dir.Copy(data.PathToSymbolSet, newSymbolSet);
+        if (error != Error.Ok)
+            GD.PrintErr(error);
+        
         error = dir.Copy(data.PathToSpeciesAttributes, newSpeciesAttributes);
-
-        if (data.HeightMapOptions.Flag == HeightMapAcquisitionFlag.FromFile)
-        {
-            var newHeightMap = cacheInstanceLocation + Path.GetFileName(data.HeightMapOptions.Path);
-            dir.Copy(data.HeightMapOptions.Path, newHeightMap);
-            data.HeightMapOptions.Path = ProjectSettings.GlobalizePath(newHeightMap);
-        }
+        if (error != Error.Ok)
+            GD.PrintErr(error);
+        
+        error = dir.Copy(data.HeightMapOptions.Path, newHeightMap);
+        if (error != Error.Ok)
+            GD.PrintErr(error);
 
         if (data.DiffusionPointsOptions.Flag == DiffusionPointsAccusitionFlag.FromFile)
         {
             var newDiffusionPoints = cacheInstanceLocation + Path.GetFileName(data.DiffusionPointsOptions.Path);
-            dir.Copy(data.DiffusionPointsOptions.Path, newDiffusionPoints);
+            error = dir.Copy(data.DiffusionPointsOptions.Path, newDiffusionPoints);
+            if (error != Error.Ok)
+                GD.PrintErr(error);
             data.DiffusionPointsOptions.Path = ProjectSettings.GlobalizePath(newDiffusionPoints);
         }
 
-
+        data.HeightMapOptions.Path = ProjectSettings.GlobalizePath(newHeightMap);
         data.PathToMapFile = ProjectSettings.GlobalizePath(newOcad);
         data.PathToSymbolSet = ProjectSettings.GlobalizePath(newSymbolSet);
         data.PathToSpeciesAttributes = ProjectSettings.GlobalizePath(newSpeciesAttributes);
         data.PathToPlantInstances = ProjectSettings.GlobalizePath(newInstances);
-
-
-        GD.Print(data.ToString());
     }
 }
