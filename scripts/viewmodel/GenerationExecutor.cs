@@ -15,10 +15,7 @@ public partial class GenerationExecutor : Node
     private static GenerationExecutor _instance;
     private string[] _generatorArguments;
     private Mutex _generatorMutex;
-
-    /// <summary>
-    ///     TODO: Finalize generatorPath once its done
-    /// </summary>
+    
     private string _generatorPath = "./Generator/App";
 
     private GodotThread _generatorThread;
@@ -43,7 +40,6 @@ public partial class GenerationExecutor : Node
 
     /// <summary>
     ///     Path to the executable foliage generator program.
-    ///     TODO: Finalize its path
     /// </summary>
     public string GeneratorPath
     {
