@@ -1,0 +1,7 @@
+{
+	"height_map" : "./examples/config_saves/2026-5-1-10-30-heightmap.jpeg",
+	"instances" : "./examples/config_saves/2026-5-1-10-30-instances.json",
+	"map_data" : "./examples/config_saves/2026-5-1-10-31-map_data.json",
+	"map_texture" : "./examples/config_saves/2026-5-1-10-31-map_texture.jpeg",
+	"species" : "./examples/config_saves/2026-5-1-10-30-five.json"
+}
