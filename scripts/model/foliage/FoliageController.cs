@@ -103,7 +103,6 @@ public class FoliageController
 
         try
         {
-            var tex = ResourceLoader.Load(Config.PathToMapTexture);
             Data.MapTexture = Image.LoadFromFile(Config.PathToMapTexture);
         }
         catch (Exception e)
