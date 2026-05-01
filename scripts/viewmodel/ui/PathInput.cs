@@ -1,32 +1,31 @@
-using Godot;
 using System;
+using Godot;
 
 namespace ProceduralFoliageGenerator.ViewModel;
+
 public partial class PathInput : LineEdit
 {
-    private String _path;
-    
-    [Export]
-    public string Extensions { get; set; }
-    [Export]
-    public string Description { get; set; }
+    private string _path;
 
-    public String Path
+    [Export] public string Extensions { get; set; }
+
+    [Export] public string Description { get; set; }
+
+    public string Path
     {
         get => _path;
         set
         {
             _path = value;
-            this.Text = _path;
-            this.EmitSignal(LineEdit.SignalName.TextSubmitted, this);
+            Text = _path;
+            EmitSignal(LineEdit.SignalName.TextSubmitted, this);
         }
     }
-    
-    [Export]
-    public Button FileDialogRequestButton { get; private set; }
 
-    public event Action<string,string,PathInput> FileDialogRequested ;
-    
+    [Export] public Button FileDialogRequestButton { get; private set; }
+
+    public event Action<string, string, PathInput> FileDialogRequested;
+
     public override void _Ready()
     {
         FileDialogRequestButton!.Pressed += () => { FileDialogRequested?.Invoke(Extensions, Description, this); };
@@ -34,13 +33,11 @@ public partial class PathInput : LineEdit
 
     public void EnableButtons()
     {
-        this.FileDialogRequestButton.Disabled = false;
+        FileDialogRequestButton.Disabled = false;
     }
 
     public void DisableButtons()
     {
-        this.FileDialogRequestButton.Disabled = true;
+        FileDialogRequestButton.Disabled = true;
     }
-    
 }
-

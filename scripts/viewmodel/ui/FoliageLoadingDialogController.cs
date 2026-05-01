@@ -1,27 +1,22 @@
-using Godot;
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using Godot;
 using ProceduralFoliageGenerator.Model;
 
 namespace ProceduralFoliageGenerator.ViewModel;
+
 public partial class FoliageLoadingDialogController : FileDialogController
 {
 
-    private const int InitialItemAmount = 5; 
-    
     [Export] public PathInput FoliageConfigInput { get; set; }
-    
-    public List<InstanceAmountItem> Items;
-    
+
     public override void _Ready()
     {
         FoliageConfigInput.FileDialogRequested += OnFileDialogReadRequested;
         FoliageConfigInput.TextSubmitted += OnConfigInput;
-        
+
         base._Ready();
     }
-    
+
     public override void OnFileDialogOpenRequested(string extensions, string description, PathInput input)
     {
         FoliageConfigInput.DisableButtons();
@@ -44,19 +39,19 @@ public partial class FoliageLoadingDialogController : FileDialogController
     {
         GlobalModel.Instance.FoliageController.ParseConfig(path);
     }
-    
+
 
     public void OnConfirmPressed()
     {
         FoliageConfigInput.Clear();
         GlobalModel.Instance.FoliageController.Populate();
-        
-        this.Hide();
+
+        Hide();
     }
 
     public void OnCancelPressed()
     {
         FoliageConfigInput.Clear();
-        this.Hide();
+        Hide();
     }
 }

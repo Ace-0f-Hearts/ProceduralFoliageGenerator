@@ -6,16 +6,13 @@ using ProceduralFoliageGenerator.ViewModel;
 namespace ProceduralFoliageGenerator.Model;
 
 /// <summary>
-/// Responsible for constructing the string containing the flags for the command to be executed
+///     Responsible for constructing the string containing the flags for the command to be executed
 /// </summary>
 public class GenerationCommandBuilder
 {
-
-
-    
-    public static List<String> BuildHeightMapFlag(GenerationCommandData data)
+    public static List<string> BuildHeightMapFlag(GenerationCommandData data)
     {
-        List<String> resultFlags = new();
+        List<string> resultFlags = new();
         switch (data.HeightMapOptions.Flag)
         {
             case HeightMapAcquisitionFlag.FromFile:
@@ -27,14 +24,15 @@ public class GenerationCommandBuilder
                 resultFlags.Add(ProjectSettings.GlobalizePath(data.HeightMapOptions.Path));
                 break;
             default:
-                throw  new ArgumentException($"Invalid heightmap option {data.HeightMapOptions.Flag}");
+                throw new ArgumentException($"Invalid heightmap option {data.HeightMapOptions.Flag}");
         }
+
         return resultFlags;
     }
 
-    public static List<String> BuildDiffusionPointsFlag(GenerationCommandData data)
+    public static List<string> BuildDiffusionPointsFlag(GenerationCommandData data)
     {
-        List<String> resultFlags = new();
+        List<string> resultFlags = new();
         switch (data.DiffusionPointsOptions.Flag)
         {
             case DiffusionPointsAccusitionFlag.Random:
@@ -51,44 +49,46 @@ public class GenerationCommandBuilder
 
         return resultFlags;
     }
-    public static (string,string[]) Build(GenerationCommandData data)
+
+    public static (string, string[]) Build(GenerationCommandData data)
     {
         var time = Time.GetDatetimeDictFromSystem();
-        var location = GenerationDataCache.CacheLocation + "/" + time["year"] + "-" + time["month"] + "-" + time["day"] +  "-"  + time["hour"] + "-" + time["minute"] + "-";
-        
+        var location = GenerationDataCache.CacheLocation + "/" + time["year"] + "-" + time["month"] + "-" +
+                       time["day"] + "-" + time["hour"] + "-" + time["minute"] + "-";
+
         var configFileName = location + "config.json";
         var mapDataFile = location + "map_data.json";
-        var mapTexture =  location + "map_texture.jpeg";
-        
+        var mapTexture = location + "map_texture.jpeg";
+
         configFileName = ProjectSettings.GlobalizePath(configFileName);
         mapDataFile = ProjectSettings.GlobalizePath(mapDataFile);
         mapTexture = ProjectSettings.GlobalizePath(mapTexture);
         var buildInstructions = new List<(string, Func<string>)>
         {
-            ("--ocad",() => data.PathToMapFile),
+            ("--ocad", () => data.PathToMapFile),
             ("--species", () => data.PathToSpeciesAttributes),
             ("--symbol", () => data.PathToSymbolSet),
             ("--out", () => data.PathToPlantInstances),
             ("--config", () => { return configFileName; }),
-            ("--write_map_data", () => {return mapDataFile; }),
-            ("--foliage_img", () => { return mapTexture; }),
+            ("--write_map_data", () => { return mapDataFile; }),
+            ("--foliage_img", () => { return mapTexture; })
         };
-        
-        bool isReady = data.IsReady();
-        List<String> command = new ();
-        if (isReady) 
+
+        var isReady = data.IsReady();
+        List<string> command = new();
+        if (isReady)
         {
-            foreach (var (option,instruction) in buildInstructions)
+            foreach (var (option, instruction) in buildInstructions)
             {
                 command.Add(option);
                 command.Add(instruction());
             }
+
             command.AddRange(BuildDiffusionPointsFlag(data));
             command.AddRange(BuildHeightMapFlag(data));
         }
-        
 
-        
+
         return (configFileName, command.ToArray());
     }
 }

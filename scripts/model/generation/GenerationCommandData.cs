@@ -7,16 +7,14 @@ using FileAccess = Godot.FileAccess;
 namespace ProceduralFoliageGenerator.Model;
 
 /// <summary>
-/// Contains data that we will directly use for requesting the foliage generation
+///     Contains data that we will directly use for requesting the foliage generation
 /// </summary>
 public class GenerationCommandData
 {
-    private String _pathToSymbolSet = String.Empty;
-    private String _pathToMapFile = String.Empty;
-    private String _pathToSpeciesAttributes = String.Empty;
-    private String _pathToPlantInstances  = String.Empty;
+    private string _pathToSpeciesAttributes = string.Empty;
+    private string _pathToSymbolSet = string.Empty;
 
-    public String PathToSymbolSet
+    public string PathToSymbolSet
     {
         get => _pathToSymbolSet;
         set
@@ -26,16 +24,9 @@ public class GenerationCommandData
         }
     }
 
-    public String PathToMapFile
-    {
-        get =>  _pathToMapFile;
-        set
-        {
-            _pathToMapFile = value;
-        }
-    }
+    public string PathToMapFile { get; set; } = string.Empty;
 
-    public String PathToSpeciesAttributes
+    public string PathToSpeciesAttributes
     {
         get => _pathToSpeciesAttributes;
         set
@@ -45,65 +36,61 @@ public class GenerationCommandData
         }
     }
 
-    public String PathToPlantInstances
-    {
-        get => _pathToPlantInstances;
-        set
-        {
-            _pathToPlantInstances = value;
-        }
-    }
-    
+    public string PathToPlantInstances { get; set; } = string.Empty;
+
     public DiffusionPointsOptions DiffusionPointsOptions { get; set; }
     public HeightMapOptions HeightMapOptions { get; set; }
-    
+
     public event EventHandler PathToSymbolSetChanged;
     public event EventHandler PathToSpeciesAttributesChanged;
-    
+
     public bool IsReady()
     {
-        var predicates = 
-            new List<(Func<bool>,string)>{
-                (() => { return FileAccess.FileExists(PathToSymbolSet); },"Issue with file containing the symbol set: File does not exist\n"),
-                (() => { return Path.HasExtension(PathToSymbolSet) && Path.GetExtension(PathToSymbolSet) == ".json"; },"Issue with file containing the symbol set: Extension is missing or not supported. Supported extensions: '.json'\n"),
-                (() => { return FileAccess.FileExists(PathToMapFile);},"Issue with OCAD map file: File does not exist\n"),
-                (() => { return Path.HasExtension(PathToMapFile) && (Path.GetExtension(PathToMapFile) == ".omap" || Path.GetExtension(PathToMapFile) == ".ocd");},"Issue with OCAD map file: Extension is missing or not supported. Supported extensions: '.ocad', '.ocd'\n"),
-                (() => { return FileAccess.FileExists(PathToSpeciesAttributes);},"Issue with file containing species attributes: File does not exist\n"),
-                (() => { return Path.HasExtension(PathToSpeciesAttributes) && Path.GetExtension(PathToSpeciesAttributes) == ".json"; },"Issue with file containing species attributes: Extension is missing or not supported. Supported extensions: '.json'\n"),
-                (() => { return HeightMapOptions.Ready();},"Issue with height map: Invalid configuration\n"),
-                (() => { return DiffusionPointsOptions.Ready();},"Issue with diffusion points: Invalid configuration")
-            
+        var predicates =
+            new List<(Func<bool>, string)>
+            {
+                (() => { return FileAccess.FileExists(PathToSymbolSet); },
+                    "Issue with file containing the symbol set: File does not exist\n"),
+                (() => { return Path.HasExtension(PathToSymbolSet) && Path.GetExtension(PathToSymbolSet) == ".json"; },
+                    "Issue with file containing the symbol set: Extension is missing or not supported. Supported extensions: '.json'\n"),
+                (() => { return FileAccess.FileExists(PathToMapFile); },
+                    "Issue with OCAD map file: File does not exist\n"),
+                (() => { return Path.HasExtension(PathToMapFile) && (Path.GetExtension(PathToMapFile) == ".omap" || Path.GetExtension(PathToMapFile) == ".ocd"); },
+                    "Issue with OCAD map file: Extension is missing or not supported. Supported extensions: '.ocad', '.ocd'\n"),
+                (() => { return FileAccess.FileExists(PathToSpeciesAttributes); },
+                    "Issue with file containing species attributes: File does not exist\n"),
+                (() => { return Path.HasExtension(PathToSpeciesAttributes) && Path.GetExtension(PathToSpeciesAttributes) == ".json"; },
+                    "Issue with file containing species attributes: Extension is missing or not supported. Supported extensions: '.json'\n"),
+                (() => { return HeightMapOptions.Ready(); }, "Issue with height map: Invalid configuration\n"),
+                (() => { return DiffusionPointsOptions.Ready(); }, "Issue with diffusion points: Invalid configuration")
             };
-        bool isReady = true;
+        var isReady = true;
 
-        List<String> errors = new();
-        
-        foreach (var (predicate,errorMessage) in predicates)
-        {
+        List<string> errors = new();
+
+        foreach (var (predicate, errorMessage) in predicates)
             if (!predicate())
             {
                 isReady = false;
                 errors.Add(errorMessage);
             }
-        }
-        
+
         return isReady;
     }
 
     public void Clear()
     {
-        PathToSymbolSet = String.Empty;
-        PathToMapFile = String.Empty;
-        PathToSpeciesAttributes = String.Empty;
-        PathToPlantInstances = String.Empty;
-        
+        PathToSymbolSet = string.Empty;
+        PathToMapFile = string.Empty;
+        PathToSpeciesAttributes = string.Empty;
+        PathToPlantInstances = string.Empty;
     }
 
-    public override String ToString()
+    public override string ToString()
     {
-        String res = String.Empty;
-        
-        res += "OCAD map: " + PathToMapFile+ "\n";
+        var res = string.Empty;
+
+        res += "OCAD map: " + PathToMapFile + "\n";
         res += "Species attributes file: " + PathToSpeciesAttributes + "\n";
         res += "Symbol set: " + PathToSymbolSet + "\n";
         res += "Plant instance output: " + PathToPlantInstances + "\n";
@@ -130,11 +117,11 @@ public class GenerationCommandData
                 res += "Using random diffusion points\n";
                 break;
             case DiffusionPointsAccusitionFlag.Manual:
-                res += "Using manually set diffusion points: " + DiffusionPointsOptions.NumberOfPoints.ToString() +
+                res += "Using manually set diffusion points: " + DiffusionPointsOptions.NumberOfPoints +
                        "\n";
                 break;
         }
-        
+
         return res;
     }
 }

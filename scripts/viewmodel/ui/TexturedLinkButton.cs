@@ -1,22 +1,19 @@
 using Godot;
-using System;
 
-namespace ProceduralFoliageGenerator.ViewModel
+namespace ProceduralFoliageGenerator.ViewModel;
+
+/// <summary>
+///     Custom textured button class for handling URL opening.
+/// </summary>
+public partial class TexturedLinkButton : TextureButton
 {
+    [Export] public string Url { get; set; }
+
     /// <summary>
-    /// Custom textured button class for handling URL opening.
+    ///     Handler function of the <c>pressed</c> signal. Responsible for opening a custom URL.
     /// </summary>
-    public partial class TexturedLinkButton : TextureButton
+    public void OnPressed()
     {
-        [Export]
-        public string Url { get; set; }
-        
-        /// <summary>
-        /// Handler function of the <c>pressed</c> signal. Responsible for opening a custom URL.
-        /// </summary>
-        public void OnPressed()
-        {
-            OS.ShellOpen(Url);
-        }
+        OS.ShellOpen(Url);
     }
 }

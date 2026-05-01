@@ -6,7 +6,6 @@ namespace ProceduralFoliageGenerator.scripts.model;
 
 public class SymbolAttributesParser
 {
-
     public static List<SymbolAttributes> Parse(string jsonContent)
     {
         List<SymbolAttributes> symbolAttributesList = new();
@@ -17,14 +16,14 @@ public class SymbolAttributesParser
         foreach (var item in array)
         {
             var symbolAttr = item.AsGodotDictionary();
-            
+
             if (!symbolAttr.ContainsKey("id") || !symbolAttr.ContainsKey("flags") ||
                 !symbolAttr.ContainsKey("radius"))
             {
                 GD.Print("Ill-formed symbol attributes list!");
                 return new List<SymbolAttributes>();
             }
-            
+
             var id = symbolAttr["id"].AsInt32();
             var flags = symbolAttr["flags"].AsInt16();
             var radius = symbolAttr["radius"].AsSingle();
@@ -32,7 +31,7 @@ public class SymbolAttributesParser
             var res = new SymbolAttributes(id, flags, radius);
             symbolAttributesList.Add(res);
         }
-        
+
         return symbolAttributesList;
     }
 }

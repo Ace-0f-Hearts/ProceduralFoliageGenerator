@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 project/assembly_name="ProceduralFoliageGenerator"
 
+[editor]
+
+run/main_run_args="--verbose"
+
 [gui]
 
 theme/default_font_multichannel_signed_distance_field=true

@@ -1,10 +1,10 @@
 using Godot;
-using System;
 
 public partial class InstanceAmountItem : HBoxContainer
 {
     [Export] public Label DescLabel;
     [Export] public Label ValueLabel;
+
     public override void _Ready()
     {
         base._Ready();
@@ -14,7 +14,7 @@ public partial class InstanceAmountItem : HBoxContainer
     {
         DescLabel.Text = description;
     }
-    
+
     public void SetValue(int value)
     {
         ValueLabel.Text = value.ToString();

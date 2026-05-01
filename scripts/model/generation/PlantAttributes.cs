@@ -1,21 +1,23 @@
-using System.Reflection;
 using Godot;
 
 namespace ProceduralFoliageGenerator.Model;
 
 /// <summary>
-/// Resource describing the simplified attributes of plant species used in the procedural foliage generation.
+///     Resource describing the simplified attributes of plant species used in the procedural foliage generation.
 /// </summary>
 public partial class PlantAttributes : Resource
 {
-    
+    /// <summary>
+    ///     Default constructor
+    /// </summary>
     public PlantAttributes()
     {
     }
-    
+
     /// <summary>
-    /// Parameterized constructor
-    /// </summary>í
+    ///     Parameterized constructor
+    /// </summary>
+    /// í
     /// <param name="name"></param>
     /// <param name="growthRadius"></param>
     /// <param name="elevation"></param>
@@ -30,36 +32,35 @@ public partial class PlantAttributes : Resource
     }
 
 
-
-
     public int Id { get; init; }
+
     /// <summary>
-    /// Name of the plant species.
+    ///     Name of the plant species.
     /// </summary>
     public string Name { get; init; }
 
     /// <summary>
-    /// Determines the necessary radius for the plant to grow and survive.
-    /// Plants cannot have intersecting growth radii with each other.
-    /// Measured in meters.
+    ///     Determines the necessary radius for the plant to grow and survive.
+    ///     Plants cannot have intersecting growth radii with each other.
+    ///     Measured in meters.
     /// </summary>
     public RangeValue GrowthRadius { get; init; }
-    
+
     /// <summary>
-    /// A simplified attribute derived from the real-life requirements of plantlife.
-    /// Determines the minimum level of elevation necessary for the plant to grow and survive.
-    /// Measured in meters.
-    /// <br/>
-    /// Must be smaller than <see cref="Slope"/>
+    ///     A simplified attribute derived from the real-life requirements of plantlife.
+    ///     Determines the minimum level of elevation necessary for the plant to grow and survive.
+    ///     Measured in meters.
+    ///     <br />
+    ///     Must be smaller than <see cref="Slope" />
     /// </summary>
     public Gaussian Elevation { get; init; }
-    
+
     /// <summary>
-    /// A simplified attribute derived from the real-life requirements of plantlife.
-    /// Determines the maximum level of elevation necessary for the plant to grow and survive.
-    /// Measured in meters.
-    /// <br/>
-    /// Must be greater than <see cref="Elevation"/>
+    ///     A simplified attribute derived from the real-life requirements of plantlife.
+    ///     Determines the maximum level of elevation necessary for the plant to grow and survive.
+    ///     Measured in meters.
+    ///     <br />
+    ///     Must be greater than <see cref="Elevation" />
     /// </summary>
     public Gaussian Slope { get; init; }
 }

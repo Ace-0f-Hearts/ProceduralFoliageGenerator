@@ -6,9 +6,9 @@ namespace ProceduralFoliageGenerator.scripts.model;
 
 public class FoliageConfigParser
 {
-    public static FoliageConfig Parse(String content)
+    public static FoliageConfig Parse(string content)
     {
-        FoliageConfig config = new ();
+        FoliageConfig config = new();
         var json = Json.ParseString(content);
         var jsonObject = json.AsGodotDictionary();
         try
@@ -16,8 +16,8 @@ public class FoliageConfigParser
             config.PathToSpeciesAttributes = jsonObject["species"].AsString();
             config.PathToInstances = jsonObject["instances"].AsString();
             config.PathToMapData = jsonObject["map_data"].AsString();
-            config.PathToHeightMap =  jsonObject["height_map"].AsString();
-            config.PathToMapTexture =  jsonObject["map_texture"].AsString();
+            config.PathToHeightMap = jsonObject["height_map"].AsString();
+            config.PathToMapTexture = jsonObject["map_texture"].AsString();
         }
         catch (Exception e)
         {
@@ -25,7 +25,7 @@ public class FoliageConfigParser
             throw;
         }
 
-        
+
         return config;
-    } 
+    }
 }

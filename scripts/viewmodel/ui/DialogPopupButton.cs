@@ -1,18 +1,14 @@
 using Godot;
-using System;
-using ProceduralFoliageGenerator.ViewModel;
 
-namespace ProceduralFoliageGenerator.ViewModel
+namespace ProceduralFoliageGenerator.ViewModel;
+
+/// <summary>
+///     Custom class for handling the user request for foliage generation.
+/// </summary>
+public partial class DialogPopupButton : Button
 {
-    /// <summary>
-    /// Custom class for handling the user request for foliage generation. 
-    /// </summary>
-    public partial class DialogPopupButton : Button
+    public override void _Ready()
     {
-        public override void _Ready()
-        {
-            base._Ready();
-        }
+        base._Ready();
     }
-    
 }

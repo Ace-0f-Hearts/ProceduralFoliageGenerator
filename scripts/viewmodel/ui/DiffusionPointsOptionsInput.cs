@@ -1,18 +1,16 @@
-using Godot;
 using System;
-using ProceduralFoliageGenerator.ViewModel;
+using Godot;
 
 namespace ProceduralFoliageGenerator.ViewModel;
+
 public partial class DiffusionPointsOptionsInput : TabContainer
 {
-    
     // [Export]
     // public PathInput DiffusionFilePathInput { get; set; }
-    [Export]
-    public SpinBox NumberOfPointsInput { get; set; }
-    
+    [Export] public SpinBox NumberOfPointsInput { get; set; }
+
     public DiffusionPointsOptions Options { get; set; } = new();
-    
+
     public event EventHandler OptionsReady;
 
     public override void _Ready()
@@ -28,13 +26,13 @@ public partial class DiffusionPointsOptionsInput : TabContainer
             Options.NumberOfPoints = (int)value;
             CheckAndSignalWhenReady();
         };
-        OnTabChanged(this.CurrentTab);
+        OnTabChanged(CurrentTab);
     }
 
     public void EnableInputs()
     {
         // DiffusionFilePathInput.EnableButtons();
-        this.SetTabDisabled(0,false);
+        SetTabDisabled(0, false);
         // this.SetTabDisabled(1,false);
         // this.SetTabDisabled(2,false);    
     }
@@ -42,7 +40,7 @@ public partial class DiffusionPointsOptionsInput : TabContainer
     public void DisableInputs()
     {
         // DiffusionFilePathInput.DisableButtons();
-        this.SetTabDisabled(0,true);
+        SetTabDisabled(0, true);
         // this.SetTabDisabled(1,true);
         // this.SetTabDisabled(2,true);
     }
@@ -52,17 +50,13 @@ public partial class DiffusionPointsOptionsInput : TabContainer
         if (Options.Ready())
         {
             GD.Print("DiffusionPoints Ready!");
-            OptionsReady?.Invoke(this,EventArgs.Empty);
+            OptionsReady?.Invoke(this, EventArgs.Empty);
         }
     }
 
     public void OnTabChanged(int i)
     {
-
-        
-        if (i == 0)
-        {
-            Options.Flag = DiffusionPointsAccusitionFlag.Random;
+        if (i == 0) Options.Flag = DiffusionPointsAccusitionFlag.Random;
         // } else if (i == 1)
         // {
         //     Options.Flag = DiffusionPointsAccusitionFlag.Manual;
@@ -70,8 +64,6 @@ public partial class DiffusionPointsOptionsInput : TabContainer
         // else if (i == 2)
         // {
         //     Options.Flag = DiffusionPointsAccusitionFlag.FromFile;
-        }
         CheckAndSignalWhenReady();
     }
-    
 }

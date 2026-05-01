@@ -1,9 +1,6 @@
-using System;
 using Godot;
-using ProceduralFoliageGenerator.Model;
 
 namespace ProceduralFoliageGenerator.ViewModel;
-
 
 public enum HeightMapAcquisitionFlag
 {
@@ -11,37 +8,19 @@ public enum HeightMapAcquisitionFlag
     Default,
     FromFile
 }
+
 public record HeightMapOptions
 {
-    private HeightMapAcquisitionFlag _flag;  
-    private NoiseTexture2D _defaultNoiseTexture;
-    private FastNoiseLite _defaultNoise;
-    private String _defaultPath = "user://GenerationCache/heightmap.jpeg";
-    
-    
-    public HeightMapAcquisitionFlag Flag
-    {
-        get => _flag;
-
-        set
-        {
-            _flag = value;
-            if (value == HeightMapAcquisitionFlag.Random)
-                GenerateRandomHeightMap();
-            
-        }
-    }
-
-
-    
-    public String Path { get; set; } = String.Empty;
-
+    private readonly FastNoiseLite _defaultNoise;
+    private readonly NoiseTexture2D _defaultNoiseTexture;
+    private readonly string _defaultPath = "user://GenerationCache/heightmap.jpeg";
+    private HeightMapAcquisitionFlag _flag;
 
 
     public HeightMapOptions()
     {
         Flag = HeightMapAcquisitionFlag.FromFile;
-        
+
         {
             _defaultNoiseTexture = new NoiseTexture2D();
             _defaultNoise = new FastNoiseLite();
@@ -51,21 +30,35 @@ public record HeightMapOptions
             _defaultNoise.NoiseType = FastNoiseLite.NoiseTypeEnum.Simplex;
             _defaultNoise.Frequency = 0.0004f;
             _defaultNoise.FractalOctaves = 5;
-            
+
             _defaultNoiseTexture.SetNoise(_defaultNoise);
             _defaultNoiseTexture.Seamless = true;
             _defaultNoiseTexture.SetWidth(2048);
             _defaultNoiseTexture.SetHeight(2048);
             _defaultNoiseTexture.GenerateMipmaps = true;
         }
-
-        
     }
 
     public HeightMapOptions(HeightMapAcquisitionFlag flag)
     {
         Flag = flag;
     }
+
+
+    public HeightMapAcquisitionFlag Flag
+    {
+        get => _flag;
+
+        set
+        {
+            _flag = value;
+            if (value == HeightMapAcquisitionFlag.Random)
+                GenerateRandomHeightMap();
+        }
+    }
+
+
+    public string Path { get; set; } = string.Empty;
 
     public async void GenerateRandomHeightMap()
     {
@@ -78,13 +71,15 @@ public record HeightMapOptions
         _defaultNoiseTexture.GetImage().SaveJpg(ProjectSettings.GlobalizePath(_defaultPath));
         Path = ProjectSettings.GlobalizePath(_defaultPath);
     }
-    
+
     public bool Ready()
     {
-        bool ready = false;
-        ready = ready || (Flag == HeightMapAcquisitionFlag.Random);
-        ready = ready || (Flag == HeightMapAcquisitionFlag.Default);
-        ready = ready || (Flag == HeightMapAcquisitionFlag.FromFile && Path.Length > 0 &&  FileAccess.FileExists(Path) && (System.IO.Path.GetExtension(Path) == ".jpeg" ||System.IO.Path.GetExtension(Path) == ".jpg" || System.IO.Path.GetExtension(Path) == ".png") );
+        var ready = false;
+        ready = ready || Flag == HeightMapAcquisitionFlag.Random;
+        ready = ready || Flag == HeightMapAcquisitionFlag.Default;
+        ready = ready || (Flag == HeightMapAcquisitionFlag.FromFile && Path.Length > 0 && FileAccess.FileExists(Path) &&
+                          (System.IO.Path.GetExtension(Path) == ".jpeg" ||
+                           System.IO.Path.GetExtension(Path) == ".jpg" || System.IO.Path.GetExtension(Path) == ".png"));
 
         return ready;
     }
@@ -92,6 +87,6 @@ public record HeightMapOptions
     public void Clear()
     {
         Flag = HeightMapAcquisitionFlag.FromFile;
-        Path = String.Empty;
+        Path = string.Empty;
     }
 }

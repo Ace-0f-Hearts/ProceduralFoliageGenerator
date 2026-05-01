@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.JavaScript;
 using Godot;
 
 namespace ProceduralFoliageGenerator.ViewModel;
@@ -12,19 +10,20 @@ public enum DiffusionPointsAccusitionFlag
     FromFile
 }
 
-public record DiffusionPointsOptions()
+public record DiffusionPointsOptions
 {
     public DiffusionPointsAccusitionFlag Flag { get; set; } = DiffusionPointsAccusitionFlag.Random;
     public int NumberOfPoints { get; set; } = 3;
-    public String Path { get; set; } = String.Empty;
+    public string Path { get; set; } = string.Empty;
     public List<DiffusionPoint> Points { get; set; } = new();
 
     public bool Ready()
     {
-        bool ready = false;
+        var ready = false;
         ready = ready || (Flag == DiffusionPointsAccusitionFlag.Random && NumberOfPoints > 0);
         ready = ready || (Flag == DiffusionPointsAccusitionFlag.Manual && Points.Count > 0);
-        ready = ready || (Flag == DiffusionPointsAccusitionFlag.FromFile && Path.Length > 0 && FileAccess.FileExists(Path) && (System.IO.Path.GetExtension(Path) == ".json"));
+        ready = ready || (Flag == DiffusionPointsAccusitionFlag.FromFile && Path.Length > 0 &&
+                          FileAccess.FileExists(Path) && System.IO.Path.GetExtension(Path) == ".json");
 
         return ready;
     }
@@ -32,8 +31,8 @@ public record DiffusionPointsOptions()
     public void Clear()
     {
         Points.Clear();
-        Path = String.Empty;
+        Path = string.Empty;
         NumberOfPoints = 3;
-        Flag =  DiffusionPointsAccusitionFlag.Random;
+        Flag = DiffusionPointsAccusitionFlag.Random;
     }
 }
